@@ -6,14 +6,22 @@
  */
 
 #include <CPPLOGGER.h>
+#include <thread>
+
+void print_thread_id(uint id) {
+	logger::info("Message from thread: %d", id);
+	logger::info("Message from thread: %d", id);
+}
+
+void logger_thread_test() {
+	std::thread threads[10];
+	for (uint8_t i=0; i<10; ++i)
+		threads[i] = std::thread(print_thread_id, i+1);
+	for (std::thread& t : threads) t.join();
+}
 
 int main(int argc, char** argv) {
 
-	logger::error("This is a sample error message.");
-	logger::error("%s%d", logger::RED("This is a non-zero exit status: ").c_str(), 255);
+	logger_thread_test();
 
-	logger::info(logger::BLUE("This is a blue info. message").c_str());
-	logger::info(logger::UNDERLINE("This is an underlined line.").c_str());
-	logger::info(logger::BOLD("This is a bold text.").c_str());
-	logger::info(logger::BOLD(logger::UNDERLINE("This is a bold underlined text.")).c_str());
 }

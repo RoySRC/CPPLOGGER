@@ -9,12 +9,16 @@
 #define CPPLOGGER_H_
 
 #include <iostream>
+#include <stdlib.h>
+#include <sstream>
 #include <string>
 #include <stdio.h>
 #include <stdarg.h>
+#include <thread>
+#include <mutex>
 
 using std::string;
-
+using std::mutex;
 
 #define info(fmt, ...) _info_ (__FILE__, __LINE__, fmt, ##__VA_ARGS__);
 #define error(fmt, ...) _error_ (__FILE__, __LINE__, fmt, ##__VA_ARGS__);
@@ -22,6 +26,11 @@ using std::string;
 
 
 namespace logger {
+
+	mutex critical_section;
+
+	bool print_timestamps = false;
+	bool print_thread_id = false;
 
 	const string ANSI_RESET = "\u001B[0m";
 	const string ANSI_BLACK = "\u001B[30m";
@@ -34,6 +43,7 @@ namespace logger {
 	const string ANSI_WHITE = "\u001B[37m";
 	const string ANSI_BOLD = "\u001B[1m";
 	const string ANSI_UNDERLINE = "\u001B[4m";
+	const string ANSI_ITALIC = "\u001B[3m";
 
 	string BLACK(string msg) {
 		return ANSI_BLACK + msg + ANSI_RESET;
@@ -75,27 +85,44 @@ namespace logger {
 		return ANSI_UNDERLINE + msg + ANSI_RESET;
 	}
 
+	string ITALIC(string msg) {
+		return ANSI_ITALIC + msg + ANSI_RESET;
+	}
+
 	void print(string type, const char* _file_, int line, const char* fmt, va_list& args) {
-		printf("%s: %s:%d: ", type.c_str(), _file_, line);
+		std::stringstream ss; ss << std::this_thread::get_id();
+		unsigned long long int id = std::stoull(ss.str());
+
+		auto duration = std::chrono::system_clock::now().time_since_epoch();
+		unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+		critical_section.lock();
+		printf("%s", type.c_str());
+
+		if (print_timestamps) printf("[%ld]", millis);
+		if (print_thread_id) printf("[%lld]", id);
+
+		printf(": %s:%d:: ", _file_, line);
 		vfprintf(stdout, fmt, args);
 		printf("\n");
 		fflush(stdout);
 		va_end(args);
+		critical_section.unlock();
 	}
 
 	void _info_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
-		print(logger::GREEN("[INFO]"), _file_, line, fmt, args);
+		print(GREEN("[INFO]"), _file_, line, fmt, args);
 	}
 
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
-		print(logger::RED("[ERROR]"), _file_, line, fmt, args);
+		print(RED("[ERROR]"), _file_, line, fmt, args);
 	}
 
 	void _warning_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
-		print(logger::BLUE("[WARN]"), _file_, line, fmt, args);
+		print(BLUE("[WARN]"), _file_, line, fmt, args);
 	}
 
 	template<typename T>
