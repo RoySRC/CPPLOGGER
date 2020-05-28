@@ -37,13 +37,12 @@ using std::mutex;
 #define error(fmt, ...) CRITICAL_SECTION_CODE(_error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 #define warning(fmt, ...) CRITICAL_SECTION_CODE(_warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 
-#define COLOR(color, msg) {\
+#define COLOR(color, msg) \
 			memset(buffer, 0, sizeof(buffer));\
 			strcat(buffer, color);\
 			strcat(buffer, msg.c_str());\
 			strcat(buffer, ANSI_RESET);\
-			return buffer;\
-		}
+			return buffer;
 
 namespace logger {
 
