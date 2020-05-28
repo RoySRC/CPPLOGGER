@@ -17,14 +17,33 @@
 #include <thread>
 #include <mutex>
 #include <cxxabi.h>
+#include <cstring>
 
 using std::string;
 using std::mutex;
 
-#define info(fmt, ...) _info_ (__FILE__, __LINE__, fmt, ##__VA_ARGS__);
-#define error(fmt, ...) _error_ (__FILE__, __LINE__, fmt, ##__VA_ARGS__);
-#define warning(fmt, ...) _warning_ (__FILE__, __LINE__, fmt, ##__VA_ARGS__);
+#define __force_inline__ __attribute__((always_inline)) inline
 
+/**
+ * The following critical section macro is to make the logger thread safe
+ */
+#define CRITICAL_SECTION_CODE(code) critical_section.lock(); logger::code; logger::critical_section.unlock();
+
+/**
+ * The following block is to wrap functions calls to the logger function inside a critical
+ * section block for thread safety
+ */
+#define info(fmt, ...) CRITICAL_SECTION_CODE(_info_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
+#define error(fmt, ...) CRITICAL_SECTION_CODE(_error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
+#define warning(fmt, ...) CRITICAL_SECTION_CODE(_warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
+
+#define COLOR(color, msg) {\
+			memset(buffer, 0, sizeof(buffer));\
+			strcat(buffer, color);\
+			strcat(buffer, msg.c_str());\
+			strcat(buffer, ANSI_RESET);\
+			return buffer;\
+		}
 
 namespace logger {
 
@@ -33,170 +52,103 @@ namespace logger {
 	bool print_timestamps = false;
 	bool print_thread_id = false;
 
-	const string ANSI_RESET = "\u001B[0m";
-	const string ANSI_BLACK = "\u001B[30m";
-	const string ANSI_RED = "\u001B[31m";
-	const string ANSI_GREEN = "\u001B[32m";
-	const string ANSI_YELLOW = "\u001B[33m";
-	const string ANSI_BLUE = "\u001B[34m";
-	const string ANSI_PURPLE = "\u001B[35m";
-	const string ANSI_CYAN = "\u001B[36m";
-	const string ANSI_WHITE = "\u001B[37m";
-	const string ANSI_BOLD = "\u001B[1m";
-	const string ANSI_UNDERLINE = "\u001B[4m";
-	const string ANSI_ITALIC = "\u001B[3m";
+	/**
+	 * setting the following to false will disable global logging.
+	 */
+	bool enable = true;
 
 	/**
-	 * The following set of functions take in a string object as argument and return a const char pointer
+	 * temporary buffer used to output colored text
 	 */
-	const char* BLACK(string msg) {
-		return (ANSI_BLACK + msg + ANSI_RESET).c_str();
-	}
-
-	const char* RED(string msg) {
-		return (ANSI_RED + msg + ANSI_RESET).c_str();
-	}
-
-	const char* GREEN(string msg) {
-		return (ANSI_GREEN + msg + ANSI_RESET).c_str();
-	}
-
-	const char* YELLOW(string msg) {
-		return (ANSI_YELLOW + msg + ANSI_RESET).c_str();
-	}
-
-	const char* BLUE(string msg) {
-		return (ANSI_BLUE + msg + ANSI_RESET).c_str();
-	}
-
-	const char* PURPLE(string msg) {
-		return (ANSI_PURPLE + msg + ANSI_RESET).c_str();
-	}
-
-	const char* CYAN(string msg) {
-		return (ANSI_CYAN + msg + ANSI_RESET).c_str();
-	}
-
-	const char* WHITE(string msg) {
-		return (ANSI_WHITE + msg + ANSI_RESET).c_str();
-	}
-
-	const char* BOLD(string msg) {
-		return (ANSI_BOLD + msg + ANSI_RESET).c_str();
-	}
-
-	const char* UNDERLINE(string msg) {
-		return (ANSI_UNDERLINE + msg + ANSI_RESET).c_str();
-	}
-
-	const char* ITALIC(string msg) {
-		return (ANSI_ITALIC + msg + ANSI_RESET).c_str();
-	}
+	char buffer[1024] = {'\0',};
 
 	/**
-	 * The following set of functions are used when parameter and return types are the same
+	 * Add support for colors for versions older than c++11. This is for backwards compatibility
 	 */
-	template<typename T>
-	T BLACK(T msg) {
-		return (ANSI_BLACK + string(msg) + ANSI_RESET).c_str();
-	}
+	#if __cplusplus >= 201103L
+	#define COLOR_UNICODE "\u001b"
+	#else
+	#define COLOR_UNICODE "\x1b"
+	#endif
 
-	template<typename T>
-	T RED(T msg) {
-		return (ANSI_RED + string(msg) + ANSI_RESET).c_str();
-	}
+	/**
+	 * Define the ANSI color codes
+	 */
+	#define ANSI_RESET		COLOR_UNICODE	"[0m"
+	#define ANSI_BLACK		COLOR_UNICODE	"[30m"
+	#define ANSI_RED		COLOR_UNICODE	"[31m"
+	#define ANSI_GREEN		COLOR_UNICODE	"[32m"
+	#define ANSI_YELLOW		COLOR_UNICODE	"[33m"
+	#define ANSI_BLUE		COLOR_UNICODE	"[34m"
+	#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
+	#define ANSI_CYAN		COLOR_UNICODE	"[36m"
+	#define ANSI_WHITE		COLOR_UNICODE	"[37m"
+	#define ANSI_BOLD		COLOR_UNICODE	"[1m"
+	#define ANSI_UNDERLINE	COLOR_UNICODE	"[4m"
+	#define ANSI_ITALIC		COLOR_UNICODE	"[3m"
 
-	template<typename T>
-	T GREEN(T msg) {
-		return (ANSI_GREEN + string(msg) + ANSI_RESET).c_str();
-	}
 
-	template<typename T>
-	T YELLOW(T msg) {
-		return (ANSI_YELLOW + string(msg) + ANSI_RESET).c_str();
-	}
+	/**
+	 * The following set of macros take in a string object as argument and return a constant char pointer
+	 */
+	__force_inline__ const char* BLACK(string msg)		{	COLOR(ANSI_BLACK, msg);		}
+	__force_inline__ const char* RED(string msg)		{	COLOR(ANSI_RED, msg);		}
+	__force_inline__ const char* GREEN(string msg)		{	COLOR(ANSI_GREEN, msg);		}
+	__force_inline__ const char* YELLOW(string msg)		{	COLOR(ANSI_YELLOW, msg);	}
+	__force_inline__ const char* BLUE(string msg)		{	COLOR(ANSI_BLUE, msg);		}
+	__force_inline__ const char* PURPLE(string msg)		{	COLOR(ANSI_PURPLE, msg);	}
+	__force_inline__ const char* CYAN(string msg)		{	COLOR(ANSI_CYAN, msg);		}
+	__force_inline__ const char* WHITE(string msg)		{	COLOR(ANSI_WHITE, msg);		}
+	__force_inline__ const char* BOLD(string msg)		{	COLOR(ANSI_BOLD, msg);		}
+	__force_inline__ const char* UNDERLINE(string msg)	{	COLOR(ANSI_UNDERLINE, msg);	}
+	__force_inline__ const char* ITALIC(string msg)		{	COLOR(ANSI_ITALIC, msg);	}
 
-	template<typename T>
-	T BLUE(T msg) {
-		return (ANSI_BLUE + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T PURPLE(T msg) {
-		return (ANSI_PURPLE + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T CYAN(T msg) {
-		return (ANSI_CYAN + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T WHITE(T msg) {
-		return (ANSI_WHITE + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T BOLD(T msg) {
-		return (ANSI_BOLD + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T UNDERLINE(T msg) {
-		return (ANSI_UNDERLINE + string(msg) + ANSI_RESET).c_str();
-	}
-
-	template<typename T>
-	T ITALIC(T msg) {
-		return (ANSI_ITALIC + string(msg) + ANSI_RESET).c_str();
-	}
 
 	/**
 	 * Wrapper function for printing logging information to screen
 	 */
-	void print(string type, const char* _file_, int line, const char* fmt, va_list& args) {
+	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
 		std::stringstream ss; ss << std::this_thread::get_id();
 		unsigned long long int id = std::stoull(ss.str());
 
 		auto duration = std::chrono::system_clock::now().time_since_epoch();
 		unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
-		critical_section.lock();
-		printf("%s", type.c_str());
-
+		printf("%s%s%s", color, type.c_str(), ANSI_RESET);
 		if (print_timestamps) printf("[%ld]", millis);
 		if (print_thread_id) printf("[%lld]", id);
-
 		printf(": %s:%d:: ", _file_, line);
 		vfprintf(stdout, fmt, args);
 		printf("\n");
 		fflush(stdout);
 		va_end(args);
-		critical_section.unlock();
 	}
 
 	/**
 	 *
 	 */
 	void _info_(const char* _file_, int line, const char* fmt, ...) {
+		if (!enable) return;
 		va_list args; va_start(args, fmt);
-		print(GREEN("[INFO]"), _file_, line, fmt, args);
+		print(ANSI_GREEN, "[INFO]", _file_, line, fmt, args);
 	}
 
 	/**
 	 *
 	 */
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
+		if (!enable) return;
 		va_list args; va_start(args, fmt);
-		print(RED("[ERROR]"), _file_, line, fmt, args);
+		print(ANSI_RED, "[ERROR]", _file_, line, fmt, args);
 	}
 
 	/**
 	 *
 	 */
 	void _warning_(const char* _file_, int line, const char* fmt, ...) {
+		if (!enable) return;
 		va_list args; va_start(args, fmt);
-		print(BLUE("[WARN]"), _file_, line, fmt, args);
+		print(ANSI_BLUE, "[WARN]", _file_, line, fmt, args);
 	}
 
 	/**
@@ -204,6 +156,7 @@ namespace logger {
 	 */
 	template<typename T>
 	const char* get_type(T* c) {
+		if (!enable) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
@@ -213,6 +166,7 @@ namespace logger {
 
 	template<typename T>
 	const char* get_type(T c) {
+		if (!enable) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free
