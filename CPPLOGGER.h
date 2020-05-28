@@ -106,6 +106,7 @@ namespace logger {
 	/**
 	 * Wrapper function for printing logging information to screen
 	 */
+	__force_inline__
 	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
 		std::stringstream ss; ss << std::this_thread::get_id();
 		unsigned long long int id = std::stoull(ss.str());
