@@ -16,6 +16,7 @@
 #include <stdarg.h>
 #include <thread>
 #include <mutex>
+#include <cxxabi.h>
 
 using std::string;
 using std::mutex;
@@ -45,50 +46,114 @@ namespace logger {
 	const string ANSI_UNDERLINE = "\u001B[4m";
 	const string ANSI_ITALIC = "\u001B[3m";
 
-	string BLACK(string msg) {
-		return ANSI_BLACK + msg + ANSI_RESET;
+	/**
+	 * The following set of functions take in a string object as argument and return a const char pointer
+	 */
+	const char* BLACK(string msg) {
+		return (ANSI_BLACK + msg + ANSI_RESET).c_str();
 	}
 
-	string RED(string msg) {
-		return ANSI_RED + msg + ANSI_RESET;
+	const char* RED(string msg) {
+		return (ANSI_RED + msg + ANSI_RESET).c_str();
 	}
 
-	string GREEN(string msg) {
-		return ANSI_GREEN + msg + ANSI_RESET;
+	const char* GREEN(string msg) {
+		return (ANSI_GREEN + msg + ANSI_RESET).c_str();
 	}
 
-	string YELLOW(string msg) {
-		return ANSI_YELLOW + msg + ANSI_RESET;
+	const char* YELLOW(string msg) {
+		return (ANSI_YELLOW + msg + ANSI_RESET).c_str();
 	}
 
-	string BLUE(string msg) {
-		return ANSI_BLUE + msg + ANSI_RESET;
+	const char* BLUE(string msg) {
+		return (ANSI_BLUE + msg + ANSI_RESET).c_str();
 	}
 
-	string PURPLE(string msg) {
-		return ANSI_PURPLE + msg + ANSI_RESET;
+	const char* PURPLE(string msg) {
+		return (ANSI_PURPLE + msg + ANSI_RESET).c_str();
 	}
 
-	string CYAN(string msg) {
-		return ANSI_CYAN + msg + ANSI_RESET;
+	const char* CYAN(string msg) {
+		return (ANSI_CYAN + msg + ANSI_RESET).c_str();
 	}
 
-	string WHITE(string msg) {
-		return ANSI_WHITE + msg + ANSI_RESET;
+	const char* WHITE(string msg) {
+		return (ANSI_WHITE + msg + ANSI_RESET).c_str();
 	}
 
-	string BOLD(string msg) {
-		return ANSI_BOLD + msg + ANSI_RESET;
+	const char* BOLD(string msg) {
+		return (ANSI_BOLD + msg + ANSI_RESET).c_str();
 	}
 
-	string UNDERLINE(string msg) {
-		return ANSI_UNDERLINE + msg + ANSI_RESET;
+	const char* UNDERLINE(string msg) {
+		return (ANSI_UNDERLINE + msg + ANSI_RESET).c_str();
 	}
 
-	string ITALIC(string msg) {
-		return ANSI_ITALIC + msg + ANSI_RESET;
+	const char* ITALIC(string msg) {
+		return (ANSI_ITALIC + msg + ANSI_RESET).c_str();
 	}
 
+	/**
+	 * The following set of functions are used when parameter and return types are the same
+	 */
+	template<typename T>
+	T BLACK(T msg) {
+		return (ANSI_BLACK + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T RED(T msg) {
+		return (ANSI_RED + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T GREEN(T msg) {
+		return (ANSI_GREEN + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T YELLOW(T msg) {
+		return (ANSI_YELLOW + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T BLUE(T msg) {
+		return (ANSI_BLUE + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T PURPLE(T msg) {
+		return (ANSI_PURPLE + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T CYAN(T msg) {
+		return (ANSI_CYAN + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T WHITE(T msg) {
+		return (ANSI_WHITE + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T BOLD(T msg) {
+		return (ANSI_BOLD + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T UNDERLINE(T msg) {
+		return (ANSI_UNDERLINE + string(msg) + ANSI_RESET).c_str();
+	}
+
+	template<typename T>
+	T ITALIC(T msg) {
+		return (ANSI_ITALIC + string(msg) + ANSI_RESET).c_str();
+	}
+
+	/**
+	 * Wrapper function for printing logging information to screen
+	 */
 	void print(string type, const char* _file_, int line, const char* fmt, va_list& args) {
 		std::stringstream ss; ss << std::this_thread::get_id();
 		unsigned long long int id = std::stoull(ss.str());
@@ -110,24 +175,49 @@ namespace logger {
 		critical_section.unlock();
 	}
 
+	/**
+	 *
+	 */
 	void _info_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
 		print(GREEN("[INFO]"), _file_, line, fmt, args);
 	}
 
+	/**
+	 *
+	 */
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
 		print(RED("[ERROR]"), _file_, line, fmt, args);
 	}
 
+	/**
+	 *
+	 */
 	void _warning_(const char* _file_, int line, const char* fmt, ...) {
 		va_list args; va_start(args, fmt);
 		print(BLUE("[WARN]"), _file_, line, fmt, args);
 	}
 
+	/**
+	 * The following two functions are used to get the name of a type
+	 */
 	template<typename T>
-	string get_classname(T c) {
-		return "";
+	const char* get_type(T* c) {
+		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
+			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
+			std::free
+		};
+		return string(ptr.get()).c_str();
+	}
+
+	template<typename T>
+	const char* get_type(T c) {
+		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
+			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
+			std::free
+		};
+		return string(ptr.get()).c_str();
 	}
 
 }
