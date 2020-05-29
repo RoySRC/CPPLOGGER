@@ -65,6 +65,9 @@ namespace logger {
 	 */
 	bool print_log_type = true;
 
+	bool print_file = true;
+	bool print_line = true;
+
 	/**
 	 * setting the following to false will disable global logging.
 	 */
@@ -122,7 +125,7 @@ namespace logger {
 	 */
 	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
 		if (print_log_type) {
-			printf("%s%s%s: ", color, type.c_str(), ANSI_RESET);
+			printf("%s%s%s", color, type.c_str(), ANSI_RESET);
 		}
 
 		if (print_timestamps) {
@@ -137,7 +140,17 @@ namespace logger {
 			printf("[%lld]", id);
 		}
 
-		printf("%s:%d:: ", _file_, line);
+		printf(": ");
+
+		if (print_file) {
+			printf("%s:", _file_);
+		}
+
+		if (print_line) {
+			printf("%d:", line);
+		}
+
+		printf(": ");
 		vfprintf(stdout, fmt, args);
 		printf("\n");
 		fflush(stdout);
