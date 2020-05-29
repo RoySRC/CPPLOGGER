@@ -172,7 +172,7 @@ namespace logger {
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
 		if (!enable) return;
 		va_list args; va_start(args, fmt);
-		print(ANSI_RED, "[ERROR]", _file_, line, fmt, args);
+		print(ANSI_RED, "[ ERR]", _file_, line, fmt, args);
 	}
 
 	/**

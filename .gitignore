@@ -4,3 +4,4 @@ main
 .project
 .setting
 .settings
+*.out
