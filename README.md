@@ -33,7 +33,7 @@ This is a simple, lightweight and thread safe logger for C++.
 	
 ## Usage examples
 ### Basic usage
-```
+```c++
 #include <CPPLOGGER.h>
 
 int main() {
