@@ -46,6 +46,11 @@ using std::mutex;
 
 namespace logger {
 
+	/**
+	 *  Mutex lock for critical section. here critical section
+	 *  refers to the block of code responsible for printing
+	 *  logging information to screen.
+	 */
 	mutex critical_section;
 
 	bool print_timestamps = false;
