@@ -187,6 +187,7 @@ namespace logger {
 	/**
 	 * The following function is used to get the name of a type from its reference
 	 */
+	#ifndef __clang__
 	template<typename T>
 	const char* get_type(T& c) {
 		if (!enable) return nullptr;
@@ -196,6 +197,7 @@ namespace logger {
 		};
 		return string(ptr.get()).c_str();
 	}
+	#endif
 
 }
 
