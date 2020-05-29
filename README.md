@@ -32,3 +32,21 @@ This is a simple, lightweight and thread safe logger for C++.
 	
 	
 ## Usage examples
+### Basic usage
+```
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info("---------------------------------------------------------------------");
+	logger::info("Welcome to CPPLOGGER!");
+	logger::info("---------------------------------------------------------------------");
+
+	logger::info("The following shows some basic usage.");
+
+	logger::error("This is an error message with some %s:", "argument")
+	logger::warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
+	logger::info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
+
+}
+```
