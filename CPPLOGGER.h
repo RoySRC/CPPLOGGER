@@ -37,8 +37,11 @@ using std::mutex;
 #define error(fmt, ...) CRITICAL_SECTION_CODE(_error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 #define warning(fmt, ...) CRITICAL_SECTION_CODE(_warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 
+/**
+ * Wrapper macro that defines logger colors
+ */
 #define COLOR(color, msg) \
-			memset(buffer, 0, sizeof(buffer));\
+			buffer[0] = '\0';\
 			strcat(buffer, color);\
 			strcat(buffer, msg.c_str());\
 			strcat(buffer, ANSI_RESET);\
@@ -55,6 +58,12 @@ namespace logger {
 
 	bool print_timestamps = false;
 	bool print_thread_id = false;
+
+	/**
+	 * Setting the following to false will not print "[INFO]: ", "[ERROR]: ", "[WARN]: "
+	 * before log messages.
+	 */
+	bool print_log_type = true;
 
 	/**
 	 * setting the following to false will disable global logging.
@@ -111,18 +120,24 @@ namespace logger {
 	/**
 	 * Wrapper function for printing logging information to screen
 	 */
-	__force_inline__
 	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
-		std::stringstream ss; ss << std::this_thread::get_id();
-		unsigned long long int id = std::stoull(ss.str());
+		if (print_log_type) {
+			printf("%s%s%s: ", color, type.c_str(), ANSI_RESET);
+		}
 
-		auto duration = std::chrono::system_clock::now().time_since_epoch();
-		unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+		if (print_timestamps) {
+			auto duration = std::chrono::system_clock::now().time_since_epoch();
+			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+			printf("[%ld]", millis);
+		}
 
-		printf("%s%s%s", color, type.c_str(), ANSI_RESET);
-		if (print_timestamps) printf("[%ld]", millis);
-		if (print_thread_id) printf("[%lld]", id);
-		printf(": %s:%d:: ", _file_, line);
+		if (print_thread_id) {
+			std::stringstream ss; ss << std::this_thread::get_id();
+			unsigned long long int id = std::stoull(ss.str());
+			printf("[%lld]", id);
+		}
+
+		printf("%s:%d:: ", _file_, line);
 		vfprintf(stdout, fmt, args);
 		printf("\n");
 		fflush(stdout);
@@ -130,7 +145,7 @@ namespace logger {
 	}
 
 	/**
-	 *
+	 * Variadic argument function for printing information logs to screen.
 	 */
 	void _info_(const char* _file_, int line, const char* fmt, ...) {
 		if (!enable) return;
@@ -139,7 +154,7 @@ namespace logger {
 	}
 
 	/**
-	 *
+	 * Variadic argument function for printing error logs to screen.
 	 */
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
 		if (!enable) return;
@@ -148,7 +163,7 @@ namespace logger {
 	}
 
 	/**
-	 *
+	 * Variadic argument function for printing warning logs to screen.
 	 */
 	void _warning_(const char* _file_, int line, const char* fmt, ...) {
 		if (!enable) return;
@@ -157,7 +172,7 @@ namespace logger {
 	}
 
 	/**
-	 * The following two functions are used to get the name of a type
+	 * The following function are used to get the name of a type from its pointer
 	 */
 	template<typename T>
 	const char* get_type(T* c) {
@@ -169,8 +184,11 @@ namespace logger {
 		return string(ptr.get()).c_str();
 	}
 
+	/**
+	 * The following function is used to get the name of a type from its reference
+	 */
 	template<typename T>
-	const char* get_type(T c) {
+	const char* get_type(T& c) {
 		if (!enable) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
