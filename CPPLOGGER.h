@@ -158,7 +158,7 @@ namespace logger {
 		if (print_thread_id) {
 			std::stringstream ss; ss << std::this_thread::get_id();
 			unsigned long long int id = std::stoull(ss.str());
-			printf("[%lld]", id);
+			printf("[%04lld]", id);
 		}
 
 		printf(": ");
