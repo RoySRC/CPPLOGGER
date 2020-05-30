@@ -51,7 +51,7 @@ int main() {
 }
 ```
 
-#### Typographic examples
+#### Typographic examples with colors
 ```c++
 #include <CPPLOGGER.h>
 
@@ -82,5 +82,44 @@ int main() {
 	logger::info("%s: %s",
 			logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
 			logger::BOLD(logger::GREEN("12")));
+}
+```
+
+##### Disabling global logging example
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This is before disabling global logging.");
+
+	logger::disable();
+	logger::info("This should not be printed.");
+
+	logger::enable();
+	logger::info("This is after enabling global logging.");
+
+}
+```
+
+#### Printing logging time stamps
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This is printed without a time stamp.");
+
+	logger::print_timestamps = true;
+	logger::info("This is printed with a time stamp.");
+
 }
 ```

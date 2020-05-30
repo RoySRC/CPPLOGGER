@@ -31,7 +31,6 @@ using std::mutex;
 #define CRITICAL_SECTION_CODE(code) 	\
 			critical_section.lock(); 	\
 			logger::code; 				\
-			logger::buffer[0] = '\0';	\
 			logger::critical_section.unlock();
 
 /**
@@ -54,22 +53,7 @@ using std::mutex;
 #define UNDERLINE(msg) 	_UNDERLINE_(msg).c_str()
 #define ITALIC(msg) 	_ITALIC_(msg).c_str()
 
-/**
- * Wrapper macro that defines logger colors
- */
-
 namespace logger {
-
-	/**
-	 * Prepends t into s. Assumes s has enough space allocated
-	 * for the combined string.
-	 */
-	__force_inline__
-	void prepend(char* s, const char* t) {
-		size_t len = strlen(t);
-		memmove(s + len, s, strlen(s) + 1);
-		memcpy(s, t, len);
-	}
 
 	/**
 	 *  Mutex lock for critical section. here critical section
@@ -93,12 +77,7 @@ namespace logger {
 	/**
 	 * setting the following to false will disable global logging.
 	 */
-	bool enable = true;
-
-	/**
-	 * temporary buffer used to output colored text
-	 */
-	char buffer[1024] = {'\0',};
+	bool _enable = true;
 
 	/**
 	 * Add support for colors for versions older than c++11. This is for backwards compatibility
@@ -125,6 +104,21 @@ namespace logger {
 	#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
 	#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
 
+	/**
+	 * The following function disables global logging
+	 */
+	__force_inline__
+	void disable() {
+		_enable = false;
+	}
+
+	/**
+	 * The following function enables global logging
+	 */
+	__force_inline__
+	void enable() {
+		_enable = true;
+	}
 
 	__force_inline__
 	string COLOR(const char* color, string msg) {
@@ -188,7 +182,7 @@ namespace logger {
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	void _info_(const char* _file_, int line, const char* fmt, ...) {
-		if (!enable) return;
+		if (!_enable) return;
 		va_list args; va_start(args, fmt);
 		print(ANSI_GREEN, "[INFO]", _file_, line, fmt, args);
 	}
@@ -197,7 +191,7 @@ namespace logger {
 	 * Variadic argument function for printing error logs to screen.
 	 */
 	void _error_(const char* _file_, int line, const char* fmt, ...) {
-		if (!enable) return;
+		if (!_enable) return;
 		va_list args; va_start(args, fmt);
 		print(ANSI_RED, "[ ERR]", _file_, line, fmt, args);
 	}
@@ -206,7 +200,7 @@ namespace logger {
 	 * Variadic argument function for printing warning logs to screen.
 	 */
 	void _warning_(const char* _file_, int line, const char* fmt, ...) {
-		if (!enable) return;
+		if (!_enable) return;
 		va_list args; va_start(args, fmt);
 		print(ANSI_BLUE, "[WARN]", _file_, line, fmt, args);
 	}
@@ -216,7 +210,7 @@ namespace logger {
 	 */
 	template<typename T>
 	const char* get_type(T* c) {
-		if (!enable) return nullptr;
+		if (!_enable) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
@@ -230,7 +224,7 @@ namespace logger {
 	#ifndef __clang__
 	template<typename T>
 	const char* get_type(T& c) {
-		if (!enable) return nullptr;
+		if (!_enable) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free

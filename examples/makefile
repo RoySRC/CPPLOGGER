@@ -2,12 +2,18 @@ CC=g++
 CFLAGS=-std=c++11 -Wall -O3
 INCLUDE_DIR=-I../
 
-all: basic_usage typographic_example
+all: basic_usage typographic_example disable_logging time_stamp
 
 basic_usage: basic_usage.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
 typographic_example: typographic_example.cpp ../CPPLOGGER.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+
+disable_logging: disable_logging.cpp
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+
+time_stamp: time_stamp.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 
 clean:
