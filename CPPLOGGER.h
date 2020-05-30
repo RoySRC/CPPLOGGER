@@ -172,7 +172,9 @@ namespace logger {
 			printf("%d:", line);
 		}
 
-		printf(": ");
+		if (print_file || print_line)
+			printf(": ");
+
 		vfprintf(stdout, fmt, args);
 		printf("\n");
 		fflush(stdout);

@@ -179,4 +179,59 @@ int main() {
 }
 ```
 
+#### Logging without printing the file name
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This message is printed with the filename.");
+
+	logger::print_file = false;
+	logger::info("This message is printed without printing the filename.");
+
+}
+```
+
+#### Logging without printing the line number
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This message is printed with the line number.");
+
+	logger::print_line = false;
+	logger::info("This message is printed without the line number.");
+
+}
+```
+
+#### Logging without printing either the filename or the line number
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This message has both line number and file");
+
+	logger::print_file = false;
+	logger::print_line = false;
+	logger::info("This message does not have either a file or a line number.");
+
+}
+```
+
 ## Benchmarks
