@@ -238,15 +238,15 @@ int main(int argc, char** argv) {
 ## Benchmarks
 Benchmarking done on Ubuntu 20.04 64 bit, Intel i5-6600K @ 4.60GHz
 ```
-[INFO]: *******************************************************************
-[INFO]: Single threaded benchmark with 1,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.57 secs | Throughput: 1,757,367/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 74,896,212/sec
-[INFO]: 
-[INFO]: *******************************************************************
-[INFO]: 10 thread benchmark with 1,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 10.14 secs | Throughput: 98,590/sec
-[INFO]: disabled        | Elapsed: 0.352 secs | Throughput: 2,841,304/sec
+*******************************************************************
+Single threaded benchmark with 1,000,000 iterations
+*******************************************************************
+basic           | Elapsed: 0.44 secs | Throughput: 2,272,940/sec
+disabled        | Elapsed: 0.01 secs | Throughput: 78,302,483/sec
+
+*******************************************************************
+10 thread benchmark with 1,000,000 iterations
+*******************************************************************
+basic           | Elapsed: 9.392 secs | Throughput: 106,476/sec
+disabled        | Elapsed: 0.328 secs | Throughput: 3,052,873/sec
 ```

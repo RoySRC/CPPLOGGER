@@ -71,7 +71,7 @@ void multi_threaded(size_t threads, size_t iters) {
 	double delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
-	logger::info("%-16s| Elapsed: %.2f secs | Throughput: %'d/sec", "basic", delta_d, int(iters/delta_d));
+	logger::info("%-16s| Elapsed: %.3f secs | Throughput: %'d/sec", "basic", delta_d, int(iters/delta_d));
 
 	logger::output_stream = fopen("/dev/null", "w");
 	logger::disable();
@@ -90,7 +90,7 @@ void multi_threaded(size_t threads, size_t iters) {
 }
 
 int main() {
-	logger::print_file = logger::print_line = false;
+	logger::print_file = logger::print_line = logger::print_log_type = false;
 
 	setlocale(LC_NUMERIC, "");
 	int iters = 1000000;
