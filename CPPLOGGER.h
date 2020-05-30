@@ -79,6 +79,8 @@ namespace logger {
 	 */
 	bool _enable = true;
 
+	FILE* output_stream = stdout;
+
 	/**
 	 * Add support for colors for versions older than c++11. This is for backwards compatibility
 	 */
@@ -146,38 +148,38 @@ namespace logger {
 	 */
 	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
 		if (print_log_type) {
-			printf("%s%s%s", color, type.c_str(), ANSI_RESET);
+			fprintf(output_stream, "%s%s%s", color, type.c_str(), ANSI_RESET);
 		}
 
 		if (print_timestamps) {
 			auto duration = std::chrono::system_clock::now().time_since_epoch();
 			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-			printf("[%ld]", millis);
+			fprintf(output_stream, "[%ld]", millis);
 		}
 
 		if (print_thread_id) {
 			std::stringstream ss; ss << std::this_thread::get_id();
 			unsigned long long int id = std::stoull(ss.str());
-			printf("[%04lld]", id);
+			fprintf(output_stream, "[%04lld]", id);
 		}
 
 		if (print_log_type || print_timestamps || print_thread_id)
-			printf(": ");
+			fprintf(output_stream, ": ");
 
 		if (print_file) {
-			printf("%s:", _file_);
+			fprintf(output_stream, "%s:", _file_);
 		}
 
 		if (print_line) {
-			printf("%d:", line);
+			fprintf(output_stream, "%d:", line);
 		}
 
 		if (print_file || print_line)
-			printf(": ");
+			fprintf(output_stream, ": ");
 
-		vfprintf(stdout, fmt, args);
-		printf("\n");
-		fflush(stdout);
+		vfprintf(output_stream, fmt, args);
+		fprintf(output_stream, "\n");
+		fflush(output_stream);
 		va_end(args);
 	}
 
