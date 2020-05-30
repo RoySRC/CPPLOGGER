@@ -2,10 +2,16 @@ CC=g++
 CFLAGS=-std=c++11 -Wall -O3
 INCLUDE_DIR=-I../
 
-all: basic_usage typographic_example \
-	disable_logging time_stamp \
-	multi_thread print_thread_id log_type\
-	file_name line_number no_file_line
+all: basic_usage\
+	typographic_example \
+	disable_logging\
+	time_stamp \
+	multi_thread\
+	print_thread_id\
+	log_type\
+	file_name\
+	line_number\
+	no_file_line
 
 basic_usage: basic_usage.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
@@ -40,3 +46,11 @@ no_file_line: no_file_line.cpp
 clean:
 	rm -rf basic_usage
 	rm -rf typographic_example
+	rm -rf disable_logging
+	rm -rf time_stamp
+	rm -rf multi_thread
+	rm -rf print_thread_id
+	rm -rf log_type
+	rm -rf file_name
+	rm -rf line_number
+	rm -rf no_file_line

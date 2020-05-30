@@ -57,10 +57,6 @@ int main() {
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-
 	logger::info(logger::RED("This is a red text"));
 	logger::info(
 			logger::RED(
@@ -91,10 +87,6 @@ int main() {
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-
 	logger::info("This is before disabling global logging.");
 
 	logger::disable();
@@ -111,10 +103,6 @@ int main() {
 #include <CPPLOGGER.h>
 
 int main() {
-
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
 
 	logger::info("This is printed without a time stamp.");
 
@@ -167,10 +155,6 @@ int main() {
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-
 	logger::info("This message is printed with log type enabled.");
 
 	logger::print_log_type = false;
@@ -184,10 +168,6 @@ int main() {
 #include <CPPLOGGER.h>
 
 int main() {
-
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
 
 	logger::info("This message is printed with the filename.");
 
@@ -203,10 +183,6 @@ int main() {
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-
 	logger::info("This message is printed with the line number.");
 
 	logger::print_line = false;
@@ -221,16 +197,41 @@ int main() {
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-
 	logger::info("This message has both line number and file");
 
 	logger::print_file = false;
 	logger::print_line = false;
 	logger::info("This message does not have either a file or a line number.");
 
+}
+```
+
+#### Get type of a variable
+```c++
+#include <CPPLOGGER.h>
+
+class sample_class {
+public:
+	sample_class() {}
+	void print() {
+		logger::info("print method in class: %s", logger::RED(logger::get_type(this)));
+	}
+};
+
+void print_thread_id(uint id) {
+	logger::info("%s: %03d", logger::RED("Message from thread"), id);
+	logger::info("Message from thread: %03d", id);
+}
+
+int main(int argc, char** argv) {
+
+	sample_class c;
+	c.print();
+	logger::info("c: %s", logger::get_type(c));
+
+
+	int a = 10;
+	logger::info("type of a: %s", logger::get_type(a));
 }
 ```
 
