@@ -80,6 +80,7 @@ namespace logger {
 	bool _enable = true;
 
 	FILE* output_stream = stdout;
+	va_list args;
 
 	/**
 	 * Add support for colors for versions older than c++11. This is for backwards compatibility
@@ -146,9 +147,9 @@ namespace logger {
 	/**
 	 * Wrapper function for printing logging information to screen
 	 */
-	void print(const char* color, string type, const char* _file_, int line, const char* fmt, va_list& args) {
+	void print(const char* color, const char* type, const char* _file_, const int line, const char* fmt) {
 		if (print_log_type) {
-			fprintf(output_stream, "%s%s%s", color, type.c_str(), ANSI_RESET);
+			fprintf(output_stream, "%s%s%s", color, type, ANSI_RESET);
 		}
 
 		if (print_timestamps) {
@@ -186,28 +187,28 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
-	void _info_(const char* _file_, int line, const char* fmt, ...) {
+	void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable) return;
-		va_list args; va_start(args, fmt);
-		print(ANSI_GREEN, "[INFO]", _file_, line, fmt, args);
+		va_start(args, fmt);
+		print(ANSI_GREEN, "[INFO]", _file_, line, fmt);
 	}
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
-	void _error_(const char* _file_, int line, const char* fmt, ...) {
+	void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable) return;
-		va_list args; va_start(args, fmt);
-		print(ANSI_RED, "[ ERR]", _file_, line, fmt, args);
+		va_start(args, fmt);
+		print(ANSI_RED, "[ ERR]", _file_, line, fmt);
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
-	void _warning_(const char* _file_, int line, const char* fmt, ...) {
+	void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable) return;
-		va_list args; va_start(args, fmt);
-		print(ANSI_BLUE, "[WARN]", _file_, line, fmt, args);
+		va_start(args, fmt);
+		print(ANSI_BLUE, "[WARN]", _file_, line, fmt);
 	}
 
 	/**
