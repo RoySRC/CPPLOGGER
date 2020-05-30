@@ -161,7 +161,8 @@ namespace logger {
 			printf("[%04lld]", id);
 		}
 
-		printf(": ");
+		if (print_log_type || print_timestamps || print_thread_id)
+			printf(": ");
 
 		if (print_file) {
 			printf("%s:", _file_);

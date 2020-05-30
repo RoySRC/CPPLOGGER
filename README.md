@@ -161,4 +161,22 @@ int main() {
 }
 ```
 
-#### 
+#### Logging without printing the log type
+```c++
+#include <CPPLOGGER.h>
+
+int main() {
+
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
+	logger::info("This message is printed with log type enabled.");
+
+	logger::print_log_type = false;
+	logger::info("This message is printed without the log type.");
+
+}
+```
+
+## Benchmarks

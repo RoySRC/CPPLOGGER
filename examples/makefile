@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-std=c++11 -Wall -O3
 INCLUDE_DIR=-I../
 
-all: basic_usage typographic_example disable_logging time_stamp multi_thread print_thread_id
+all: basic_usage typographic_example disable_logging time_stamp multi_thread print_thread_id log_type
 
 basic_usage: basic_usage.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
@@ -21,6 +21,9 @@ multi_thread: multi_thread.cpp
 	
 print_thread_id: print_thread_id.cpp
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@ -lpthread
+	
+log_type: log_type.cpp
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 
 clean:
 	rm -rf basic_usage
