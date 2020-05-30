@@ -241,13 +241,12 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel i5-6600K @ 4.60GHz
 [INFO]: benchmark.cpp:31:: *******************************************************************
 [INFO]: benchmark.cpp:32:: Single threaded benchmark with 1,000,000 iterations
 [INFO]: benchmark.cpp:33:: *******************************************************************
-[INFO]: benchmark.cpp:27:: basic           | Elapsed: 0.67 secs | Throughput: 1,482,470/sec
-[INFO]: benchmark.cpp:27:: disabled        | Elapsed: 0.01 secs | Throughput: 74,639,799/sec
+[INFO]: benchmark.cpp:27:: basic           | Elapsed: 0.65 secs | Throughput: 1,532,785/sec
+[INFO]: benchmark.cpp:27:: disabled        | Elapsed: 0.01 secs | Throughput: 72,833,318/sec
 [INFO]: benchmark.cpp:98:: 
 [INFO]: benchmark.cpp:59:: *******************************************************************
 [INFO]: benchmark.cpp:60:: 10 thread benchmark with 1,000,000 iterations
 [INFO]: benchmark.cpp:61:: *******************************************************************
-[INFO]: benchmark.cpp:74:: basic           | Elapsed: 11.44 secs | Throughput: 87,428/sec
-[INFO]: benchmark.cpp:86:: disabled        | Elapsed: 0.34 secs | Throughput: 2,912,756/sec
-
+[INFO]: benchmark.cpp:74:: basic           | Elapsed: 11.43 secs | Throughput: 87,489/sec
+[INFO]: benchmark.cpp:86:: disabled        | Elapsed: 0.353 secs | Throughput: 2,836,107/sec
 ```

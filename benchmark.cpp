@@ -83,7 +83,7 @@ void multi_threaded(size_t threads, size_t iters) {
 	delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
-	logger::info("%-16s| Elapsed: %.2f secs | Throughput: %'d/sec", "disabled",
+	logger::info("%-16s| Elapsed: %.3f secs | Throughput: %'d/sec", "disabled",
 			delta_d, int(iters/delta_d));
 
 	delete data;
