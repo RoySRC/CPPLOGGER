@@ -17,7 +17,8 @@
 #include <thread>
 #include <mutex>
 #include <cxxabi.h>
-#include <cstring>
+#include <string.h>
+#include <stdio.h>
 
 using std::string;
 using std::mutex;
@@ -27,7 +28,11 @@ using std::mutex;
 /**
  * The following critical section macro is to make the logger thread safe
  */
-#define CRITICAL_SECTION_CODE(code) critical_section.lock(); logger::code; logger::critical_section.unlock();
+#define CRITICAL_SECTION_CODE(code) 	\
+			critical_section.lock(); 	\
+			logger::code; 				\
+			logger::buffer[0] = '\0';	\
+			logger::critical_section.unlock();
 
 /**
  * The following block is to wrap functions calls to the logger function inside a critical
@@ -37,17 +42,34 @@ using std::mutex;
 #define error(fmt, ...) CRITICAL_SECTION_CODE(_error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 #define warning(fmt, ...) CRITICAL_SECTION_CODE(_warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 
+#define BLACK(msg) 		_BLACK_(msg).c_str()
+#define RED(msg)		_RED_(msg).c_str()
+#define GREEN(msg) 		_GREEN_(msg).c_str()
+#define YELLOW(msg) 	_YELLOW_(msg).c_str()
+#define BLUE(msg) 		_BLUE_(msg).c_str()
+#define PURPLE(msg) 	_PURPLE_(msg).c_str()
+#define CYAN(msg) 		_CYAN_(msg).c_str()
+#define WHITE(msg) 		_WHITE_(msg).c_str()
+#define BOLD(msg) 		_BOLD_(msg).c_str()
+#define UNDERLINE(msg) 	_UNDERLINE_(msg).c_str()
+#define ITALIC(msg) 	_ITALIC_(msg).c_str()
+
 /**
  * Wrapper macro that defines logger colors
  */
-#define COLOR(color, msg) \
-			buffer[0] = '\0';\
-			strcat(buffer, color);\
-			strcat(buffer, msg.c_str());\
-			strcat(buffer, ANSI_RESET);\
-			return buffer;
 
 namespace logger {
+
+	/**
+	 * Prepends t into s. Assumes s has enough space allocated
+	 * for the combined string.
+	 */
+	__force_inline__
+	void prepend(char* s, const char* t) {
+		size_t len = strlen(t);
+		memmove(s + len, s, strlen(s) + 1);
+		memcpy(s, t, len);
+	}
 
 	/**
 	 *  Mutex lock for critical section. here critical section
@@ -90,7 +112,7 @@ namespace logger {
 	/**
 	 * Define the ANSI color codes
 	 */
-	#define ANSI_RESET		COLOR_UNICODE	"[0m"
+	#define ANSI_RESET		COLOR_UNICODE	"[00m"
 	#define ANSI_BLACK		COLOR_UNICODE	"[30m"
 	#define ANSI_RED		COLOR_UNICODE	"[31m"
 	#define ANSI_GREEN		COLOR_UNICODE	"[32m"
@@ -99,25 +121,30 @@ namespace logger {
 	#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
 	#define ANSI_CYAN		COLOR_UNICODE	"[36m"
 	#define ANSI_WHITE		COLOR_UNICODE	"[37m"
-	#define ANSI_BOLD		COLOR_UNICODE	"[1m"
-	#define ANSI_UNDERLINE	COLOR_UNICODE	"[4m"
-	#define ANSI_ITALIC		COLOR_UNICODE	"[3m"
+	#define ANSI_BOLD		COLOR_UNICODE	"[01m"
+	#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
+	#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
 
+
+	__force_inline__
+	string COLOR(const char* color, string msg) {
+		return color+msg+ANSI_RESET;
+	}
 
 	/**
 	 * The following set of macros take in a string object as argument and return a constant char pointer
 	 */
-	__force_inline__ const char* BLACK(string msg)		{	COLOR(ANSI_BLACK, msg);		}
-	__force_inline__ const char* RED(string msg)		{	COLOR(ANSI_RED, msg);		}
-	__force_inline__ const char* GREEN(string msg)		{	COLOR(ANSI_GREEN, msg);		}
-	__force_inline__ const char* YELLOW(string msg)		{	COLOR(ANSI_YELLOW, msg);	}
-	__force_inline__ const char* BLUE(string msg)		{	COLOR(ANSI_BLUE, msg);		}
-	__force_inline__ const char* PURPLE(string msg)		{	COLOR(ANSI_PURPLE, msg);	}
-	__force_inline__ const char* CYAN(string msg)		{	COLOR(ANSI_CYAN, msg);		}
-	__force_inline__ const char* WHITE(string msg)		{	COLOR(ANSI_WHITE, msg);		}
-	__force_inline__ const char* BOLD(string msg)		{	COLOR(ANSI_BOLD, msg);		}
-	__force_inline__ const char* UNDERLINE(string msg)	{	COLOR(ANSI_UNDERLINE, msg);	}
-	__force_inline__ const char* ITALIC(string msg)		{	COLOR(ANSI_ITALIC, msg);	}
+	__force_inline__ string _BLACK_(string msg)		{	return COLOR(ANSI_BLACK, msg);		}
+	__force_inline__ string _RED_(string msg)		{	return COLOR(ANSI_RED, msg);		}
+	__force_inline__ string _GREEN_(string msg)		{	return COLOR(ANSI_GREEN, msg);		}
+	__force_inline__ string _YELLOW_(string msg)	{	return COLOR(ANSI_YELLOW, msg);		}
+	__force_inline__ string _BLUE_(string msg)		{	return COLOR(ANSI_BLUE, msg);		}
+	__force_inline__ string _PURPLE_(string msg)	{	return COLOR(ANSI_PURPLE, msg);		}
+	__force_inline__ string _CYAN_(string msg)		{	return COLOR(ANSI_CYAN, msg);		}
+	__force_inline__ string _WHITE_(string msg)		{	return COLOR(ANSI_WHITE, msg);		}
+	__force_inline__ string _BOLD_(string msg)		{	return COLOR(ANSI_BOLD, msg);		}
+	__force_inline__ string _UNDERLINE_(string msg)	{	return COLOR(ANSI_UNDERLINE, msg);	}
+	__force_inline__ string _ITALIC_(string msg)	{	return COLOR(ANSI_ITALIC, msg);		}
 
 
 	/**
