@@ -90,6 +90,8 @@ void multi_threaded(size_t threads, size_t iters) {
 }
 
 int main() {
+	logger::print_file = logger::print_line = false;
+
 	setlocale(LC_NUMERIC, "");
 	int iters = 1000000;
 	size_t threads = 10;

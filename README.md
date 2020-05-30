@@ -238,15 +238,15 @@ int main(int argc, char** argv) {
 ## Benchmarks
 Benchmarking done on Ubuntu 20.04 64 bit, Intel i5-6600K @ 4.60GHz
 ```
-[INFO]: benchmark.cpp:31:: *******************************************************************
-[INFO]: benchmark.cpp:32:: Single threaded benchmark with 1,000,000 iterations
-[INFO]: benchmark.cpp:33:: *******************************************************************
-[INFO]: benchmark.cpp:27:: basic           | Elapsed: 0.65 secs | Throughput: 1,532,785/sec
-[INFO]: benchmark.cpp:27:: disabled        | Elapsed: 0.01 secs | Throughput: 72,833,318/sec
-[INFO]: benchmark.cpp:98:: 
-[INFO]: benchmark.cpp:59:: *******************************************************************
-[INFO]: benchmark.cpp:60:: 10 thread benchmark with 1,000,000 iterations
-[INFO]: benchmark.cpp:61:: *******************************************************************
-[INFO]: benchmark.cpp:74:: basic           | Elapsed: 11.43 secs | Throughput: 87,489/sec
-[INFO]: benchmark.cpp:86:: disabled        | Elapsed: 0.353 secs | Throughput: 2,836,107/sec
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 1,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 0.57 secs | Throughput: 1,757,367/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 74,896,212/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 1,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 10.14 secs | Throughput: 98,590/sec
+[INFO]: disabled        | Elapsed: 0.352 secs | Throughput: 2,841,304/sec
 ```
