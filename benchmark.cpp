@@ -93,7 +93,7 @@ int main() {
 	logger::print_file(false);
 	logger::print_line(false);
 	logger::print_log_type(false);
-	logger::flush_immediately(true);
+	logger::flush_immediately(false);
 
 	setlocale(LC_NUMERIC, "");
 	int iters = 1000000;
