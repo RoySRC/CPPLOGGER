@@ -36,6 +36,6 @@ int main() {
 			logger::BOLD(logger::GREEN("12")));
 
 	logger::info(logger::UNDERLINE("%s: %s"),
-				logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
-				logger::BOLD(logger::GREEN("12")));
+			logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
+			logger::BOLD(logger::GREEN("12")));
 }
