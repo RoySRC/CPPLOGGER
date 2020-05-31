@@ -90,7 +90,7 @@ int main() {
 }
 ```
 
-##### Disabling global logging example
+#### Disabling global logging example
 ```c++
 #include <CPPLOGGER.h>
 
