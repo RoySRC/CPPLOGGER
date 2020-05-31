@@ -15,7 +15,7 @@ int main() {
 
 	logger::info("This message is printed with the line number.");
 
-	logger::print_line = false;
+	logger::print_line(false);
 	logger::info("This message is printed without the line number.");
 
 }

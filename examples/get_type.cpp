@@ -15,11 +15,6 @@ public:
 	}
 };
 
-void print_thread_id(uint id) {
-	logger::info("%s: %03d", logger::RED("Message from thread"), id);
-	logger::info("Message from thread: %03d", id);
-}
-
 int main(int argc, char** argv) {
 
 	sample_class c;

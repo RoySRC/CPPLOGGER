@@ -15,7 +15,7 @@ int main() {
 
 	logger::info("This message is printed with log type enabled.");
 
-	logger::print_log_type = false;
+	logger::print_log_type(false);
 	logger::info("This message is printed without the log type.");
 
 }

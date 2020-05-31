@@ -12,35 +12,39 @@ all: basic_usage\
 	file_name\
 	line_number\
 	no_file_line
+	
+run_all: all
+	@python3 ./run_all.py
 
-basic_usage: basic_usage.cpp
+
+basic_usage: basic_usage.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
-typographic_example: typographic_example.cpp
+typographic_example: typographic_example.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 
-disable_logging: disable_logging.cpp
+disable_logging: disable_logging.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 
-time_stamp: time_stamp.cpp
+time_stamp: time_stamp.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
-multi_thread: multi_thread.cpp
+multi_thread: multi_thread.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@ -lpthread
 	
-print_thread_id: print_thread_id.cpp
+print_thread_id: print_thread_id.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@ -lpthread
 	
-log_type: log_type.cpp
+log_type: log_type.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
-file_name: file_name.cpp
+file_name: file_name.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
-line_number: line_number.cpp
+line_number: line_number.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 	
-no_file_line: no_file_line.cpp
+no_file_line: no_file_line.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
 
 clean:

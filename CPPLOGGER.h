@@ -62,25 +62,62 @@ namespace logger {
 	 */
 	mutex critical_section;
 
-	bool print_timestamps = false;
-	bool print_thread_id = false;
+	/**
+	 *
+	 */
+	bool _print_timestamps_ = false;
+	#define print_timestamps(v) _print_timestamps_ = v
+
+	/**
+	 *
+	 */
+	bool _print_thread_id_ = false;
+	#define print_thread_id(v) _print_thread_id_ = v
 
 	/**
 	 * Setting the following to false will not print "[INFO]: ", "[ERROR]: ", "[WARN]: "
 	 * before log messages.
 	 */
-	bool print_log_type = true;
+	bool _print_log_type_ = true;
+	#define print_log_type(v) _print_log_type_ = v
 
-	bool print_file = true;
-	bool print_line = true;
+	/**
+	 *
+	 */
+	bool _print_file_ = true;
+	#define print_file(v) _print_file_ = v
+
+	/**
+	 *
+	 */
+	bool _print_line_ = true;
+	#define print_line(v) _print_line_ = v
 
 	/**
 	 * setting the following to false will disable global logging.
 	 */
-	bool _enable = true;
+	bool _enable_ = true;
+	#define disable() _enable_ = false
+	#define enable() _enable_ = true
 
-	FILE* output_stream = stdout;
-	va_list args;
+	/**
+	 * When the following is set to true all logging is immediately flushed to
+	 * output stream. If false, the logs are stored in a buffer maintained by
+	 * the OS and are flushed to the output stream when this buffer is full.
+	 */
+	bool _flush_immediately_ = true;
+	#define flush_immediately(v) _flush_immediately_ = v
+
+	/**
+	 * The output stream of the logger.
+	 */
+	FILE* _output_stream_ = stdout;
+	#define output_stream(v) _output_stream_ = v
+
+	/**
+	 *
+	 */
+	va_list __args__;
 
 	/**
 	 * Add support for colors for versions older than c++11. This is for backwards compatibility
@@ -107,30 +144,11 @@ namespace logger {
 	#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
 	#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
 
-	/**
-	 * The following function disables global logging
-	 */
-	__force_inline__
-	void disable() {
-		_enable = false;
-	}
-
-	/**
-	 * The following function enables global logging
-	 */
-	__force_inline__
-	void enable() {
-		_enable = true;
-	}
-
-	__force_inline__
-	string COLOR(const char* color, string msg) {
-		return color+msg+ANSI_RESET;
-	}
 
 	/**
 	 * The following set of macros take in a string object as argument and return a constant char pointer
 	 */
+	#define COLOR(color, msg) color+msg+ANSI_RESET;
 	__force_inline__ string _BLACK_(string msg)		{	return COLOR(ANSI_BLACK, msg);		}
 	__force_inline__ string _RED_(string msg)		{	return COLOR(ANSI_RED, msg);		}
 	__force_inline__ string _GREEN_(string msg)		{	return COLOR(ANSI_GREEN, msg);		}
@@ -148,67 +166,69 @@ namespace logger {
 	 * Wrapper function for printing logging information to screen
 	 */
 	void print(const char* color, const char* type, const char* _file_, const int line, const char* fmt) {
-		if (print_log_type) {
-			fprintf(output_stream, "%s%s%s", color, type, ANSI_RESET);
+		if (_print_log_type_) {
+			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET);
 		}
 
-		if (print_timestamps) {
+		if (_print_timestamps_) {
 			auto duration = std::chrono::system_clock::now().time_since_epoch();
 			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-			fprintf(output_stream, "[%ld]", millis);
+			fprintf(_output_stream_, "[%ld]", millis);
 		}
 
-		if (print_thread_id) {
+		if (_print_thread_id_) {
 			std::stringstream ss; ss << std::this_thread::get_id();
 			unsigned long long int id = std::stoull(ss.str());
-			fprintf(output_stream, "[%04lld]", id);
+			fprintf(_output_stream_, "[%04lld]", id);
 		}
 
-		if (print_log_type || print_timestamps || print_thread_id)
-			fprintf(output_stream, ": ");
-
-		if (print_file) {
-			fprintf(output_stream, "%s:", _file_);
+		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) {
+			fprintf(_output_stream_, ": ");
 		}
 
-		if (print_line) {
-			fprintf(output_stream, "%d:", line);
+		if (_print_file_) {
+			fprintf(_output_stream_, "%s:", _file_);
 		}
 
-		if (print_file || print_line)
-			fprintf(output_stream, ": ");
+		if (_print_line_) {
+			fprintf(_output_stream_, "%d:", line);
+		}
 
-		vfprintf(output_stream, fmt, args);
-		fprintf(output_stream, "\n");
-		fflush(output_stream);
-		va_end(args);
+		if (_print_file_ || _print_line_) {
+			fprintf(_output_stream_, ": ");
+		}
+
+		vfprintf(_output_stream_, fmt, __args__);
+		fprintf(_output_stream_, "\n");
+		if (_flush_immediately_) fflush(_output_stream_);
+		va_end(__args__);
 	}
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	void _info_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable) return;
-		va_start(args, fmt);
-		print(ANSI_GREEN, "[INFO]", _file_, line, fmt);
+		if (!_enable_) return;
+		va_start(__args__, fmt);
+		print(ANSI_GREEN, "INFO", _file_, line, fmt);
 	}
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
 	void _error_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable) return;
-		va_start(args, fmt);
-		print(ANSI_RED, "[ ERR]", _file_, line, fmt);
+		if (!_enable_) return;
+		va_start(__args__, fmt);
+		print(ANSI_RED, " ERR", _file_, line, fmt);
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
 	void _warning_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable) return;
-		va_start(args, fmt);
-		print(ANSI_BLUE, "[WARN]", _file_, line, fmt);
+		if (!_enable_) return;
+		va_start(__args__, fmt);
+		print(ANSI_BLUE, "WARN", _file_, line, fmt);
 	}
 
 	/**
@@ -216,7 +236,7 @@ namespace logger {
 	 */
 	template<typename T>
 	const char* get_type(T* c) {
-		if (!_enable) return nullptr;
+		if (!_enable_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
@@ -230,7 +250,7 @@ namespace logger {
 	#ifndef __clang__
 	template<typename T>
 	const char* get_type(T& c) {
-		if (!_enable) return nullptr;
+		if (!_enable_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free

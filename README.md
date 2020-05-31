@@ -38,9 +38,9 @@ This is a simple, lightweight and thread safe logger for C++.
 
 int main() {
 
-	logger::info("---------------------------------------------------------------------");
+	logger::info("-------------------------------------------------------------");
 	logger::info("Welcome to CPPLOGGER!");
-	logger::info("---------------------------------------------------------------------");
+	logger::info("-------------------------------------------------------------");
 
 	logger::info("The following shows some basic usage.");
 
@@ -236,17 +236,34 @@ int main(int argc, char** argv) {
 ```
 
 ## Benchmarks
-Benchmarking done on Ubuntu 20.04 64 bit, Intel i5-6600K @ 4.60GHz
+Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i7-8750H CPU @ 2.20GHz × 12 
+
+#### Benchmark result with immediate flushing enabled
 ```
 *******************************************************************
 Single threaded benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.44 secs | Throughput: 2,272,940/sec
-disabled        | Elapsed: 0.01 secs | Throughput: 78,302,483/sec
+basic           | Elapsed: 0.52 secs | Throughput: 1,930,615/sec
+disabled        | Elapsed: 0.02 secs | Throughput: 62,881,288/sec
 
 *******************************************************************
 10 thread benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 9.392 secs | Throughput: 106,476/sec
-disabled        | Elapsed: 0.328 secs | Throughput: 3,052,873/sec
+basic           | Elapsed: 13.995 secs | Throughput: 71,456/sec
+disabled        | Elapsed: 0.944 secs | Throughput: 1,059,625/sec
+```
+
+#### Benchmark result with immediate flushing disabled
+```
+*******************************************************************
+Single threaded benchmark with 1,000,000 iterations
+*******************************************************************
+basic           | Elapsed: 0.07 secs | Throughput: 15,062,030/sec
+disabled        | Elapsed: 0.02 secs | Throughput: 66,112,577/sec
+
+*******************************************************************
+10 thread benchmark with 1,000,000 iterations
+*******************************************************************
+basic           | Elapsed: 5.905 secs | Throughput: 169,359/sec
+disabled        | Elapsed: 0.907 secs | Throughput: 1,103,023/sec
 ```

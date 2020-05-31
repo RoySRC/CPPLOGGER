@@ -15,8 +15,8 @@ int main() {
 
 	logger::info("This message has both line number and file");
 
-	logger::print_file = false;
-	logger::print_line = false;
+	logger::print_file(false);
+	logger::print_line(false);
 	logger::info("This message does not have either a file or a line number.");
 
 }

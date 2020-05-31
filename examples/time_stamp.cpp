@@ -15,7 +15,7 @@ int main() {
 
 	logger::info("This is printed without a time stamp.");
 
-	logger::print_timestamps = true;
+	logger::print_timestamps(true);
 	logger::info("This is printed with a time stamp.");
 
 }

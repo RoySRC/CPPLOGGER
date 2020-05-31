@@ -15,7 +15,7 @@ int main() {
 
 	logger::info("This message is printed with the filename.");
 
-	logger::print_file = false;
+	logger::print_file(false);
 	logger::info("This message is printed without printing the filename.");
 
 }
