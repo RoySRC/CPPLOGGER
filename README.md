@@ -58,6 +58,10 @@ int main() {
 
 int main() {
 
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
+	logger::info(logger::BOLD("-------------------------------------------------------------"));
+
 	logger::info(logger::RED("This is a red text"));
 	logger::info(
 			logger::RED(
@@ -79,6 +83,10 @@ int main() {
 	logger::info("%s: %s",
 			logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
 			logger::BOLD(logger::GREEN("12")));
+
+	logger::info(logger::UNDERLINE("%s: %s"),
+				logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
+				logger::BOLD(logger::GREEN("12")));
 }
 ```
 
