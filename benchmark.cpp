@@ -24,7 +24,7 @@ void bench(size_t iters, const char* msg) {
 
 	logger::output_stream(stdout);
 	logger::enable();
-	logger::info("%-16s| Elapsed: %.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
+	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
 }
 
 void single_threaded(size_t iters) {
@@ -71,7 +71,7 @@ void multi_threaded(size_t threads, size_t iters) {
 	double delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
-	logger::info("%-16s| Elapsed: %.3f secs | Throughput: %'d/sec", "basic", delta_d, int(iters/delta_d));
+	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", "basic", delta_d, int(iters/delta_d));
 
 	logger::output_stream(fopen("/dev/null", "w"));
 	logger::disable();
@@ -83,21 +83,32 @@ void multi_threaded(size_t threads, size_t iters) {
 	delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
-	logger::info("%-16s| Elapsed: %.3f secs | Throughput: %'d/sec", "disabled",
+	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", "disabled",
 			delta_d, int(iters/delta_d));
 
 	delete[] data;
 }
 
-int main() {
+int main(int argc, char** argv) {
 	logger::print_file(false);
 	logger::print_line(false);
-	logger::print_log_type(false);
-	logger::flush_immediately(false);
+	logger::print_log_type(true);
+	logger::flush_immediately(true);
 
 	setlocale(LC_NUMERIC, "");
-	int iters = 1000000;
+	unsigned int iters = 1000000;
 	size_t threads = 10;
+
+	for (uint8_t i=0; i<argc; ++i) {
+		if (strcmp(argv[i], "--threads") == 0) {
+			threads = atoi(argv[i+1]);
+			i += 1;
+
+		} else if (strcmp(argv[i], "--iters") == 0) {
+			iters = atoi(argv[i+1]);
+			i += 1;
+		}
+	}
 
 	single_threaded(iters);
 	logger::info("");
