@@ -247,6 +247,8 @@ int main(int argc, char** argv) {
 ## Benchmarks
 Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i7-8750H CPU @ 2.20GHz × 12 
 
+Throughput is the number of messages printed per second.
+
 #### Benchmark result with immediate flushing enabled
 ```
 *******************************************************************
