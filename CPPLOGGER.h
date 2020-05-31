@@ -53,6 +53,20 @@ using std::mutex;
 #define UNDERLINE(msg) 	_UNDERLINE_(msg).c_str()
 #define ITALIC(msg) 	_ITALIC_(msg).c_str()
 
+#define logger_init() \
+namespace logger { \
+	bool _print_timestamps_ = false; \
+	bool _print_thread_id_ = false; \
+	bool _print_log_type_ = true; \
+	bool _print_file_ = true; \
+	bool _print_line_ = true; \
+	bool _enable_ = true; \
+	bool _flush_immediately_ = false; \
+	mutex critical_section; \
+	va_list __args__; \
+	FILE* _output_stream_ = stdout; \
+}
+
 namespace logger {
 
 	/**
@@ -60,64 +74,63 @@ namespace logger {
 	 *  refers to the block of code responsible for printing
 	 *  logging information to screen.
 	 */
-	mutex critical_section;
+	extern mutex critical_section;
 
 	/**
 	 *
 	 */
-	bool _print_timestamps_ = false;
+	extern bool _print_timestamps_;
 	#define print_timestamps(v) _print_timestamps_ = v
 
 	/**
 	 *
 	 */
-	bool _print_thread_id_ = false;
+	extern bool _print_thread_id_;
 	#define print_thread_id(v) _print_thread_id_ = v
 
 	/**
 	 * Setting the following to false will not print "[INFO]: ", "[ERROR]: ", "[WARN]: "
 	 * before log messages.
 	 */
-	bool _print_log_type_ = true;
+	extern bool _print_log_type_;
 	#define print_log_type(v) _print_log_type_ = v
 
 	/**
 	 *
 	 */
-	bool _print_file_ = true;
+	extern bool _print_file_;
 	#define print_file(v) _print_file_ = v
 
 	/**
 	 *
 	 */
-	bool _print_line_ = true;
+	extern bool _print_line_;
 	#define print_line(v) _print_line_ = v
 
 	/**
 	 * setting the following to false will disable global logging.
 	 */
-	bool _enable_ = true;
-	#define disable() _enable_ = false
-	#define enable() _enable_ = true
+	extern bool _enable_;
+	#define enable(v) _enable_ = v
 
 	/**
 	 * When the following is set to true all logging is immediately flushed to
 	 * output stream. If false, the logs are stored in a buffer maintained by
 	 * the OS and are flushed to the output stream when this buffer is full.
 	 */
-	bool _flush_immediately_ = false;
+	extern bool _flush_immediately_;
 	#define flush_immediately(v) _flush_immediately_ = v
 
 	/**
 	 * The output stream of the logger.
 	 */
-	FILE* _output_stream_ = stdout;
+	extern FILE* _output_stream_;
 	#define output_stream(v) _output_stream_ = v
 
 	/**
 	 *
 	 */
-	va_list __args__;
+	extern va_list __args__;
 
 	/**
 	 * Add support for colors for versions older than c++11. This is for backwards compatibility
@@ -165,6 +178,7 @@ namespace logger {
 	/**
 	 * Wrapper function for printing logging information to screen
 	 */
+	inline
 	void print(const char* color, const char* type, const char* _file_, const int line, const char* fmt) {
 		if (_print_log_type_) {
 			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET);
@@ -207,6 +221,7 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
+	inline
 	void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);
@@ -216,6 +231,7 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
+	inline
 	void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);
@@ -225,6 +241,7 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
+	inline
 	void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);

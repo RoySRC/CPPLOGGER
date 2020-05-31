@@ -37,6 +37,12 @@ This is a simple, lightweight and thread safe logger for C++.
 ```c++
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 int main() {
 
 	logger::info("-------------------------------------------------------------");
@@ -55,6 +61,12 @@ int main() {
 #### Typographic examples with colors
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 int main() {
 
@@ -94,14 +106,20 @@ int main() {
 ```c++
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 int main() {
 
 	logger::info("This is before disabling global logging.");
 
-	logger::disable();
+	logger::enable(false);
 	logger::info("This should not be printed.");
 
-	logger::enable();
+	logger::enable(true);
 	logger::info("This is after enabling global logging.");
 
 }
@@ -110,6 +128,12 @@ int main() {
 #### Printing logging time stamps
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 int main() {
 
@@ -124,6 +148,12 @@ int main() {
 #### Logging with multiple threads
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 void print_thread_id(uint id) {
 	logger::info("%s: %03d", logger::RED("Message from thread"), id);
@@ -142,6 +172,12 @@ int main() {
 ####  Logging with printing thread IDs
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 void print_thread_id(uint id) {
 	logger::print_thread_id = true;
@@ -162,6 +198,12 @@ int main() {
 ```c++
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 int main() {
 
 	logger::info("This message is printed with log type enabled.");
@@ -175,6 +217,12 @@ int main() {
 #### Logging without printing the file name
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 int main() {
 
@@ -190,6 +238,12 @@ int main() {
 ```c++
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 int main() {
 
 	logger::info("This message is printed with the line number.");
@@ -203,6 +257,12 @@ int main() {
 #### Logging without printing either the filename or the line number
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 int main() {
 
@@ -218,6 +278,12 @@ int main() {
 #### Get type of a variable
 ```c++
 #include <CPPLOGGER.h>
+
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
 
 class sample_class {
 public:

@@ -7,6 +7,12 @@
 
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 int main() {
 
 	logger::info(logger::BOLD("-------------------------------------------------------------"));
@@ -15,10 +21,10 @@ int main() {
 
 	logger::info("This is before disabling global logging.");
 
-	logger::disable();
+	logger::enable(false);
 	logger::info("This should not be printed.");
 
-	logger::enable();
+	logger::enable(true);
 	logger::info("This is after enabling global logging.");
 
 }

@@ -9,6 +9,12 @@
 #include <thread>
 #include <CPPLOGGER.h>
 
+/**
+ * The following should always be called only in the main translation unit.
+ * This is to default initialize the logger flags.
+ */
+logger_init();
+
 void bench(size_t iters, const char* msg) {
 	using std::chrono::duration;
 	using std::chrono::duration_cast;
@@ -23,7 +29,7 @@ void bench(size_t iters, const char* msg) {
 	double delta_d = duration_cast<duration<double>>(delta).count();
 
 	logger::output_stream(stdout);
-	logger::enable();
+	logger::enable(true);
 	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
 }
 
@@ -36,7 +42,7 @@ void single_threaded(size_t iters) {
 	bench(iters, "basic");
 
 	logger::output_stream(fopen("/dev/null", "w"));
-	logger::disable();
+	logger::enable(false);
 	bench(iters, "disabled");
 }
 
@@ -67,19 +73,19 @@ void multi_threaded(size_t threads, size_t iters) {
 	for (std::thread& t : _threads) t.join();
 
 	logger::output_stream(stdout);
-	logger::enable();
+	logger::enable(true);
 	double delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
 	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", "basic", delta_d, int(iters/delta_d));
 
 	logger::output_stream(fopen("/dev/null", "w"));
-	logger::disable();
+	logger::enable(false);
 	for (size_t i=0; i<threads; ++i) _threads[i] = std::thread(multi_thread_bench, iters, i, data);
 	for (std::thread& t : _threads) t.join();
 
 	logger::output_stream(stdout);
-	logger::enable();
+	logger::enable(true);
 	delta_d = 0.0;
 	for (size_t i=0; i<threads; ++i) delta_d += data[i];
 	delta_d /= double(threads);
