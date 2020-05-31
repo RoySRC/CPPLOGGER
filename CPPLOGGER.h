@@ -105,7 +105,7 @@ namespace logger {
 	 * output stream. If false, the logs are stored in a buffer maintained by
 	 * the OS and are flushed to the output stream when this buffer is full.
 	 */
-	bool _flush_immediately_ = true;
+	bool _flush_immediately_ = false;
 	#define flush_immediately(v) _flush_immediately_ = v
 
 	/**
