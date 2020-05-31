@@ -176,76 +176,66 @@ namespace logger {
 
 
 	/**
-	 * Wrapper function for printing logging information to screen
+	 * Wrapper macro boilerplate code for printing logging information to screen
 	 */
-	inline
-	void print(const char* color, const char* type, const char* _file_, const int line, const char* fmt) {
-		if (_print_log_type_) {
-			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET);
-		}
-
-		if (_print_timestamps_) {
-			auto duration = std::chrono::system_clock::now().time_since_epoch();
-			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-			fprintf(_output_stream_, "[%ld]", millis);
-		}
-
-		if (_print_thread_id_) {
-			std::stringstream ss; ss << std::this_thread::get_id();
-			unsigned long long int id = std::stoull(ss.str());
-			fprintf(_output_stream_, "[%04lld]", id);
-		}
-
-		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) {
-			fprintf(_output_stream_, ": ");
-		}
-
-		if (_print_file_) {
-			fprintf(_output_stream_, "%s:", _file_);
-		}
-
-		if (_print_line_) {
-			fprintf(_output_stream_, "%d:", line);
-		}
-
-		if (_print_file_ || _print_line_) {
-			fprintf(_output_stream_, ": ");
-		}
-
-		vfprintf(_output_stream_, fmt, __args__);
-		fprintf(_output_stream_, "%s\n", ANSI_RESET);
-		if (_flush_immediately_) fflush(_output_stream_);
-		va_end(__args__);
+	#define print(color, type) { \
+		if (_print_log_type_) { \
+			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET); \
+		} \
+		if (_print_timestamps_) { \
+			auto duration = std::chrono::system_clock::now().time_since_epoch(); \
+			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
+			fprintf(_output_stream_, "[%ld]", millis); \
+		} \
+		if (_print_thread_id_) { \
+			std::stringstream ss; ss << std::this_thread::get_id(); \
+			unsigned long long int id = std::stoull(ss.str()); \
+			fprintf(_output_stream_, "[%04lld]", id); \
+		} \
+		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
+			fprintf(_output_stream_, ": "); \
+		} \
+		if (_print_file_) { \
+			fprintf(_output_stream_, "%s:", _file_); \
+		} \
+		if (_print_line_) { \
+			fprintf(_output_stream_, "%d:", line); \
+		} \
+		if (_print_file_ || _print_line_) { \
+			fprintf(_output_stream_, ": "); \
+		} \
+		vfprintf(_output_stream_, fmt, __args__); \
+		fprintf(_output_stream_, "%s\n", ANSI_RESET); \
+		if (_flush_immediately_) fflush(_output_stream_); \
+		va_end(__args__); \
 	}
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
-	inline
-	void _info_(const char* _file_, const int line, const char* fmt, ...) {
+	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);
-		print(ANSI_GREEN, "INFO", _file_, line, fmt);
+		print(ANSI_GREEN, "INFO");
 	}
+
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
-	inline
-	void _error_(const char* _file_, const int line, const char* fmt, ...) {
+	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);
-		print(ANSI_RED, " ERR", _file_, line, fmt);
+		print(ANSI_RED, " ERR");
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
-	inline
-	void _warning_(const char* _file_, const int line, const char* fmt, ...) {
+	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (!_enable_) return;
 		va_start(__args__, fmt);
-		print(ANSI_BLUE, "WARN", _file_, line, fmt);
+		print(ANSI_BLUE, "WARN");
 	}
 
 	/**

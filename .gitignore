@@ -6,3 +6,4 @@ main
 .settings
 *.out
 benchmark
+*/bin/*

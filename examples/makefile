@@ -2,7 +2,9 @@ CC=g++
 CFLAGS=-std=c++11 -Wall -O3
 INCLUDE_DIR=-I../
 
-all: basic_usage\
+all: \
+	make_bin_dir\
+	basic_usage\
 	typographic_example \
 	disable_logging\
 	time_stamp \
@@ -16,36 +18,38 @@ all: basic_usage\
 run_all: all
 	@python3 ./run_all.py
 
+make_bin_dir:
+	mkdir -p ./bin
 
 basic_usage: basic_usage.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 typographic_example: typographic_example.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 disable_logging: disable_logging.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 time_stamp: time_stamp.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 multi_thread: multi_thread.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@ -lpthread
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ -lpthread
 	
 print_thread_id: print_thread_id.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@ -lpthread
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ -lpthread
 	
 log_type: log_type.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 file_name: file_name.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 line_number: line_number.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 no_file_line: no_file_line.cpp ../CPPLOGGER.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 clean:
 	rm -rf basic_usage
