@@ -46,13 +46,13 @@ void single_threaded(size_t iters) {
 	bench(iters, "disabled");
 }
 
-void multi_thread_bench(size_t iters, size_t id, double* data) {
+void multi_thread_bench(size_t n_threads, size_t iters, size_t id, double* data) {
 	using std::chrono::duration;
 	using std::chrono::duration_cast;
 	using std::chrono::high_resolution_clock;
 
 	auto start = high_resolution_clock::now();
-	for(size_t i=0; i<iters; ++i) {
+	for(size_t i=0; i<iters/n_threads; ++i) {
 		logger::info("Hello world!");
 	}
 
@@ -69,7 +69,7 @@ void multi_threaded(size_t threads, size_t iters) {
 	logger::output_stream(fopen("/dev/null", "w"));
 	std::thread _threads[threads];
 	double* data = new double [threads];
-	for (size_t i=0; i<threads; ++i) _threads[i] = std::thread(multi_thread_bench, iters, i, data);
+	for (size_t i=0; i<threads; ++i) _threads[i] = std::thread(multi_thread_bench, threads, iters, i, data);
 	for (std::thread& t : _threads) t.join();
 
 	logger::output_stream(stdout);
@@ -81,7 +81,7 @@ void multi_threaded(size_t threads, size_t iters) {
 
 	logger::output_stream(fopen("/dev/null", "w"));
 	logger::enable(false);
-	for (size_t i=0; i<threads; ++i) _threads[i] = std::thread(multi_thread_bench, iters, i, data);
+	for (size_t i=0; i<threads; ++i) _threads[i] = std::thread(multi_thread_bench, threads, iters, i, data);
 	for (std::thread& t : _threads) t.join();
 
 	logger::output_stream(stdout);

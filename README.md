@@ -320,14 +320,14 @@ Throughput is the number of messages printed per second.
 *******************************************************************
 Single threaded benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.52 secs | Throughput: 1,930,615/sec
-disabled        | Elapsed: 0.02 secs | Throughput: 62,881,288/sec
+basic           | Elapsed: 0.56 secs | Throughput: 1,792,189/sec
+disabled        | Elapsed: 0.01 secs | Throughput: 68,039,041/sec
 
 *******************************************************************
 10 thread benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 13.995 secs | Throughput: 71,456/sec
-disabled        | Elapsed: 0.944 secs | Throughput: 1,059,625/sec
+basic           | Elapsed: 3.32 secs | Throughput: 300,781/sec
+disabled        | Elapsed: 0.12 secs | Throughput: 8,299,084/sec
 ```
 
 #### Benchmark result with immediate flushing disabled
@@ -335,12 +335,12 @@ disabled        | Elapsed: 0.944 secs | Throughput: 1,059,625/sec
 *******************************************************************
 Single threaded benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.07 secs | Throughput: 15,062,030/sec
-disabled        | Elapsed: 0.02 secs | Throughput: 66,112,577/sec
+basic           | Elapsed: 0.09 secs | Throughput: 11,337,780/sec
+disabled        | Elapsed: 0.01 secs | Throughput: 66,996,777/sec
 
 *******************************************************************
 10 thread benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 5.905 secs | Throughput: 169,359/sec
-disabled        | Elapsed: 0.907 secs | Throughput: 1,103,023/sec
+basic           | Elapsed: 0.98 secs | Throughput: 1,023,245/sec
+disabled        | Elapsed: 0.13 secs | Throughput: 7,910,320/sec
 ```
