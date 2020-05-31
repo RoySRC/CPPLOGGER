@@ -148,7 +148,7 @@ namespace logger {
 	/**
 	 * The following set of macros take in a string object as argument and return a constant char pointer
 	 */
-	#define COLOR(color, msg) color+msg+ANSI_RESET;
+	#define COLOR(color, msg) color+msg;
 	__force_inline__ string _BLACK_(string msg)		{	return COLOR(ANSI_BLACK, msg);		}
 	__force_inline__ string _RED_(string msg)		{	return COLOR(ANSI_RED, msg);		}
 	__force_inline__ string _GREEN_(string msg)		{	return COLOR(ANSI_GREEN, msg);		}
@@ -199,7 +199,7 @@ namespace logger {
 		}
 
 		vfprintf(_output_stream_, fmt, __args__);
-		fprintf(_output_stream_, "\n");
+		fprintf(_output_stream_, "%s\n", ANSI_RESET);
 		if (_flush_immediately_) fflush(_output_stream_);
 		va_end(__args__);
 	}
