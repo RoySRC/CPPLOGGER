@@ -320,14 +320,14 @@ Throughput is the number of messages printed per second.
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 3.05 secs | Throughput: 1,641,628/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 294,613,811/sec
+[INFO]: basic           | Elapsed: 2.37 secs | Throughput: 2,112,810/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 415,817,359/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 10 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 8.43 secs | Throughput: 593,304/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 634,479,037/sec
+[INFO]: basic           | Elapsed: 4.81 secs | Throughput: 1,038,932/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 425,526,881/sec
 ```
 
 #### Benchmark result with immediate flushing disabled
@@ -335,12 +335,12 @@ Throughput is the number of messages printed per second.
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.75 secs | Throughput: 6,643,821/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 317,625,704/sec
+[INFO]: basic           | Elapsed: 0.46 secs | Throughput: 10,955,614/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 417,115,448/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 10 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 4.69 secs | Throughput: 1,066,544/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 695,115,617/sec
+[INFO]: basic           | Elapsed: 2.45 secs | Throughput: 2,044,349/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 453,749,783/sec
 ```
