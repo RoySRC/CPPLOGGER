@@ -317,30 +317,30 @@ Throughput is the number of messages printed per second.
 
 #### Benchmark result with immediate flushing enabled
 ```
-*******************************************************************
-Single threaded benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.48 secs | Throughput: 2,072,417/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 408,444,675/sec
-
-*******************************************************************
-10 thread benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.97 secs | Throughput: 1,034,400/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 340,511,891/sec
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 3.05 secs | Throughput: 1,641,628/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 294,613,811/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 8.43 secs | Throughput: 593,304/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 634,479,037/sec
 ```
 
 #### Benchmark result with immediate flushing disabled
 ```
-*******************************************************************
-Single threaded benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.10 secs | Throughput: 10,382,924/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 413,423,189/sec
-
-*******************************************************************
-10 thread benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.40 secs | Throughput: 2,477,338/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 262,786,466/sec
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 0.75 secs | Throughput: 6,643,821/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 317,625,704/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 4.69 secs | Throughput: 1,066,544/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 695,115,617/sec
 ```
