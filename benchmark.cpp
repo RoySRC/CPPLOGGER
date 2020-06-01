@@ -88,8 +88,6 @@ void multi_threaded(size_t threads, size_t iters) {
 int main(int argc, char** argv) {
 	logger::print_file(false);
 	logger::print_line(false);
-	logger::print_log_type(false);
-	logger::flush_immediately(false);
 
 	setlocale(LC_NUMERIC, "");
 	unsigned int iters = 1000000;
