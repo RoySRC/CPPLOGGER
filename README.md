@@ -315,21 +315,6 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz
 
 Throughput is the number of messages printed per second.
 
-#### Benchmark result with immediate flushing enabled
-```
-[INFO]: *******************************************************************
-[INFO]: Single threaded benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 2.37 secs | Throughput: 2,112,810/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 415,817,359/sec
-[INFO]: 
-[INFO]: *******************************************************************
-[INFO]: 10 thread benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 4.81 secs | Throughput: 1,038,932/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 425,526,881/sec
-```
-
 #### Benchmark result with immediate flushing disabled
 ```
 [INFO]: *******************************************************************
@@ -343,4 +328,18 @@ Throughput is the number of messages printed per second.
 [INFO]: *******************************************************************
 [INFO]: basic           | Elapsed: 2.45 secs | Throughput: 2,044,349/sec
 [INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 453,749,783/sec
+```
+#### Benchmark result with immediate flushing enabled
+```
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 2.37 secs | Throughput: 2,112,810/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 415,817,359/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 4.81 secs | Throughput: 1,038,932/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 425,526,881/sec
 ```
