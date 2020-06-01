@@ -32,12 +32,12 @@ void bench(size_t iters, const char* msg) {
 
 	logger::output_stream(stdout);
 	logger::enable(true);
-	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
+	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %d/sec", msg, delta_d, int(iters/delta_d));
 }
 
 void single_threaded(size_t iters) {
 	logger::info("*******************************************************************");
-	logger::info("Single threaded benchmark with %'ld iterations", iters);
+	logger::info("Single threaded benchmark with %ld iterations", iters);
 	logger::info("*******************************************************************");
 
 	logger::output_stream(null_file);
@@ -71,12 +71,12 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 
 	logger::output_stream(stdout);
 	logger::enable(true);
-	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
+	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %d/sec", type.c_str(), delta_d, int(iters/delta_d));
 }
 
 void multi_threaded(size_t threads, size_t iters) {
 	logger::info("*******************************************************************");
-	logger::info("%'d thread benchmark with %'ld iterations", threads, iters);
+	logger::info("%ld thread benchmark with %ld iterations", threads, iters);
 	logger::info("*******************************************************************");
 
 	logger::output_stream(null_file);
@@ -88,10 +88,6 @@ void multi_threaded(size_t threads, size_t iters) {
 }
 
 int main(int argc, char** argv) {
-	logger::print_file(false);
-	logger::print_line(false);
-
-	setlocale(LC_NUMERIC, "");
 	unsigned int iters = 1000000;
 	size_t threads = 10;
 

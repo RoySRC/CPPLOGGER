@@ -20,6 +20,12 @@
 #include <string.h>
 #include <stdio.h>
 
+#define FMT_HEADER_ONLY
+#include "fmt/include/fmt/core.h"
+#include "fmt/include/fmt/os.h"
+#include "fmt/include/fmt/printf.h"
+#include "fmt/include/fmt/ranges.h"
+
 using std::string;
 using std::mutex;
 
@@ -186,12 +192,12 @@ namespace logger {
 		if (_print_timestamps_) { \
 			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
 			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
-			fprintf(_output_stream_, "[%ld]", millis); \
+			fmt::fprintf(_output_stream_, "[%ld]", millis); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			fprintf(_output_stream_, "[%04lld]", id); \
+			fmt::fprintf(_output_stream_, "[%04lld]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
 			fputs(": ", _output_stream_); \
@@ -201,24 +207,23 @@ namespace logger {
 			fputs(":", _output_stream_);\
 		} \
 		if (_print_line_) { \
-			fprintf(_output_stream_, "%d:", line); \
+			fmt::fprintf(_output_stream_, "%d:", line); \
 		} \
 		if (_print_file_ || _print_line_) { \
 			fputs(": ", _output_stream_); \
 		} \
-		vfprintf(_output_stream_, fmt, __args__); \
-		fputs(ANSI_RESET "\n", _output_stream_); \
-		if (_flush_immediately_) fflush(_output_stream_); \
-		va_end(__args__); \
+		vfprintf(_output_stream_, format, __args__); \
+		fputs(ANSI_RESET "\n", logger::_output_stream_); \
+		va_end(__args__);\
 	}
 
 	/**
 	 * wrapper function containing the boilerplate code for multi-threaded
 	 * logging
 	 */
-	#define __mt__(fmt, color, type) \
+	#define __mt__(format, color, type) \
 				va_list __args__; \
-				va_start(__args__, fmt); \
+				va_start(__args__, format); \
 				critical_section.lock(); \
 				print(color, type); \
 				critical_section.unlock()
@@ -226,54 +231,54 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
-	#define info(fmt, ...) _info_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
+	#define info(format, ...) _info_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _info_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			va_start(__args__, fmt);
+			va_start(__args__, format);
 			print(ANSI_GREEN, "INFO");
 		}
 	}
 
-	#define info_mt(fmt, ...) _info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
+	#define info_mt(format, ...) _info_mt_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _info_mt_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_GREEN, "INFO");
+			__mt__(format, ANSI_GREEN, "INFO");
 		}
 	}
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
-	#define error(fmt, ...) _error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
+	#define error(format, ...) _error_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _error_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			va_start(__args__, fmt);
+			va_start(__args__, format);
 			print(ANSI_RED, " ERR");
 		}
 	}
 
-	#define error_mt(fmt, ...) _error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
+	#define error_mt(format, ...) _error_mt_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _error_mt_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_RED, " ERR");
+			__mt__(format, ANSI_RED, " ERR");
 		}
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
-	#define warning(fmt, ...) _warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
+	#define warning(format, ...) _warning_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _warning_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			va_start(__args__, fmt);
+			va_start(__args__, format);
 			print(ANSI_BLUE, "WARN");
 		}
 	}
 
-	#define warning_mt(fmt, ...) _warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
-	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
+	#define warning_mt(format, ...) _warning_mt_(__FILE__, __LINE__, format, ##__VA_ARGS__)
+	inline void _warning_mt_(const char* _file_, const int line, const char* format, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_BLUE, "WARN");
+			__mt__(format, ANSI_BLUE, "WARN");
 		}
 	}
 
