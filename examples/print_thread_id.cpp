@@ -15,8 +15,8 @@ logger_init();
 
 void print_thread(uint id) {
 	logger::print_thread_id(true);
-	logger::info("%s: %03d", logger::RED("Message from thread"), id);
-	logger::info("Message from thread: %03d", id);
+	logger::info_mt("%s: %03d", logger::RED("Message from thread"), id);
+	logger::info_mt("Message from thread: %03d", id);
 }
 
 int main() {

@@ -26,7 +26,7 @@ void bench(size_t iters, const char* msg) {
 	}
 
 	auto delta = high_resolution_clock::now() - start;
-	double delta_d = duration_cast<duration<double>>(delta).count();
+	auto delta_d = duration_cast<duration<double>>(delta).count();
 
 	logger::output_stream(stdout);
 	logger::enable(true);
@@ -54,7 +54,7 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	std::thread _threads[n_threads];
 	for (size_t i=0; i<n_threads; ++i) _threads[i] = std::thread([&]() {
         for (int j = 0; j < int(iters / n_threads); j++) {
-			logger::info("Hello logger: msg number %d", j);
+			logger::info_mt("Hello logger: msg number %d", j);
         }
     });
 
@@ -65,7 +65,7 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	};
 
 	auto delta = high_resolution_clock::now() - start;
-	double delta_d = duration_cast<duration<double>>(delta).count();
+	auto delta_d = duration_cast<duration<double>>(delta).count();
 
 	logger::output_stream(stdout);
 	logger::enable(true);

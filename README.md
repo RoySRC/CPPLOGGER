@@ -311,7 +311,7 @@ int main(int argc, char** argv) {
 ```
 
 ## Benchmarks
-Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i7-8750H CPU @ 2.20GHz × 12 
+Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz × 4 
 
 Throughput is the number of messages printed per second.
 
@@ -320,14 +320,14 @@ Throughput is the number of messages printed per second.
 *******************************************************************
 Single threaded benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.56 secs | Throughput: 1,792,189/sec
-disabled        | Elapsed: 0.01 secs | Throughput: 68,039,041/sec
+basic           | Elapsed: 0.48 secs | Throughput: 2,072,417/sec
+disabled        | Elapsed: 0.00 secs | Throughput: 408,444,675/sec
 
 *******************************************************************
 10 thread benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 3.32 secs | Throughput: 300,781/sec
-disabled        | Elapsed: 0.12 secs | Throughput: 8,299,084/sec
+basic           | Elapsed: 0.97 secs | Throughput: 1,034,400/sec
+disabled        | Elapsed: 0.00 secs | Throughput: 340,511,891/sec
 ```
 
 #### Benchmark result with immediate flushing disabled
@@ -335,12 +335,12 @@ disabled        | Elapsed: 0.12 secs | Throughput: 8,299,084/sec
 *******************************************************************
 Single threaded benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.09 secs | Throughput: 11,337,780/sec
-disabled        | Elapsed: 0.01 secs | Throughput: 66,996,777/sec
+basic           | Elapsed: 0.10 secs | Throughput: 10,382,924/sec
+disabled        | Elapsed: 0.00 secs | Throughput: 413,423,189/sec
 
 *******************************************************************
 10 thread benchmark with 1,000,000 iterations
 *******************************************************************
-basic           | Elapsed: 0.98 secs | Throughput: 1,023,245/sec
-disabled        | Elapsed: 0.13 secs | Throughput: 7,910,320/sec
+basic           | Elapsed: 0.40 secs | Throughput: 2,477,338/sec
+disabled        | Elapsed: 0.00 secs | Throughput: 262,786,466/sec
 ```

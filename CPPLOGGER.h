@@ -33,13 +33,6 @@ using std::mutex;
 			logger::code; 				\
 			logger::critical_section.unlock();
 
-/**
- * The following block is to wrap functions calls to the logger function inside a critical
- * section block for thread safety
- */
-#define info(fmt, ...) CRITICAL_SECTION_CODE(_info_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
-#define error(fmt, ...) CRITICAL_SECTION_CODE(_error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
-#define warning(fmt, ...) CRITICAL_SECTION_CODE(_warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__);)
 
 #define BLACK(msg) 		_BLACK_(msg).c_str()
 #define RED(msg)		_RED_(msg).c_str()
@@ -53,6 +46,9 @@ using std::mutex;
 #define UNDERLINE(msg) 	_UNDERLINE_(msg).c_str()
 #define ITALIC(msg) 	_ITALIC_(msg).c_str()
 
+/**
+ * macro to initialize the extern variables in logger
+ */
 #define logger_init() \
 namespace logger { \
 	bool _print_timestamps_ = false; \
@@ -77,13 +73,16 @@ namespace logger {
 	extern mutex critical_section;
 
 	/**
-	 *
+	 * Setting the following to true will print the timestamps
+	 * with the logging information
 	 */
 	extern bool _print_timestamps_;
 	#define print_timestamps(v) _print_timestamps_ = v
 
 	/**
-	 *
+	 * Setting the following to true will print the thread id
+	 * with the logging info, i.e. the thread responsible for
+	 * printing the current log statement
 	 */
 	extern bool _print_thread_id_;
 	#define print_thread_id(v) _print_thread_id_ = v
@@ -96,13 +95,15 @@ namespace logger {
 	#define print_log_type(v) _print_log_type_ = v
 
 	/**
-	 *
+	 * Setting the following to true will the file name from
+	 * where the current log statement was invoked
 	 */
 	extern bool _print_file_;
 	#define print_file(v) _print_file_ = v
 
 	/**
-	 *
+	 * Setting the following to true will the line number from
+	 * where the current log statement was invoked
 	 */
 	extern bool _print_line_;
 	#define print_line(v) _print_line_ = v
@@ -128,7 +129,7 @@ namespace logger {
 	#define output_stream(v) _output_stream_ = v
 
 	/**
-	 *
+	 * global va_list to optimize for performance on single threads
 	 */
 	extern va_list __args__;
 
@@ -211,31 +212,68 @@ namespace logger {
 	}
 
 	/**
+	 * wrapper function containing the boilerplate code for multi-threaded
+	 * logging
+	 */
+	#define __mt__(fmt, color, type) \
+				va_list __args__; \
+				va_start(__args__, fmt); \
+				critical_section.lock(); \
+				print(color, type); \
+				critical_section.unlock()
+
+	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
+	#define info(fmt, ...) _info_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable_) return;
-		va_start(__args__, fmt);
-		print(ANSI_GREEN, "INFO");
+		if (_enable_) {
+			va_start(__args__, fmt);
+			print(ANSI_GREEN, "INFO");
+		}
 	}
 
+	#define info_mt(fmt, ...) _info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__mt__(fmt, ANSI_GREEN, "INFO");
+		}
+	}
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
+	#define error(fmt, ...) _error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable_) return;
-		va_start(__args__, fmt);
-		print(ANSI_RED, " ERR");
+		if (_enable_) {
+			va_start(__args__, fmt);
+			print(ANSI_RED, " ERR");
+		}
+	}
+
+	#define error_mt(fmt, ...) _error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__mt__(fmt, ANSI_RED, " ERR");
+		}
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
+	#define warning(fmt, ...) _warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
-		if (!_enable_) return;
-		va_start(__args__, fmt);
-		print(ANSI_BLUE, "WARN");
+		if (_enable_) {
+			va_start(__args__, fmt);
+			print(ANSI_BLUE, "WARN");
+		}
+	}
+
+	#define warning_mt(fmt, ...) _warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__mt__(fmt, ANSI_BLUE, "WARN");
+		}
 	}
 
 	/**
