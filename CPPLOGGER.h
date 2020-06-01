@@ -181,16 +181,16 @@ namespace logger {
 	 */
 	#define print(color, type) { \
 		if (_print_log_type_) { \
-			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET); \
+			fprintf(_output_stream_, "[" color type ANSI_RESET "]"); \
 		} \
 		if (_print_timestamps_) { \
-			auto duration = std::chrono::system_clock::now().time_since_epoch(); \
-			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
+			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
+			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
 			fprintf(_output_stream_, "[%ld]", millis); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
-			unsigned long long int id = std::stoull(ss.str()); \
+			const unsigned long long int id = std::stoull(ss.str()); \
 			fprintf(_output_stream_, "[%04lld]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
@@ -206,7 +206,7 @@ namespace logger {
 			fprintf(_output_stream_, ": "); \
 		} \
 		vfprintf(_output_stream_, fmt, __args__); \
-		fprintf(_output_stream_, "%s\n", ANSI_RESET); \
+		fprintf(_output_stream_, ANSI_RESET "\n"); \
 		if (_flush_immediately_) fflush(_output_stream_); \
 		va_end(__args__); \
 	}
