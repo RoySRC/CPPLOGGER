@@ -181,32 +181,33 @@ namespace logger {
 	 */
 	#define print(color, type) { \
 		if (_print_log_type_) { \
-			fprintf(_output_stream_, "[%s%s%s]", color, type, ANSI_RESET); \
+			fputs("[" color type ANSI_RESET "]", _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
-			auto duration = std::chrono::system_clock::now().time_since_epoch(); \
-			unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
+			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
+			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
 			fprintf(_output_stream_, "[%ld]", millis); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
-			unsigned long long int id = std::stoull(ss.str()); \
+			const unsigned long long int id = std::stoull(ss.str()); \
 			fprintf(_output_stream_, "[%04lld]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
-			fprintf(_output_stream_, ": "); \
+			fputs(": ", _output_stream_); \
 		} \
 		if (_print_file_) { \
-			fprintf(_output_stream_, "%s:", _file_); \
+			fputs(_file_, _output_stream_); \
+			fputs(":", _output_stream_);\
 		} \
 		if (_print_line_) { \
 			fprintf(_output_stream_, "%d:", line); \
 		} \
 		if (_print_file_ || _print_line_) { \
-			fprintf(_output_stream_, ": "); \
+			fputs(": ", _output_stream_); \
 		} \
 		vfprintf(_output_stream_, fmt, __args__); \
-		fprintf(_output_stream_, "%s\n", ANSI_RESET); \
+		fputs(ANSI_RESET "\n", _output_stream_); \
 		if (_flush_immediately_) fflush(_output_stream_); \
 		va_end(__args__); \
 	}
@@ -218,9 +219,8 @@ namespace logger {
 	#define __mt__(fmt, color, type) \
 				va_list __args__; \
 				va_start(__args__, fmt); \
-				critical_section.lock(); \
-				print(color, type); \
-				critical_section.unlock()
+				std::lock_guard<mutex> lock(critical_section); \
+				print(color, type);
 
 	/**
 	 * Variadic argument function for printing information logs to screen.

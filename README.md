@@ -156,8 +156,8 @@ int main() {
 logger_init();
 
 void print_thread_id(uint id) {
-	logger::info("%s: %03d", logger::RED("Message from thread"), id);
-	logger::info("Message from thread: %03d", id);
+	logger::info_mt("%s: %03d", logger::RED("Message from thread"), id);
+	logger::info_mt("Message from thread: %03d", id);
 }
 
 int main() {
@@ -180,9 +180,9 @@ int main() {
 logger_init();
 
 void print_thread_id(uint id) {
-	logger::print_thread_id = true;
-	logger::info("%s: %03d", logger::RED("Message from thread"), id);
-	logger::info("Message from thread: %03d", id);
+	logger::print_thread_id(true);
+	logger::info_mt("%s: %03d", logger::RED("Message from thread"), id);
+	logger::info_mt("Message from thread: %03d", id);
 }
 
 int main() {
@@ -313,34 +313,33 @@ int main(int argc, char** argv) {
 ## Benchmarks
 Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz × 4 
 
-Throughput is the number of messages printed per second.
-
-#### Benchmark result with immediate flushing enabled
-```
-*******************************************************************
-Single threaded benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.48 secs | Throughput: 2,072,417/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 408,444,675/sec
-
-*******************************************************************
-10 thread benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.97 secs | Throughput: 1,034,400/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 340,511,891/sec
-```
+Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
 #### Benchmark result with immediate flushing disabled
 ```
-*******************************************************************
-Single threaded benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.10 secs | Throughput: 10,382,924/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 413,423,189/sec
-
-*******************************************************************
-10 thread benchmark with 1,000,000 iterations
-*******************************************************************
-basic           | Elapsed: 0.40 secs | Throughput: 2,477,338/sec
-disabled        | Elapsed: 0.00 secs | Throughput: 262,786,466/sec
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 0.46 secs | Throughput: 10,955,614/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 417,115,448/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 2.45 secs | Throughput: 2,044,349/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 453,749,783/sec
+```
+#### Benchmark result with immediate flushing enabled
+```
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 2.37 secs | Throughput: 2,112,810/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 415,817,359/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 4.81 secs | Throughput: 1,038,932/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 425,526,881/sec
 ```

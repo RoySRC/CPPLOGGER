@@ -15,6 +15,8 @@
  */
 logger_init();
 
+FILE* null_file = fopen("/dev/null", "w");
+
 void bench(size_t iters, const char* msg) {
 	using std::chrono::duration;
 	using std::chrono::duration_cast;
@@ -38,10 +40,10 @@ void single_threaded(size_t iters) {
 	logger::info("Single threaded benchmark with %'ld iterations", iters);
 	logger::info("*******************************************************************");
 
-	logger::output_stream(fopen("/dev/null", "w"));
+	logger::output_stream(null_file);
 	bench(iters, "basic");
 
-	logger::output_stream(fopen("/dev/null", "w"));
+	logger::output_stream(null_file);
 	logger::enable(false);
 	bench(iters, "disabled");
 }
@@ -77,10 +79,10 @@ void multi_threaded(size_t threads, size_t iters) {
 	logger::info("%'d thread benchmark with %'ld iterations", threads, iters);
 	logger::info("*******************************************************************");
 
-	logger::output_stream(fopen("/dev/null", "w"));
+	logger::output_stream(null_file);
 	multi_thread_bench(threads, iters, "basic");
 
-	logger::output_stream(fopen("/dev/null", "w"));
+	logger::output_stream(null_file);
 	logger::enable(false);
 	multi_thread_bench(threads, iters, "disabled");
 }
@@ -88,8 +90,6 @@ void multi_threaded(size_t threads, size_t iters) {
 int main(int argc, char** argv) {
 	logger::print_file(false);
 	logger::print_line(false);
-	logger::print_log_type(false);
-	logger::flush_immediately(false);
 
 	setlocale(LC_NUMERIC, "");
 	unsigned int iters = 1000000;
@@ -109,4 +109,6 @@ int main(int argc, char** argv) {
 	single_threaded(iters);
 	logger::info("");
 	multi_threaded(threads, iters);
+
+	fclose(null_file);
 }
