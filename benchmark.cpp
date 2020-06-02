@@ -24,27 +24,27 @@ void bench(size_t iters, const char* msg) {
 
 	auto start = high_resolution_clock::now();
 	for(size_t i=0; i<iters; ++i) {
-		logger::info("Hello logger: msg number %ld", i);
+		cpplogger_info("Hello logger: msg number %ld", i);
 	}
 
 	auto delta = high_resolution_clock::now() - start;
 	auto delta_d = duration_cast<duration<double>>(delta).count();
 
-	logger::output_stream(stdout);
-	logger::enable(true);
-	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
+	cpplogger_output_stream(stdout);
+	cpplogger_enable(true);
+	cpplogger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
 }
 
 void single_threaded(size_t iters) {
-	logger::info("*******************************************************************");
-	logger::info("Single threaded benchmark with %'ld iterations", iters);
-	logger::info("*******************************************************************");
+	cpplogger_info("*******************************************************************");
+	cpplogger_info("Single threaded benchmark with %'ld iterations", iters);
+	cpplogger_info("*******************************************************************");
 
-	logger::output_stream(null_file);
+	cpplogger_output_stream(null_file);
 	bench(iters, "basic");
 
-	logger::output_stream(null_file);
-	logger::enable(false);
+	cpplogger_output_stream(null_file);
+	cpplogger_enable(false);
 	bench(iters, "disabled");
 }
 
@@ -56,7 +56,7 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	std::thread _threads[n_threads];
 	for (size_t i=0; i<n_threads; ++i) _threads[i] = std::thread([&]() {
         for (int j = 0; j < int(iters / n_threads); j++) {
-			logger::info_mt("Hello logger: msg number %d", j);
+			cpplogger_info_mt("Hello logger: msg number %d", j);
         }
     });
 
@@ -69,27 +69,27 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	auto delta = high_resolution_clock::now() - start;
 	auto delta_d = duration_cast<duration<double>>(delta).count();
 
-	logger::output_stream(stdout);
-	logger::enable(true);
-	logger::info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
+	cpplogger_output_stream(stdout);
+	cpplogger_enable(true);
+	cpplogger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
 }
 
 void multi_threaded(size_t threads, size_t iters) {
-	logger::info("*******************************************************************");
-	logger::info("%'d thread benchmark with %'ld iterations", threads, iters);
-	logger::info("*******************************************************************");
+	cpplogger_info("*******************************************************************");
+	cpplogger_info("%'d thread benchmark with %'ld iterations", threads, iters);
+	cpplogger_info("*******************************************************************");
 
-	logger::output_stream(null_file);
+	cpplogger_output_stream(null_file);
 	multi_thread_bench(threads, iters, "basic");
 
-	logger::output_stream(null_file);
-	logger::enable(false);
+	cpplogger_output_stream(null_file);
+	cpplogger_enable(false);
 	multi_thread_bench(threads, iters, "disabled");
 }
 
 int main(int argc, char** argv) {
-	logger::print_file(false);
-	logger::print_line(false);
+	cpplogger_print_file(false);
+	cpplogger_print_line(false);
 
 	setlocale(LC_NUMERIC, "");
 	unsigned int iters = 1000000;
@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
 	}
 
 	single_threaded(iters);
-	logger::info("");
+	cpplogger_info("");
 	multi_threaded(threads, iters);
 
 	fclose(null_file);

@@ -15,13 +15,13 @@ logger_init();
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
 
-	logger::info("This is printed without a time stamp.");
+	cpplogger_info("This is printed without a time stamp.");
 
-	logger::print_timestamps(true);
-	logger::info("This is printed with a time stamp.");
+	cpplogger_print_timestamps(true);
+	cpplogger_info("This is printed with a time stamp.");
 
 }

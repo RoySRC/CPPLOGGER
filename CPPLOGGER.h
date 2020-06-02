@@ -34,17 +34,17 @@ using std::mutex;
 			logger::critical_section.unlock();
 
 
-#define BLACK(msg) 		_BLACK_(msg).c_str()
-#define RED(msg)		_RED_(msg).c_str()
-#define GREEN(msg) 		_GREEN_(msg).c_str()
-#define YELLOW(msg) 	_YELLOW_(msg).c_str()
-#define BLUE(msg) 		_BLUE_(msg).c_str()
-#define PURPLE(msg) 	_PURPLE_(msg).c_str()
-#define CYAN(msg) 		_CYAN_(msg).c_str()
-#define WHITE(msg) 		_WHITE_(msg).c_str()
-#define BOLD(msg) 		_BOLD_(msg).c_str()
-#define UNDERLINE(msg) 	_UNDERLINE_(msg).c_str()
-#define ITALIC(msg) 	_ITALIC_(msg).c_str()
+#define cpplogger_black(msg) 		logger::_BLACK_(msg).c_str()
+#define cpplogger_red(msg)			logger::_RED_(msg).c_str()
+#define cpplogger_green(msg) 		logger::_GREEN_(msg).c_str()
+#define cpplogger_yellow(msg) 		logger::_YELLOW_(msg).c_str()
+#define cpplogger_blue(msg) 		logger::_BLUE_(msg).c_str()
+#define cpplogger_purple(msg) 		logger::_PURPLE_(msg).c_str()
+#define cpplogger_cyan(msg) 		logger::_CYAN_(msg).c_str()
+#define cpplogger_white(msg) 		logger::_WHITE_(msg).c_str()
+#define cpplogger_bold(msg) 		logger::_BOLD_(msg).c_str()
+#define cpplogger_underline(msg) 	logger::_UNDERLINE_(msg).c_str()
+#define cpplogger_italic(msg) 		logger::_ITALIC_(msg).c_str()
 
 /**
  * macro to initialize the extern variables in logger
@@ -77,7 +77,7 @@ namespace logger {
 	 * with the logging information
 	 */
 	extern bool _print_timestamps_;
-	#define print_timestamps(v) _print_timestamps_ = v
+	#define cpplogger_print_timestamps(v) logger::_print_timestamps_ = v
 
 	/**
 	 * Setting the following to true will print the thread id
@@ -85,34 +85,34 @@ namespace logger {
 	 * printing the current log statement
 	 */
 	extern bool _print_thread_id_;
-	#define print_thread_id(v) _print_thread_id_ = v
+	#define cpplogger_print_thread_id(v) logger::_print_thread_id_ = v
 
 	/**
 	 * Setting the following to false will not print "[INFO]: ", "[ERROR]: ", "[WARN]: "
 	 * before log messages.
 	 */
 	extern bool _print_log_type_;
-	#define print_log_type(v) _print_log_type_ = v
+	#define cpplogger_print_log_type(v) logger::_print_log_type_ = v
 
 	/**
 	 * Setting the following to true will the file name from
 	 * where the current log statement was invoked
 	 */
 	extern bool _print_file_;
-	#define print_file(v) _print_file_ = v
+	#define cpplogger_print_file(v) logger::_print_file_ = v
 
 	/**
 	 * Setting the following to true will the line number from
 	 * where the current log statement was invoked
 	 */
 	extern bool _print_line_;
-	#define print_line(v) _print_line_ = v
+	#define cpplogger_print_line(v) logger::_print_line_ = v
 
 	/**
 	 * setting the following to false will disable global logging.
 	 */
 	extern bool _enable_;
-	#define enable(v) _enable_ = v
+	#define cpplogger_enable(v) logger::_enable_ = v
 
 	/**
 	 * When the following is set to true all logging is immediately flushed to
@@ -120,13 +120,13 @@ namespace logger {
 	 * the OS and are flushed to the output stream when this buffer is full.
 	 */
 	extern bool _flush_immediately_;
-	#define flush_immediately(v) _flush_immediately_ = v
+	#define cpplogger_flush_immediately(v) logger::_flush_immediately_ = v
 
 	/**
 	 * The output stream of the logger.
 	 */
 	extern FILE* _output_stream_;
-	#define output_stream(v) _output_stream_ = v
+	#define cpplogger_output_stream(v) logger::_output_stream_ = v
 
 	/**
 	 * global va_list to optimize for performance on single threads
@@ -179,7 +179,7 @@ namespace logger {
 	/**
 	 * Wrapper macro boilerplate code for printing logging information to screen
 	 */
-	#define print(color, type) { \
+	#define __CPPLOGGER_PRINT__(color, type) { \
 		if (_print_log_type_) { \
 			fputs("[" color type ANSI_RESET "]", _output_stream_); \
 		} \
@@ -216,84 +216,84 @@ namespace logger {
 	 * wrapper function containing the boilerplate code for multi-threaded
 	 * logging
 	 */
-	#define __mt__(fmt, color, type) \
+	#define __CPPLOGGER_MT__(fmt, color, type) \
 				va_list __args__; \
 				va_start(__args__, fmt); \
 				std::lock_guard<mutex> lock(critical_section); \
-				print(color, type);
+				__CPPLOGGER_PRINT__(color, type);
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
-	#define info(...) _info_(__FILE__, __LINE__, __VA_ARGS__)
+	#define cpplogger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			print(ANSI_GREEN, "INFO");
+			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			print(ANSI_GREEN, "INFO");
+			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
 		}
 	}
 
-	#define info_mt(fmt, ...) _info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define cpplogger_info_mt(fmt, ...) logger::_info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_GREEN, "INFO");
+			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO");
 		}
 	}
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
-	#define error(...) _error_(__FILE__, __LINE__, __VA_ARGS__)
+	#define cpplogger_error(...) logger::_error_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			print(ANSI_RED, " ERR");
+			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			print(ANSI_RED, " ERR");
+			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
 		}
 	}
 
-	#define error_mt(fmt, ...) _error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define cpplogger_error_mt(fmt, ...) logger::_error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_RED, " ERR");
+			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR");
 		}
 	}
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
-	#define warning(...) _warning_(__FILE__, __LINE__, __VA_ARGS__)
+	#define cpplogger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			print(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
 		}
 	}
 
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			print(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
 		}
 	}
 
-	#define warning_mt(fmt, ...) _warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define cpplogger_warning_mt(fmt, ...) logger::_warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__mt__(fmt, ANSI_BLUE, "WARN");
+			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN");
 		}
 	}
 

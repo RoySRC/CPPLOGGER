@@ -15,16 +15,16 @@ logger_init();
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
 
-	logger::info("This is before disabling global logging.");
+	cpplogger_info("This is before disabling global logging.");
 
-	logger::enable(false);
-	logger::info("This should not be printed.");
+	cpplogger_enable(false);
+	cpplogger_info("This should not be printed.");
 
-	logger::enable(true);
-	logger::info("This is after enabling global logging.");
+	cpplogger_enable(true);
+	cpplogger_info("This is after enabling global logging.");
 
 }
