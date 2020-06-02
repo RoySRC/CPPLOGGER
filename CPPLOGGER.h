@@ -219,9 +219,8 @@ namespace logger {
 	#define __mt__(fmt, color, type) \
 				va_list __args__; \
 				va_start(__args__, fmt); \
-				critical_section.lock(); \
-				print(color, type); \
-				critical_section.unlock()
+				std::lock_guard<mutex> lock(critical_section); \
+				print(color, type);
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
