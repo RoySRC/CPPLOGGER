@@ -21,7 +21,7 @@ void vector::add(element* __e) {
 		size += 1;
 
 	} else {
-		logger::info("Resizing vector.");
+		cpplogger_info("Resizing vector.");
 		capacity += 10;
 		element** tmp = new element* [capacity];
 		for (size_t i=0; i<size; ++i) {
@@ -30,6 +30,6 @@ void vector::add(element* __e) {
 		delete[] e;
 		e = tmp;
 		add(__e);
-		logger::info("capacity: %ld", capacity);
+		cpplogger_info("capacity: %ld", capacity);
 	}
 }
