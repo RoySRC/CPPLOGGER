@@ -15,33 +15,33 @@ logger_init();
 
 int main() {
 
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
-	logger::info(logger::BOLD("Welcome to CPPLOGGER!"));
-	logger::info(logger::BOLD("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
+	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
 
-	logger::info(logger::RED("This is a red text"));
-	logger::info(
-			logger::RED(
-					logger::ITALIC("This is a red italic text.")
+	cpplogger_info(cpplogger_red("This is a red text"));
+	cpplogger_info(
+			cpplogger_red(
+					cpplogger_italic("This is a red italic text.")
 			)
 	);
-	logger::info(logger::BOLD(logger::RED("This is a red bold text")));
-	logger::info(logger::RED(logger::BOLD(logger::ITALIC("This is a red bold italic text"))));
+	cpplogger_info(cpplogger_bold(cpplogger_red("This is a red bold text")));
+	cpplogger_info(cpplogger_red(cpplogger_bold(cpplogger_italic("This is a red bold italic text"))));
 
 
-	logger::info("%s: %d",
-			logger::BOLD(logger::RED("This is a red bold text with argument")),
+	cpplogger_info("%s: %d",
+			cpplogger_bold(cpplogger_red("This is a red bold text with argument")),
 			12);
 
-	logger::info("%s: %s",
-			logger::BOLD(logger::RED("This is a red bold text with green argument")),
-			logger::GREEN("12"));
+	cpplogger_info("%s: %s",
+			cpplogger_bold(cpplogger_red("This is a red bold text with green argument")),
+			cpplogger_green("12"));
 
-	logger::info("%s: %s",
-			logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
-			logger::BOLD(logger::GREEN("12")));
+	cpplogger_info("%s: %s",
+			cpplogger_bold(cpplogger_red("This is a red bold text with green bold argument")),
+			cpplogger_bold(cpplogger_green("12")));
 
-	logger::info(logger::UNDERLINE("%s: %s"),
-			logger::BOLD(logger::RED("This is a red bold text with green bold argument")),
-			logger::BOLD(logger::GREEN("12")));
+	cpplogger_info(cpplogger_underline("%s: %s"),
+			cpplogger_bold(cpplogger_red("This is a red bold text with green bold argument")),
+			cpplogger_bold(cpplogger_green("12")));
 }
