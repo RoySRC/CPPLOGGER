@@ -56,13 +56,4 @@ verbosity: verbosity.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 clean:
-	rm -rf ./bin/basic_usage
-	rm -rf ./bin/typographic_example
-	rm -rf ./bin/disable_logging
-	rm -rf ./bin/time_stamp
-	rm -rf ./bin/multi_thread
-	rm -rf ./bin/print_thread_id
-	rm -rf ./bin/log_type
-	rm -rf ./bin/file_name
-	rm -rf ./bin/line_number
-	rm -rf ./bin/no_file_line
+	rm -rf ./bin/
