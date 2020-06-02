@@ -30,7 +30,7 @@ This is a simple, lightweight and thread safe logger for C++.
 * Provides a flag to disable global logging, when this flag is set all logging is disabled
 * Enabling/Disabling logging does not require flags to be passed in at compile time
 * Provides a flag to enable or disable immediate logging. When immediate logging is enabled, the `printf` buffer gets immediately flushed to the output stream. When immediate logging is disabled, the print buffer only gets flushed when it is full. When this buffer gets flushed is also determined by the OS. Disabling immediate logging provides a significant performance boost as outlined in the [Benchmarks](#Benchmarks) section. As a result of the performance gains, immediate logging is disabled by default.
-* Provides verbose level option to limit how much logging information gets printed. Refer to [Verbose Level](#### Verbose Level) example.
+* Provides verbose level option to limit how much logging information gets printed. Refer to [Verbose Level](#Verbose Level) example.
 	
 	
 ## Usage examples
