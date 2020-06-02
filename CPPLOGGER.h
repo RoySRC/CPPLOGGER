@@ -225,7 +225,14 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
-	#define info(fmt, ...) _info_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define info(...) _info_(__FILE__, __LINE__, __VA_ARGS__)
+	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			va_start(__args__, fmt);
+			print(ANSI_GREEN, "INFO");
+		}
+	}
+
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
@@ -243,7 +250,14 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing error logs to screen.
 	 */
-	#define error(fmt, ...) _error_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define error(...) _error_(__FILE__, __LINE__, __VA_ARGS__)
+	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			va_start(__args__, fmt);
+			print(ANSI_RED, " ERR");
+		}
+	}
+
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
@@ -261,11 +275,18 @@ namespace logger {
 	/**
 	 * Variadic argument function for printing warning logs to screen.
 	 */
-	#define warning(fmt, ...) _warning_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
+	#define warning(...) _warning_(__FILE__, __LINE__, __VA_ARGS__)
+	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			va_start(__args__, fmt);
+			print(ANSI_PURPLE, "WARN");
+		}
+	}
+
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			print(ANSI_BLUE, "WARN");
+			print(ANSI_PURPLE, "WARN");
 		}
 	}
 

@@ -13,7 +13,8 @@ all: \
 	log_type\
 	file_name\
 	line_number\
-	no_file_line
+	no_file_line\
+	verbosity
 	
 run_all: all
 	@python3 ./run_all.py
@@ -49,6 +50,9 @@ line_number: line_number.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 no_file_line: no_file_line.cpp ../CPPLOGGER.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
+
+verbosity: verbosity.cpp ../CPPLOGGER.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 clean:
