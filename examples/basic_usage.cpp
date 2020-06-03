@@ -15,14 +15,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info("-------------------------------------------------------------");
-	cpplogger_info("Welcome to CPPLOGGER!");
-	cpplogger_info("-------------------------------------------------------------");
+	logger_info("-------------------------------------------------------------");
+	logger_info("Welcome to CPPLOGGER!");
+	logger_info("-------------------------------------------------------------");
 
-	cpplogger_info("The following shows some basic usage.");
+	logger_info("The following shows some basic usage.");
 
-	cpplogger_error("This is an error message with some %s:", "argument");
-	cpplogger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
-	cpplogger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
+	logger_error("This is an error message with some %s:", "argument");
+	logger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
+	logger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
 
 }

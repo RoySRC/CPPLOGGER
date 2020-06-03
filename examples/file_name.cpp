@@ -15,13 +15,13 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message is printed with the filename.");
+	logger_info("This message is printed with the filename.");
 
-	cpplogger_print_file(false);
-	cpplogger_info("This message is printed without printing the filename.");
+	logger_print_file(false);
+	logger_info("This message is printed without printing the filename.");
 
 }

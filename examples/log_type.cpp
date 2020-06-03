@@ -15,13 +15,13 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message is printed with log type enabled.");
+	logger_info("This message is printed with log type enabled.");
 
-	cpplogger_print_log_type(false);
-	cpplogger_info("This message is printed without the log type.");
+	logger_print_log_type(false);
+	logger_info("This message is printed without the log type.");
 
 }
