@@ -77,7 +77,6 @@ namespace logger { \
 	bool _print_file_ = true; \
 	bool _print_line_ = true; \
 	bool _enable_ = true; \
-	bool _flush_immediately_ = false; \
 	mutex mtx; \
 	va_list __args__; \
 	FILE* _output_stream_ = stdout; \
@@ -140,16 +139,6 @@ namespace logger {
 	 */
 	extern bool _enable_;
 	#define logger_enable(v) logger::_enable_ = v
-
-	/**
-	 * When the following is set to true all logging is immediately flushed to
-	 * output stream. If false, the logs are stored in a buffer maintained by
-	 * the OS and are flushed to the output stream when this buffer is full.
-	 */
-	extern bool _flush_immediately_;
-	#define logger_flush_immediately(v) \
-			logger::buffer.set_buffer_size(1);\
-			logger::_flush_immediately_ = v
 
 	/**
 	 * The output stream of the logger.
@@ -225,7 +214,6 @@ namespace logger {
 		} \
 		vfprintf(_output_stream_, fmt, __args__); \
 		fputs(ANSI_RESET "\n", _output_stream_); \
-		if (_flush_immediately_) fflush(_output_stream_); \
 		va_end(__args__); \
 	}
 
@@ -275,7 +263,6 @@ namespace logger {
 				buffer.flush_buffer();\
 				cv.notify_all();\
 			}\
-			if (_flush_immediately_) fflush(_output_stream_); \
 			va_end(__args__)
 
 	/**

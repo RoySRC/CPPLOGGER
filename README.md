@@ -29,7 +29,6 @@ This is a simple, lightweight and thread safe logger for C++.
 		* File name and Line numbers
 * Provides a flag to disable global logging, when this flag is set all logging is disabled
 * Enabling/Disabling logging does not require flags to be passed in at compile time
-* Provides a flag to enable or disable immediate logging. When immediate logging is enabled, the `printf` buffer gets immediately flushed to the output stream. When immediate logging is disabled, the print buffer only gets flushed when it is full. When this buffer gets flushed is also determined by the OS. Disabling immediate logging provides a significant performance boost as outlined in the [Benchmarks](#Benchmarks) section. As a result of the performance gains, immediate logging is disabled by default.
 * Provides verbose level option to limit how much logging information gets printed. Refer to [this](#Verbose-Level) example.
 	
 	
@@ -358,32 +357,18 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz
 
 Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
-#### Benchmark result with immediate flushing disabled
+#### Benchmark result
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.46 secs | Throughput: 10,869,754/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 416,167,785/sec
+[INFO]: basic           | Elapsed: 0.50 secs | Throughput: 10,009,506/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 417,104,696/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 10 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.67 secs | Throughput: 7,473,363/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 429,597,220/sec
+[INFO]: basic           | Elapsed: 2.09 secs | Throughput: 2,396,118/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 432,633,249/sec
 ```
 
-#### Benchmark result with immediate flushing enabled
-```
-[INFO]: *******************************************************************
-[INFO]: Single threaded benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 2.36 secs | Throughput: 2,115,065/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 417,118,614/sec
-[INFO]: 
-[INFO]: *******************************************************************
-[INFO]: 10 thread benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 3.32 secs | Throughput: 1,508,275/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 441,097,047/sec
-```
