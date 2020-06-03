@@ -52,7 +52,7 @@ public:
 	FILE* _output_stream_ = stdout;
 
 	lock_free_buffer() {
-		size = pow(2, 9);
+		size = pow(2, 1);
 		allocate_buffer();
 	}
 

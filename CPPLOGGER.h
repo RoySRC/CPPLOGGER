@@ -147,7 +147,9 @@ namespace logger {
 	 * the OS and are flushed to the output stream when this buffer is full.
 	 */
 	extern bool _flush_immediately_;
-	#define logger_flush_immediately(v) logger::_flush_immediately_ = v
+	#define logger_flush_immediately(v) \
+			logger::buffer.set_buffer_size(1);\
+			logger::_flush_immediately_ = v
 
 	/**
 	 * The output stream of the logger.
@@ -273,6 +275,7 @@ namespace logger {
 				buffer.flush_buffer();\
 				cv.notify_all();\
 			}\
+			if (_flush_immediately_) fflush(_output_stream_); \
 			va_end(__args__)
 
 	/**
