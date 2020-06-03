@@ -18,20 +18,40 @@
 #include <mutex>
 #include <cxxabi.h>
 #include <string.h>
-#include <stdio.h>
+#include <condition_variable>
+#include "lock_free_buffer.h"
 
+using std::cout;
+using std::endl;
 using std::string;
 using std::mutex;
 
 #define __force_inline__ __attribute__((always_inline)) inline
 
 /**
- * The following critical section macro is to make the logger thread safe
+ * Add support for colors for versions older than c++11. This is for backwards compatibility
  */
-#define CRITICAL_SECTION_CODE(code) 	\
-			critical_section.lock(); 	\
-			logger::code; 				\
-			logger::critical_section.unlock();
+#if __cplusplus >= 201103L
+#define COLOR_UNICODE "\u001b"
+#else
+#define COLOR_UNICODE "\x1b"
+#endif
+
+/**
+ * Define the ANSI color codes
+ */
+#define ANSI_RESET		COLOR_UNICODE	"[00m"
+#define ANSI_BLACK		COLOR_UNICODE	"[30m"
+#define ANSI_RED		COLOR_UNICODE	"[31m"
+#define ANSI_GREEN		COLOR_UNICODE	"[32m"
+#define ANSI_YELLOW		COLOR_UNICODE	"[33m"
+#define ANSI_BLUE		COLOR_UNICODE	"[34m"
+#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
+#define ANSI_CYAN		COLOR_UNICODE	"[36m"
+#define ANSI_WHITE		COLOR_UNICODE	"[37m"
+#define ANSI_BOLD		COLOR_UNICODE	"[01m"
+#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
+#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
 
 
 #define logger_black(msg) 		logger::_BLACK_(msg).c_str()
@@ -58,9 +78,11 @@ namespace logger { \
 	bool _print_line_ = true; \
 	bool _enable_ = true; \
 	bool _flush_immediately_ = false; \
-	mutex critical_section; \
+	mutex mtx; \
 	va_list __args__; \
 	FILE* _output_stream_ = stdout; \
+	std::condition_variable cv; \
+	lock_free_buffer buffer; \
 }
 
 namespace logger {
@@ -70,7 +92,12 @@ namespace logger {
 	 *  refers to the block of code responsible for printing
 	 *  logging information to screen.
 	 */
-	extern mutex critical_section;
+	extern mutex mtx;
+
+	/**
+	 *
+	 */
+	extern std::condition_variable cv;
 
 	/**
 	 * Setting the following to true will print the timestamps
@@ -126,7 +153,10 @@ namespace logger {
 	 * The output stream of the logger.
 	 */
 	extern FILE* _output_stream_;
-	#define logger_output_stream(v) logger::_output_stream_ = v
+	#define logger_output_stream(v) \
+			logger::buffer.flush_buffer();\
+			logger::_output_stream_ = v; \
+			logger::buffer._output_stream_ = v
 
 	/**
 	 * global va_list to optimize for performance on single threads
@@ -134,29 +164,13 @@ namespace logger {
 	extern va_list __args__;
 
 	/**
-	 * Add support for colors for versions older than c++11. This is for backwards compatibility
+	 * Lock free buffer region. The set_buffer_size sets the number of lines
+	 * to store in the buffer before printing the contents to screen. Each
+	 * line has a limit of 1024 characters by default. When a new buffer size
+	 * is set, the contents of the old buffer gets flushed on the screen.
 	 */
-	#if __cplusplus >= 201103L
-	#define COLOR_UNICODE "\u001b"
-	#else
-	#define COLOR_UNICODE "\x1b"
-	#endif
-
-	/**
-	 * Define the ANSI color codes
-	 */
-	#define ANSI_RESET		COLOR_UNICODE	"[00m"
-	#define ANSI_BLACK		COLOR_UNICODE	"[30m"
-	#define ANSI_RED		COLOR_UNICODE	"[31m"
-	#define ANSI_GREEN		COLOR_UNICODE	"[32m"
-	#define ANSI_YELLOW		COLOR_UNICODE	"[33m"
-	#define ANSI_BLUE		COLOR_UNICODE	"[34m"
-	#define ANSI_PURPLE		COLOR_UNICODE	"[35m"
-	#define ANSI_CYAN		COLOR_UNICODE	"[36m"
-	#define ANSI_WHITE		COLOR_UNICODE	"[37m"
-	#define ANSI_BOLD		COLOR_UNICODE	"[01m"
-	#define ANSI_UNDERLINE	COLOR_UNICODE	"[04m"
-	#define ANSI_ITALIC		COLOR_UNICODE	"[03m"
+	extern lock_free_buffer buffer;
+	#define logger_set_buffer_size(size) logger::buffer.set_buffer_size(size)
 
 
 	/**
@@ -189,7 +203,8 @@ namespace logger {
 			fprintf(_output_stream_, "[%ld]", millis); \
 		} \
 		if (_print_thread_id_) { \
-			std::stringstream ss; ss << std::this_thread::get_id(); \
+			std::stringstream ss;\
+			ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
 			fprintf(_output_stream_, "[%04lld]", id); \
 		} \
@@ -216,11 +231,49 @@ namespace logger {
 	 * wrapper function containing the boilerplate code for multi-threaded
 	 * logging
 	 */
-	#define __CPPLOGGER_MT__(fmt, color, type) \
-				va_list __args__; \
-				va_start(__args__, fmt); \
-				std::lock_guard<mutex> lock(critical_section); \
-				__CPPLOGGER_PRINT__(color, type);
+	#define __CPPLOGGER_MT__(fmt, color, type, file, line) \
+			va_list __args__;\
+			va_start(__args__, fmt);\
+			uint index = buffer.idx++;\
+			if (index >= buffer.size) {\
+				std::unique_lock<std::mutex> lck(mtx);\
+				while ((index = buffer.idx++) >= buffer.size) cv.wait(lck);\
+			}\
+			char* b = buffer[index];\
+			if (logger::_print_log_type_) {\
+				b += sprintf(b, "[%s%s%s]", color, type, ANSI_RESET);\
+			}\
+			if (logger::_print_timestamps_) {\
+				auto duration = std::chrono::system_clock::now().time_since_epoch();\
+				unsigned long int millis =\
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();\
+				b += sprintf(b, "[%ld]", millis);\
+			}\
+			if (logger::_print_thread_id_) {\
+				std::stringstream ss;\
+				ss << std::this_thread::get_id();\
+				const unsigned long long int id = std::stoull(ss.str());\
+				b += sprintf(b, "[%04lld]", id);\
+			}\
+			if (logger::_print_log_type_ || logger::_print_timestamps_ || logger::_print_thread_id_) {\
+				b += sprintf(b, ": ");\
+			}\
+			if (logger::_print_file_) {\
+				b += sprintf(b, "%s:", _file_);\
+			}\
+			if (logger::_print_line_) {\
+				b += sprintf(b, "%d:", line);\
+			}\
+			if (logger::_print_file_ || logger::_print_line_) {\
+				b += sprintf(b, ": ");\
+			}\
+			b += vsprintf(b, fmt, __args__);\
+			b += sprintf(b, ANSI_RESET "\n");\
+			if (index == buffer.size - 1) {\
+				buffer.flush_buffer();\
+				cv.notify_all();\
+			}\
+			va_end(__args__)
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
@@ -243,7 +296,7 @@ namespace logger {
 	#define logger_info_mt(fmt, ...) logger::_info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO");
+			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO", _file_, line);
 		}
 	}
 
@@ -268,7 +321,7 @@ namespace logger {
 	#define logger_error_mt(fmt, ...) logger::_error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR");
+			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR", _file_, line);
 		}
 	}
 
@@ -293,7 +346,7 @@ namespace logger {
 	#define logger_warning_mt(fmt, ...) logger::_warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN");
+			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN", _file_, line);
 		}
 	}
 
