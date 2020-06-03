@@ -46,15 +46,15 @@ logger_init();
 
 int main() {
 
-	cpplogger_info("-------------------------------------------------------------");
-	cpplogger_info("Welcome to CPPLOGGER!");
-	cpplogger_info("-------------------------------------------------------------");
+	logger_info("-------------------------------------------------------------");
+	logger_info("Welcome to CPPLOGGER!");
+	logger_info("-------------------------------------------------------------");
 
-	cpplogger_info("The following shows some basic usage.");
+	logger_info("The following shows some basic usage.");
 
-	cpplogger_error("This is an error message with some %s:", "argument");
-	cpplogger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
-	cpplogger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
+	logger_error("This is an error message with some %s:", "argument");
+	logger_warning("This is a warning message with 2 args: (%.3f, %.4f)", 1.2323745, 2.5);
+	logger_info("This is an info message with three arguments: (%03d, %03d, %03d)", 0, 50, 100);
 
 }
 ```
@@ -71,35 +71,35 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info(cpplogger_red("This is a red text"));
-	cpplogger_info(
-			cpplogger_red(
-					cpplogger_italic("This is a red italic text.")
+	logger_info(logger_red("This is a red text"));
+	logger_info(
+			logger_red(
+					logger_italic("This is a red italic text.")
 			)
 	);
-	cpplogger_info(cpplogger_bold(cpplogger_red("This is a red bold text")));
-	cpplogger_info(cpplogger_red(cpplogger_bold(cpplogger_italic("This is a red bold italic text"))));
+	logger_info(logger_bold(logger_red("This is a red bold text")));
+	logger_info(logger_red(logger_bold(logger_italic("This is a red bold italic text"))));
 
 
-	cpplogger_info("%s: %d",
-			cpplogger_bold(cpplogger_red("This is a red bold text with argument")),
+	logger_info("%s: %d",
+			logger_bold(logger_red("This is a red bold text with argument")),
 			12);
 
-	cpplogger_info("%s: %s",
-			cpplogger_bold(cpplogger_red("This is a red bold text with green argument")),
-			cpplogger_green("12"));
+	logger_info("%s: %s",
+			logger_bold(logger_red("This is a red bold text with green argument")),
+			logger_green("12"));
 
-	cpplogger_info("%s: %s",
-			cpplogger_bold(cpplogger_red("This is a red bold text with green bold argument")),
-			cpplogger_bold(cpplogger_green("12")));
+	logger_info("%s: %s",
+			logger_bold(logger_red("This is a red bold text with green bold argument")),
+			logger_bold(logger_green("12")));
 
-	cpplogger_info(cpplogger_underline("%s: %s"),
-			cpplogger_bold(cpplogger_red("This is a red bold text with green bold argument")),
-			cpplogger_bold(cpplogger_green("12")));
+	logger_info(logger_underline("%s: %s"),
+			logger_bold(logger_red("This is a red bold text with green bold argument")),
+			logger_bold(logger_green("12")));
 }
 ```
 
@@ -115,17 +115,17 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This is before disabling global logging.");
+	logger_info("This is before disabling global logging.");
 
-	cpplogger_enable(false);
-	cpplogger_info("This should not be printed.");
+	logger_enable(false);
+	logger_info("This should not be printed.");
 
-	cpplogger_enable(true);
-	cpplogger_info("This is after enabling global logging.");
+	logger_enable(true);
+	logger_info("This is after enabling global logging.");
 
 }
 ```
@@ -142,14 +142,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This is printed without a time stamp.");
+	logger_info("This is printed without a time stamp.");
 
-	cpplogger_print_timestamps(true);
-	cpplogger_info("This is printed with a time stamp.");
+	logger_print_timestamps(true);
+	logger_info("This is printed with a time stamp.");
 
 }
 ```
@@ -165,8 +165,8 @@ int main() {
 logger_init();
 
 void print_thread(uint id) {
-	cpplogger_info_mt("%s: %03d", cpplogger_red("Message from thread"), id);
-	cpplogger_info_mt("Message from thread: %03d", id);
+	logger_info_mt("%s: %03d", logger_red("Message from thread"), id);
+	logger_info_mt("Message from thread: %03d", id);
 }
 
 int main() {
@@ -189,9 +189,9 @@ int main() {
 logger_init();
 
 void print_thread(uint id) {
-	cpplogger_print_thread_id(true);
-	cpplogger_info_mt("%s: %03d", cpplogger_red("Message from thread"), id);
-	cpplogger_info_mt("Message from thread: %03d", id);
+	logger_print_thread_id(true);
+	logger_info_mt("%s: %03d", logger_red("Message from thread"), id);
+	logger_info_mt("Message from thread: %03d", id);
 }
 
 int main() {
@@ -215,14 +215,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message is printed with log type enabled.");
+	logger_info("This message is printed with log type enabled.");
 
-	cpplogger_print_log_type(false);
-	cpplogger_info("This message is printed without the log type.");
+	logger_print_log_type(false);
+	logger_info("This message is printed without the log type.");
 
 }
 ```
@@ -239,14 +239,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message is printed with the filename.");
+	logger_info("This message is printed with the filename.");
 
-	cpplogger_print_file(false);
-	cpplogger_info("This message is printed without printing the filename.");
+	logger_print_file(false);
+	logger_info("This message is printed without printing the filename.");
 
 }
 ```
@@ -263,14 +263,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message is printed with the line number.");
+	logger_info("This message is printed with the line number.");
 
-	cpplogger_print_line(false);
-	cpplogger_info("This message is printed without the line number.");
+	logger_print_line(false);
+	logger_info("This message is printed without the line number.");
 
 }
 ```
@@ -287,15 +287,15 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message has both line number and file");
+	logger_info("This message has both line number and file");
 
-	cpplogger_print_file(false);
-	cpplogger_print_line(false);
-	cpplogger_info("This message does not have either a file or a line number.");
+	logger_print_file(false);
+	logger_print_line(false);
+	logger_info("This message does not have either a file or a line number.");
 
 }
 ```
@@ -313,13 +313,13 @@ logger_init();
 int main() {
 	int verbose_level = 0;
 
-	cpplogger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
+	logger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
 
-	cpplogger_info("Current verbose level: %d", verbose_level);
-	cpplogger_info("Incrementing verbose level by one: %d", ++verbose_level);
-	cpplogger_info("Current verbose level: %d", verbose_level);
+	logger_info("Current verbose level: %d", verbose_level);
+	logger_info("Incrementing verbose level by one: %d", ++verbose_level);
+	logger_info("Current verbose level: %d", verbose_level);
 
-	cpplogger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
+	logger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
 }
 ```
 
@@ -337,7 +337,7 @@ class sample_class {
 public:
 	sample_class() {}
 	void print() {
-		cpplogger_info("print method in class: %s", cpplogger_red(logger::get_type(this)));
+		logger_info("print method in class: %s", logger_red(logger::get_type(this)));
 	}
 };
 
@@ -345,11 +345,11 @@ int main(int argc, char** argv) {
 
 	sample_class c;
 	c.print();
-	cpplogger_info("c: %s", logger::get_type(c));
+	logger_info("c: %s", logger::get_type(c));
 
 
 	int a = 10;
-	cpplogger_info("type of a: %s", logger::get_type(a));
+	logger_info("type of a: %s", logger::get_type(a));
 }
 ```
 

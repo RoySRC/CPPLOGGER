@@ -17,7 +17,7 @@ class sample_class {
 public:
 	sample_class() {}
 	void print() {
-		cpplogger_info("print method in class: %s", cpplogger_red(logger::get_type(this)));
+		logger_info("print method in class: %s", logger_red(logger::get_type(this)));
 	}
 };
 
@@ -25,9 +25,9 @@ int main(int argc, char** argv) {
 
 	sample_class c;
 	c.print();
-	cpplogger_info("c: %s", logger::get_type(c));
+	logger_info("c: %s", logger::get_type(c));
 
 
 	int a = 10;
-	cpplogger_info("type of a: %s", logger::get_type(a));
+	logger_info("type of a: %s", logger::get_type(a));
 }

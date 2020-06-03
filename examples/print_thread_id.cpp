@@ -14,9 +14,9 @@
 logger_init();
 
 void print_thread(uint id) {
-	cpplogger_print_thread_id(true);
-	cpplogger_info_mt("%s: %03d", cpplogger_red("Message from thread"), id);
-	cpplogger_info_mt("Message from thread: %03d", id);
+	logger_print_thread_id(true);
+	logger_info_mt("%s: %03d", logger_red("Message from thread"), id);
+	logger_info_mt("Message from thread: %03d", id);
 }
 
 int main() {

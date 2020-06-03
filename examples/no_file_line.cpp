@@ -15,14 +15,14 @@ logger_init();
 
 int main() {
 
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
-	cpplogger_info(cpplogger_bold("Welcome to CPPLOGGER!"));
-	cpplogger_info(cpplogger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
+	logger_info(logger_bold("Welcome to CPPLOGGER!"));
+	logger_info(logger_bold("-------------------------------------------------------------"));
 
-	cpplogger_info("This message has both line number and file");
+	logger_info("This message has both line number and file");
 
-	cpplogger_print_file(false);
-	cpplogger_print_line(false);
-	cpplogger_info("This message does not have either a file or a line number.");
+	logger_print_file(false);
+	logger_print_line(false);
+	logger_info("This message does not have either a file or a line number.");
 
 }

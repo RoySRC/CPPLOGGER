@@ -8,11 +8,11 @@
 #include "element.h"
 
 element::element() {
-	cpplogger_info("in empty constructor.");
+	logger_info("in empty constructor.");
 }
 
 element::element(int data) {
-	cpplogger_info("creating element with data: %d", data);
+	logger_info("creating element with data: %d", data);
 	this->data = data;
 }
 

@@ -21,7 +21,7 @@ int main() {
 
 	v.add(new element(12));
 
-	cpplogger_enable(false);
+	logger_enable(false);
 
 	v.add(new element(13));
 
