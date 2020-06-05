@@ -22,37 +22,37 @@ run_all: all
 make_bin_dir:
 	mkdir -p ./bin
 
-basic_usage: basic_usage.cpp ../CPPLOGGER.h
+basic_usage: basic_usage.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
-typographic_example: typographic_example.cpp ../CPPLOGGER.h
+typographic_example: typographic_example.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
-disable_logging: disable_logging.cpp ../CPPLOGGER.h
+disable_logging: disable_logging.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
-time_stamp: time_stamp.cpp ../CPPLOGGER.h
+time_stamp: time_stamp.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
-multi_thread: multi_thread.cpp ../CPPLOGGER.h
+multi_thread: multi_thread.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ -lpthread
 	
-print_thread_id: print_thread_id.cpp ../CPPLOGGER.h
+print_thread_id: print_thread_id.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ -lpthread
 	
-log_type: log_type.cpp ../CPPLOGGER.h
+log_type: log_type.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
-file_name: file_name.cpp ../CPPLOGGER.h
+file_name: file_name.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
-line_number: line_number.cpp ../CPPLOGGER.h
+line_number: line_number.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
-no_file_line: no_file_line.cpp ../CPPLOGGER.h
+no_file_line: no_file_line.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
-verbosity: verbosity.cpp ../CPPLOGGER.h
+verbosity: verbosity.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 clean:

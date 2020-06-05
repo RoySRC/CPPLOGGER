@@ -19,7 +19,7 @@
 #include <cxxabi.h>
 #include <string.h>
 #include <condition_variable>
-#include "lock_free_buffer.h"
+#include "print_task_manager.h"
 
 using std::cout;
 using std::endl;
@@ -27,6 +27,8 @@ using std::string;
 using std::mutex;
 
 #define __force_inline__ __attribute__((always_inline)) inline
+
+
 
 /**
  * Add support for colors for versions older than c++11. This is for backwards compatibility
@@ -81,7 +83,7 @@ namespace logger { \
 	va_list __args__; \
 	FILE* _output_stream_ = stdout; \
 	std::condition_variable cv; \
-	lock_free_buffer buffer; \
+	print_task_manager ptm; \
 }
 
 namespace logger {
@@ -145,9 +147,8 @@ namespace logger {
 	 */
 	extern FILE* _output_stream_;
 	#define logger_output_stream(v) \
-			logger::buffer.flush_buffer();\
 			logger::_output_stream_ = v; \
-			logger::buffer._output_stream_ = v
+			logger::ptm.set_output_stream(v)
 
 	/**
 	 * global va_list to optimize for performance on single threads
@@ -155,13 +156,9 @@ namespace logger {
 	extern va_list __args__;
 
 	/**
-	 * Lock free buffer region. The set_buffer_size sets the number of lines
-	 * to store in the buffer before printing the contents to screen. Each
-	 * line has a limit of 1024 characters by default. When a new buffer size
-	 * is set, the contents of the old buffer gets flushed on the screen.
+	 *
 	 */
-	extern lock_free_buffer buffer;
-	#define logger_set_buffer_size(size) logger::buffer.set_buffer_size(size)
+	extern print_task_manager ptm;
 
 
 	/**
@@ -184,13 +181,14 @@ namespace logger {
 	/**
 	 * Wrapper macro boilerplate code for printing logging information to screen
 	 */
-	#define __CPPLOGGER_PRINT__(color, type) { \
+	#define __CPPLOGGER_ST__(color, type) { \
 		if (_print_log_type_) { \
 			fputs("[" color type ANSI_RESET "]", _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
 			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
-			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
+			const unsigned long int millis = \
+				std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
 			fprintf(_output_stream_, "[%ld]", millis); \
 		} \
 		if (_print_thread_id_) { \
@@ -221,49 +219,47 @@ namespace logger {
 	 * wrapper function containing the boilerplate code for multi-threaded
 	 * logging
 	 */
-	#define __CPPLOGGER_MT__(fmt, color, type, file, line) \
-			va_list __args__;\
-			va_start(__args__, fmt);\
-			uint index = buffer.idx++;\
-			if (index >= buffer.size) {\
-				std::unique_lock<std::mutex> lck(mtx);\
-				while ((index = buffer.idx++) >= buffer.size) cv.wait(lck);\
-			}\
-			char* b = buffer[index];\
-			if (logger::_print_log_type_) {\
-				b += sprintf(b, "[%s%s%s]", color, type, ANSI_RESET);\
-			}\
-			if (logger::_print_timestamps_) {\
-				auto duration = std::chrono::system_clock::now().time_since_epoch();\
-				unsigned long int millis =\
-						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();\
-				b += sprintf(b, "[%ld]", millis);\
-			}\
-			if (logger::_print_thread_id_) {\
-				std::stringstream ss;\
-				ss << std::this_thread::get_id();\
-				const unsigned long long int id = std::stoull(ss.str());\
-				b += sprintf(b, "[%04lld]", id);\
-			}\
-			if (logger::_print_log_type_ || logger::_print_timestamps_ || logger::_print_thread_id_) {\
-				b += sprintf(b, ": ");\
-			}\
-			if (logger::_print_file_) {\
-				b += sprintf(b, "%s:", _file_);\
-			}\
-			if (logger::_print_line_) {\
-				b += sprintf(b, "%d:", line);\
-			}\
-			if (logger::_print_file_ || logger::_print_line_) {\
-				b += sprintf(b, ": ");\
-			}\
-			b += vsprintf(b, fmt, __args__);\
-			b += sprintf(b, ANSI_RESET "\n");\
-			if (index == buffer.size - 1) {\
-				buffer.flush_buffer();\
-				cv.notify_all();\
-			}\
-			va_end(__args__)
+	__force_inline__
+	void __CPPLOGGER_MT__(const char* fmt, const char* color, const char* type, const char* file,
+									const int line, va_list& __args__) {
+		DEBUG("Before calling ptm.get()");
+		size_t index;
+		char* b = ptm.get(index);
+		DEBUG("After calling ptm.get()");
+
+		if (logger::_print_log_type_) {
+			b += sprintf(b, "[%s%s%s]", color, type, ANSI_RESET);
+		}
+		if (logger::_print_timestamps_) {
+			const auto duration = std::chrono::system_clock::now().time_since_epoch();
+			const unsigned long int millis =
+					std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+			b += sprintf(b, "[%ld]", millis);
+		}
+		if (logger::_print_thread_id_) {
+			std::stringstream ss;
+			ss << std::this_thread::get_id();
+			const unsigned long long int id = std::stoull(ss.str());
+			b += sprintf(b, "[%04lld]", id);
+		}
+		if (logger::_print_log_type_ || logger::_print_timestamps_ || logger::_print_thread_id_) {
+			b += sprintf(b, ": ");
+		}
+		if (logger::_print_file_) {
+			b += sprintf(b, "%s:", file);
+		}
+		if (logger::_print_line_) {
+			b += sprintf(b, "%d:", line);
+		}
+		if (logger::_print_file_ || logger::_print_line_) {
+			b += sprintf(b, ": ");
+		}
+		b += vsprintf(b, fmt, __args__);
+		sprintf(b, ANSI_RESET "\n");
+
+		ptm.completed(index);
+		DEBUG("Done");
+	}
 
 	/**
 	 * Variadic argument function for printing information logs to screen.
@@ -272,21 +268,24 @@ namespace logger {
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			__CPPLOGGER_ST__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			__CPPLOGGER_ST__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	#define logger_info_mt(fmt, ...) logger::_info_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO", _file_, line);
+			va_list __args__;
+			va_start(__args__, fmt);
+			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO", _file_, line, __args__);
+			va_end(__args__);
 		}
 	}
 
@@ -297,21 +296,24 @@ namespace logger {
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
+			__CPPLOGGER_ST__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
+			__CPPLOGGER_ST__(ANSI_RED, " ERR");
 		}
 	}
 
 	#define logger_error_mt(fmt, ...) logger::_error_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR", _file_, line);
+			va_list __args__;
+			va_start(__args__, fmt);
+			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR", _file_, line, __args__);
+			va_end(__args__);
 		}
 	}
 
@@ -322,21 +324,24 @@ namespace logger {
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_ST__(ANSI_PURPLE, "WARN");
 		}
 	}
 
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_ST__(ANSI_PURPLE, "WARN");
 		}
 	}
 
 	#define logger_warning_mt(fmt, ...) logger::_warning_mt_(__FILE__, __LINE__, fmt, ##__VA_ARGS__)
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN", _file_, line);
+			va_list __args__;
+			va_start(__args__, fmt);
+			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN", _file_, line, __args__);
+			va_end(__args__);
 		}
 	}
 

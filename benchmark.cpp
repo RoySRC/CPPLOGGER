@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <thread>
-#include <math.h>
 #include <CPPLOGGER.h>
 
 /**

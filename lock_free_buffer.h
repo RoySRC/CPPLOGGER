@@ -4,7 +4,7 @@
  *  Created on: Jun 3, 2020
  *      Author: sajeeb
  */
-
+#include <mutex>
 #include <math.h>
 #include <atomic>
 #include <condition_variable>
@@ -30,7 +30,9 @@ private:
 	void delete_buffer() {
 		for (uint i=0; i<size; ++i) delete[] buffer[i];
 		delete[] buffer;
+		delete[] mutexes;
 		buffer = NULL;
+		mutexes = NULL;
 	}
 
 	/**
@@ -39,6 +41,7 @@ private:
 	__force_inline__
 	void allocate_buffer() {
 		buffer = new char* [size];
+		mutexes = new std::mutex [size];
 		for (uint i=0; i<size; ++i) {
 			buffer[i] = new char [1024];
 			buffer[i][0] = '\0';
@@ -46,6 +49,7 @@ private:
 	}
 
 public:
+	std::mutex* mutexes;
 	std::atomic_uint idx;
 	uint size;
 	char** buffer;
@@ -66,10 +70,12 @@ public:
 	 */
 	__force_inline__
 	void set_buffer_size(const uint size) {
-		flush_buffer();
-		delete_buffer();
-		this->size = size;
-		allocate_buffer();
+		if (size != this->size) {
+			flush_buffer();
+			delete_buffer();
+			this->size = size;
+			allocate_buffer();
+		}
 	}
 
 	/**
