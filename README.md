@@ -357,7 +357,7 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz
 
 Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
-#### Benchmark result with immediate flushing disabled
+#### Benchmark result
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
