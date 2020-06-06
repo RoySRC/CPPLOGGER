@@ -29,7 +29,6 @@ This is a simple, lightweight and thread safe logger for C++.
 		* File name and Line numbers
 * Provides a flag to disable global logging, when this flag is set all logging is disabled
 * Enabling/Disabling logging does not require flags to be passed in at compile time
-* Provides a flag to enable or disable immediate logging. When immediate logging is enabled, the `printf` buffer gets immediately flushed to the output stream. When immediate logging is disabled, the print buffer only gets flushed when it is full. When this buffer gets flushed is also determined by the OS. Disabling immediate logging provides a significant performance boost as outlined in the [Benchmarks](#Benchmarks) section. As a result of the performance gains, immediate logging is disabled by default.
 * Provides verbose level option to limit how much logging information gets printed. Refer to [this](#Verbose-Level) example.
 	
 	
@@ -371,18 +370,4 @@ Throughput is the number of messages printed per second. Iterations is the numbe
 [INFO]: *******************************************************************
 [INFO]: basic           | Elapsed: 2.45 secs | Throughput: 2,044,349/sec
 [INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 453,749,783/sec
-```
-#### Benchmark result with immediate flushing enabled
-```
-[INFO]: *******************************************************************
-[INFO]: Single threaded benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 2.37 secs | Throughput: 2,112,810/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 415,817,359/sec
-[INFO]: 
-[INFO]: *******************************************************************
-[INFO]: 10 thread benchmark with 5,000,000 iterations
-[INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 4.81 secs | Throughput: 1,038,932/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 425,526,881/sec
 ```
