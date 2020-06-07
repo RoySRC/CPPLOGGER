@@ -5,7 +5,7 @@ LIBS=-lpthread
 
 all: benchmark
 
-benchmark: benchmark.cpp CPPLOGGER.h
+benchmark: benchmark.cpp *.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIRS) $< -o $@ $(LIBS)
 	
 	
