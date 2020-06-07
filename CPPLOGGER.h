@@ -208,13 +208,20 @@ namespace logger {
 	}
 
 	/**
+	 *
+	 */
+	#define __CPPLOGGER_ST__(color, type) {\
+		__CPPLOGGER_WRITE__(color, type);\
+	}
+
+	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	#define logger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _info_(const char* file, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_GREEN, "INFO");
+			__CPPLOGGER_ST__(ANSI_GREEN, "INFO");
 			va_end(__args__);
 		}
 	}
@@ -222,7 +229,7 @@ namespace logger {
 	inline void _info_(const char* file, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_GREEN, "INFO");
+			__CPPLOGGER_ST__(ANSI_GREEN, "INFO");
 			va_end(__args__);
 		}
 	}
@@ -244,7 +251,7 @@ namespace logger {
 	inline void _error_(const char* file, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_RED, " ERR");
+			__CPPLOGGER_ST__(ANSI_RED, " ERR");
 			va_end(__args__);
 		}
 	}
@@ -252,7 +259,7 @@ namespace logger {
 	inline void _error_(const char* file, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_RED, " ERR");
+			__CPPLOGGER_ST__(ANSI_RED, " ERR");
 			va_end(__args__);
 		}
 	}
@@ -274,7 +281,7 @@ namespace logger {
 	inline void _warning_(const char* file, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_ST__(ANSI_PURPLE, "WARN");
 			va_end(__args__);
 		}
 	}
@@ -282,7 +289,7 @@ namespace logger {
 	inline void _warning_(const char* file, const int line, const char* fmt, ...) {
 		if (_enable_) {
 			va_start(__args__, fmt);
-			__CPPLOGGER_WRITE__(ANSI_PURPLE, "WARN");
+			__CPPLOGGER_ST__(ANSI_PURPLE, "WARN");
 			va_end(__args__);
 		}
 	}
