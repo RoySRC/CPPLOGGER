@@ -43,9 +43,9 @@ public:
 	atomic<int> num_nodes;
 	atomic<bool> __kill__;
 	atomic<bool> __terminated__;
-	uint flush_interval = pow(2, 2);
+	uint flush_interval = pow(2, 5);
 	atomic<uint> current_flush_count;
-	FILE* _output_stream_;
+	atomic<FILE*> _output_stream_;
 	thread printer;
 	condition_variable cv;
 	mutex mtx;
@@ -56,14 +56,11 @@ public:
 		__terminated__.store(false);
 		__kill__.store(false);
 
-		node* dummy = new node(_output_stream_);
-		_first.store(dummy);
-		_last.store(dummy);
-
 		_first.store(nullptr);
 		_last.store(nullptr);
 
-		_output_stream_ = (FILE*)stdout;
+		_output_stream_.store((FILE*)stdout);
+		setbuf(_output_stream_.load(), NULL);
 		printer = thread(run, std::ref(*this));
 		printer.detach();
 	}
@@ -79,41 +76,62 @@ public:
 	}
 
 	__force_inline__
-	void set_output_stream(FILE* os) {
-		_output_stream_ = os;
+	node* get() {
+		node* rv = append();
+//		if (!(current_flush_count++ % flush_interval)) cv.notify_all();
+//		cv.notify_all();
+		return rv;
 	}
 
 	__force_inline__
-	node* get() {
-		node* rv = append();
-		cv.notify_one();
-		return rv;
+	void set_output_stream(FILE* os) {
+//		DEBUG("Value before setting stream: %p", _output_stream_.load());
+//		DEBUG)
+		_output_stream_.store(os);
+//		setbuf(_output_stream_.load(), NULL);
+//		DEBUG("Value after setting stream: %p", _output_stream_.load());
 	}
 
 
 private:
+	/**
+	 * Only gets called in the get function
+	 */
 	__force_inline__
 	node* append() {
-		DEBUG("Appending node..");
-		node* n = new node(_output_stream_);
+//		DEBUG("Appending node..");
+		node* n = new node(_output_stream_.load());
+//		DEBUG("new node: %p", n);
 		node* prev = _last.exchange(n);
-//		prev->next = n;
-		DEBUG("Checking previous node pointer.");
+//		DEBUG("Checking previous node pointer: %p", prev);
 		(prev) ? prev->next = n : _first = n;
-		DEBUG("Done appending node.");
+//		DEBUG("new first: %p", _first.load());
+//		DEBUG("Done appending node.");
 		return n;
 	}
 
+	/**
+	 * Gets called in flush and run method
+	 */
 	__force_inline__
 	void flush(node* n) {
+//		DEBUG("flush");
+//		DEBUG("Setting contents of _first to: %p", n->next);
 		_first.store(n->next);
+//		DEBUG("Printing contents of node: %p", n);
+//		setbuf(n->stream, NULL);
 		fprintf(n->stream, "%s", n->data);
+		DEBUG("Printed: %s to %p", n->data, n->stream);
+//		DEBUG("DELETE: %p", n);
 		delete n;
 	}
 
+	/**
+	 * Gets called only in the destructor
+	 */
 	__force_inline__
 	void flush_all() {
-		DEBUG("flush_all..");
+//		DEBUG("flush_all..");
 		node* f;
 		node* prev_last_node = _last.load();
 		while ((f = _first.load()) != nullptr) {
@@ -122,14 +140,22 @@ private:
 		_last.compare_exchange_strong(prev_last_node, f);
 	}
 
+	/**
+	 *
+	 */
 	__force_inline__
 	static void run(lock_free_queue& q) {
 		std::unique_lock<std::mutex> lock(q.mtx);
-		q.cv.wait_for(lock, std::chrono::milliseconds(1), [&]{
-//		q.cv.wait(lock, [&]{
-			for (;q._first.load() != q._last.load() && q._first.load()->done;) {
-				q.flush(q._first.load());
+//		q.cv.wait_for(lock, std::chrono::microseconds(10), [&]{
+		q.cv.wait(lock, [&]{
+			node* f = q._first.load();
+			node* l = q._last.load();
+//			DEBUG("f: %p, l: %p", f, l);
+			for (;f != l && f != nullptr && f->done; f = q._first.load()) {
+//				DEBUG("Printer thread flushing node: %p", f);
+				q.flush(f);
 			}
+//			DEBUG("Printer thread done flushing");
 			return (q.__kill__.load()) ? true : false;
 		});
 		while (!q.__terminated__.load()) q.__terminated__.store(true);
