@@ -47,8 +47,8 @@ public:
 	atomic<uint> current_flush_count;
 	atomic<FILE*> _output_stream_;
 	thread printer;
-	condition_variable cv;
-	mutex mtx;
+	condition_variable cv, cv1;
+	mutex mtx, mtx1;
 
 	lock_free_queue() {
 		num_nodes.store(0);
@@ -89,11 +89,20 @@ public:
 
 
 private:
+	atomic<bool> running;
 	/**
 	 * Only gets called in the get function
 	 */
 	__force_inline__
 	node* append() {
+		if (num_nodes % flush_interval == 0) {
+			running = false;
+			std::unique_lock<mutex> lock(mtx1);
+			cv1.wait_for(lock,  std::chrono::nanoseconds(0), [&]{
+				return (num_nodes % flush_interval);
+			});
+		}
+		running = true;
 //		DEBUG("Appending node..");
 		node* n = new node(_output_stream_);
 		++num_nodes;
@@ -104,7 +113,8 @@ private:
 //		DEBUG("new first: %p", _first.load());
 //		DEBUG("Done appending node.");
 //		if (++current_flush_count % flush_interval) cv.notify_one();
-		cv.notify_one();
+//		cv.notify_one();
+		cv1.notify_all();
 		return n;
 	}
 
@@ -131,12 +141,14 @@ private:
 	__force_inline__
 	void flush_all() {
 //		DEBUG("flush_all..");
+		std::lock_guard<mutex> lock(mtx);
 		node* f;
 		node* prev_last_node = _last;
 		while ((f = _first) != nullptr) {
 			flush(f);
 		}
 		_last.compare_exchange_strong(prev_last_node, f);
+		running = true;
 	}
 
 	/**
@@ -158,6 +170,7 @@ private:
 				delete n;
 				--q.num_nodes;
 			}
+			while (!q.running) q.cv1.notify_all();
 			q._first = f;
 //			DEBUG("num_nodes: %d", q.num_nodes.load());
 //			DEBUG("Printer thread done flushing");
