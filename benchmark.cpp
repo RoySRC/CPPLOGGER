@@ -5,6 +5,7 @@
  *      Author: sajeeb
  */
 
+#include <assert.h>
 #include <iostream>
 #include <thread>
 #include <CPPLOGGER.h>
@@ -33,6 +34,7 @@ void bench(size_t iters, const char* msg) {
 	logger_output_stream(stdout);
 	logger_enable(true);
 	logger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
+//	assert(logger::queue._last.load()->stream == stdout);
 }
 
 void single_threaded(size_t iters) {
@@ -54,7 +56,7 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	using std::chrono::high_resolution_clock;
 
 	std::thread _threads[n_threads];
-	for (size_t i=0; i<n_threads; ++i) _threads[i] = std::thread([&]() {
+	for (size_t i=0; i<n_threads; ++i) _threads[i] = std::thread([&]{
         for (int j = 0; j < int(iters / n_threads); j++) {
 			logger_info_mt("Hello logger: msg number %d", j);
         }
@@ -90,6 +92,7 @@ void multi_threaded(size_t threads, size_t iters) {
 int main(int argc, char** argv) {
 	logger_print_file(false);
 	logger_print_line(false);
+//	logger_print_log_type(false);
 
 	setlocale(LC_NUMERIC, "");
 	unsigned int iters = 1000000;

@@ -322,6 +322,26 @@ int main() {
 }
 ```
 
+#### Asynchronous logging
+```c++
+#include <CPPLOGGER.h>
+
+logger_init();
+
+int main() {
+	logger_info("This message is not asynchronously logged.");
+	logger_async_info("This message is asynchronously logged");
+
+	logger_error("This error message is not asynchronously logged.");
+	logger_async_error("This error message is asynchronously logged");
+
+	logger_warning("This warning message is not asynchronously logged.");
+	logger_async_warning("This warning message is asynchronously logged");
+}
+```
+The output of the above program may vary since the asynchronous logging las to go through additional steps to print something to screen. It is not suggested to use both synchronous logging and asynchronous logging at the same time as in the above example.
+
+
 #### Get type of a variable
 ```c++
 #include <CPPLOGGER.h>
@@ -362,12 +382,13 @@ Throughput is the number of messages printed per second. Iterations is the numbe
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.46 secs | Throughput: 10,955,614/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 417,115,448/sec
+[INFO]: basic           | Elapsed: 0.52 secs | Throughput: 9,532,075/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 390,102,932/sec
 [INFO]: 
 [INFO]: *******************************************************************
-[INFO]: 10 thread benchmark with 5,000,000 iterations
+[INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 2.45 secs | Throughput: 2,044,349/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 453,749,783/sec
+[INFO]: basic           | Elapsed: 1.27 secs | Throughput: 3,928,958/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 291,483,731/sec
 ```
+
