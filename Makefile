@@ -14,4 +14,4 @@ async_benchmark: async_benchmark.cpp *.h
 
 	
 clean:
-	rm -rf ./*.o ./benchmark
+	rm -rf ./*.o ./benchmark ./async_benchmark
