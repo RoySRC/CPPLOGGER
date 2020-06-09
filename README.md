@@ -322,6 +322,26 @@ int main() {
 }
 ```
 
+#### Asynchronous logging
+```c++
+#include <CPPLOGGER.h>
+
+logger_init();
+
+int main() {
+	logger_info("This message is not asynchronously logged.");
+	logger_async_info("This message is asynchronously logged");
+
+	logger_error("This error message is not asynchronously logged.");
+	logger_async_error("This error message is asynchronously logged");
+
+	logger_warning("This warning message is not asynchronously logged.");
+	logger_async_warning("This warning message is asynchronously logged");
+}
+```
+The output of the above program may vary since the asynchronous logging las to go through additional steps to print something to screen. It is not suggested to use both synchronous logging and asynchronous logging at the same time as in the above example.
+
+
 #### Get type of a variable
 ```c++
 #include <CPPLOGGER.h>
