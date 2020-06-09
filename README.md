@@ -383,7 +383,7 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz
 
 Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
-#### Benchmark result
+#### Benchmark result synchronous
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
@@ -397,4 +397,17 @@ Throughput is the number of messages printed per second. Iterations is the numbe
 [INFO]: basic           | Elapsed: 1.27 secs | Throughput: 3,928,958/sec
 [INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 291,483,731/sec
 ```
-
+#### Benchmark result asynchronous
+```
+[INFO]: *******************************************************************
+[INFO]: Single threaded benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 1.40 secs | Throughput: 3,565,068/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 378,145,690/sec
+[INFO]: 
+[INFO]: *******************************************************************
+[INFO]: 100 thread benchmark with 5,000,000 iterations
+[INFO]: *******************************************************************
+[INFO]: basic           | Elapsed: 0.71 secs | Throughput: 7,023,647/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 523,968,740/sec
+```
