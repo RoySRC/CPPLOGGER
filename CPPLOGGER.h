@@ -55,6 +55,7 @@ namespace logger { \
 	va_list __args__; \
 	FILE* _output_stream_ = stdout; \
 	lock_free_queue queue;\
+	timestamp_resolution _resolution = logger::timestamp_resolution::millisecond;\
 }
 
 namespace logger {
@@ -122,6 +123,99 @@ namespace logger {
 			logger::queue.set_output_stream((FILE*)v)
 
 	/**
+	 *
+	 */
+	enum timestamp_resolution{
+		nanosecond, microsecond, millisecond, seconds, minutes, hours
+	};
+	extern timestamp_resolution _resolution;
+	#define logger_nanosecond 	logger::timestamp_resolution::nanosecond
+	#define logger_microsecond 	logger::timestamp_resolution::microsecond
+	#define logger_millisecond 	logger::timestamp_resolution::millisecond
+	#define logger_seconds 		logger::timestamp_resolution::seconds
+	#define logger_minutes 		logger::timestamp_resolution::minutes
+	#define logger_hours 		logger::timestamp_resolution::hours
+	#define logger_days 		logger::timestamp_resolution::days
+	#define logger_weeks 		logger::timestamp_resolution::weeks
+	#define logger_months 		logger::timestamp_resolution::months
+	#define logger_years 		logger::timestamp_resolution::years
+	#define logger_timestamp_resolution(v) logger::_resolution = v
+
+	/**
+	 *
+	 */
+	__force_inline__
+	void __print_timestamp_printf__() {
+		const auto duration = std::chrono::system_clock::now().time_since_epoch();
+		switch (_resolution) {
+			case nanosecond:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+				break;
+
+			case microsecond:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+				break;
+
+			case millisecond:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+				break;
+
+			case seconds:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+				break;
+
+			case minutes:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+				break;
+
+			case hours:
+				fprintf(_output_stream_, "[%ld]",
+						std::chrono::duration_cast<std::chrono::hours>(duration).count());
+				break;
+		}
+	}
+
+	/**
+	 *
+	 */
+	__force_inline__
+	int __print_timestamp_sprintf__(char* b) {
+		int rv = 0;
+		const auto duration = std::chrono::system_clock::now().time_since_epoch();
+		switch (_resolution) {
+			case nanosecond:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+				break;
+
+			case microsecond:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+				break;
+
+			case millisecond:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+				break;
+
+			case seconds:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+				break;
+
+			case minutes:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+				break;
+
+			case hours:
+				rv += sprintf(b, "[%ld]", std::chrono::duration_cast<std::chrono::hours>(duration).count());
+				break;
+		}
+		return rv;
+	}
+
+	/**
 	 * global va_list to optimize for performance on single threads
 	 */
 	extern va_list __args__;
@@ -177,9 +271,7 @@ namespace logger {
 			fputs("[" color type ANSI_RESET "]", _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
-			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
-			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
-			fprintf(_output_stream_, "[%ld]", millis); \
+			__print_timestamp_printf__(); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
@@ -217,9 +309,7 @@ namespace logger {
 			b += sprintf(b, "[" color type ANSI_RESET "]"); \
 		} \
 		if (_print_timestamps_) { \
-			const auto duration = std::chrono::system_clock::now().time_since_epoch(); \
-			const unsigned long int millis = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count(); \
-			b += sprintf(b, "[%ld]", millis); \
+			b += __print_timestamp_sprintf__(b);\
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
