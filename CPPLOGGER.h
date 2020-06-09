@@ -248,6 +248,7 @@ namespace logger {
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	#define logger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_info(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
@@ -279,6 +280,7 @@ namespace logger {
 	 * Variadic argument function for printing error logs to screen.
 	 */
 	#define logger_error(...) logger::_error_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_error(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
@@ -310,6 +312,7 @@ namespace logger {
 	 * Variadic argument function for printing warning logs to screen.
 	 */
 	#define logger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_warning(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
