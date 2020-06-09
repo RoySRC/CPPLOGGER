@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-std=c++14 -Wall
+CFLAGS=-std=c++17 -Wall
 INCLUDE_DIRS=-I.
 LIBS=-lpthread
 
