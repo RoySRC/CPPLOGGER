@@ -384,20 +384,22 @@ Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz
 Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
 #### Benchmark result synchronous
+In synchronous mode the logging results are immediately displayed on the output accounting for OS buffer time.
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.52 secs | Throughput: 9,532,075/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 390,102,932/sec
+[INFO]: basic           | Elapsed: 0.53 secs | Throughput: 9,473,899/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 399,842,653/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 1.27 secs | Throughput: 3,928,958/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 291,483,731/sec
+[INFO]: basic           | Elapsed: 2.17 secs | Throughput: 2,308,156/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 332,203,288/sec
 ```
 #### Benchmark result asynchronous
+In asynchronous mode the logging results are not immediately displayed on the output. The logging thread creates a log request and then proceeds to do other work. These logs are eventually displayed on the output when the separate logger thread gets to them or when the program is terminated. If, however the logger queue is full, the threads that want to log a message gets halted while the queue is emptied out. By default, the queue size is 8192 lines.
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
