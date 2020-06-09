@@ -6,4 +6,5 @@ main
 .settings
 *.out
 benchmark
+async_benchmark
 */bin/*
