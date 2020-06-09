@@ -68,7 +68,10 @@ public:
 		DEBUG("In Destructor.");
 		DEBUG("Terminating print thread");
 		__kill__.store(true);
-		while (!__terminated__.load()) cv.notify_one();
+		while (!__terminated__.load()) {
+			running = true;
+			cv.notify_one();
+		}
 		DEBUG("Print thread terminated.");
 		DEBUG("Number of nodes remaining: %d", num_nodes.load());
 		flush_all();
