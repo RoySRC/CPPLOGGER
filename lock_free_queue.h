@@ -31,10 +31,10 @@ using std::mutex;
 class lock_free_queue {
 public:
 	typedef struct node {
-		char data[1024] = {'\0', };
+		char data[256];
 		node* next = nullptr;
 		bool done = false;
-		FILE* stream = stdout;
+		FILE* stream;
 		node(FILE* os) : stream(os) {}
 	} node;
 
@@ -43,7 +43,7 @@ public:
 	atomic<int> num_nodes;
 	atomic<bool> __kill__;
 	atomic<bool> __terminated__;
-	uint flush_interval = pow(2, 5);
+	uint flush_interval = pow(2, 13);
 	atomic<uint> current_flush_count;
 	atomic<FILE*> _output_stream_;
 	thread printer;
@@ -56,12 +56,11 @@ public:
 		__terminated__.store(false);
 		__kill__.store(false);
 
-		_first.store(nullptr);
-		_last.store(nullptr);
+		_first.store(NULL);
+		_last.store(NULL);
 
-		_output_stream_.store((FILE*)stdout);
-		setbuf(_output_stream_.load(), NULL);
-		printer = thread(run, std::ref(*this));
+		set_output_stream(stdout);
+		printer = thread(lock_free_queue::run, std::ref(*this));
 		printer.detach();
 	}
 
@@ -69,7 +68,7 @@ public:
 		DEBUG("In Destructor.");
 		DEBUG("Terminating print thread");
 		__kill__.store(true);
-		while (!__terminated__.load()) cv.notify_all();
+		while (!__terminated__.load()) cv.notify_one();
 		DEBUG("Print thread terminated.");
 		DEBUG("Number of nodes remaining: %d", num_nodes.load());
 		flush_all();
@@ -77,16 +76,12 @@ public:
 
 	__force_inline__
 	node* get() {
-		node* rv = append();
-//		if (!(current_flush_count++ % flush_interval)) cv.notify_all();
-//		cv.notify_all();
-		return rv;
+		return append();
 	}
 
 	__force_inline__
 	void set_output_stream(FILE* os) {
 //		DEBUG("Value before setting stream: %p", _output_stream_.load());
-//		DEBUG)
 		_output_stream_.store(os);
 //		setbuf(_output_stream_.load(), NULL);
 //		DEBUG("Value after setting stream: %p", _output_stream_.load());
@@ -100,13 +95,16 @@ private:
 	__force_inline__
 	node* append() {
 //		DEBUG("Appending node..");
-		node* n = new node(_output_stream_.load());
+		node* n = new node(_output_stream_);
+		++num_nodes;
 //		DEBUG("new node: %p", n);
 		node* prev = _last.exchange(n);
 //		DEBUG("Checking previous node pointer: %p", prev);
 		(prev) ? prev->next = n : _first = n;
 //		DEBUG("new first: %p", _first.load());
 //		DEBUG("Done appending node.");
+//		if (++current_flush_count % flush_interval) cv.notify_one();
+		cv.notify_one();
 		return n;
 	}
 
@@ -121,9 +119,10 @@ private:
 //		DEBUG("Printing contents of node: %p", n);
 //		setbuf(n->stream, NULL);
 		fprintf(n->stream, "%s", n->data);
-		DEBUG("Printed: %s to %p", n->data, n->stream);
+//		DEBUG("Printed: %s to %p", n->data, n->stream);
 //		DEBUG("DELETE: %p", n);
 		delete n;
+		--num_nodes;
 	}
 
 	/**
@@ -133,8 +132,8 @@ private:
 	void flush_all() {
 //		DEBUG("flush_all..");
 		node* f;
-		node* prev_last_node = _last.load();
-		while ((f = _first.load()) != nullptr) {
+		node* prev_last_node = _last;
+		while ((f = _first) != nullptr) {
 			flush(f);
 		}
 		_last.compare_exchange_strong(prev_last_node, f);
@@ -146,15 +145,21 @@ private:
 	__force_inline__
 	static void run(lock_free_queue& q) {
 		std::unique_lock<std::mutex> lock(q.mtx);
-//		q.cv.wait_for(lock, std::chrono::microseconds(10), [&]{
+//		q.cv.wait_for(lock, std::chrono::seconds(1), [&]{
 		q.cv.wait(lock, [&]{
-			node* f = q._first.load();
-			node* l = q._last.load();
+//			if (q.num_nodes < 8192) return false;
+			node* f = q._first;
 //			DEBUG("f: %p, l: %p", f, l);
-			for (;f != l && f != nullptr && f->done; f = q._first.load()) {
+			for (;f != q._last && f != NULL && f->done;) {
 //				DEBUG("Printer thread flushing node: %p", f);
-				q.flush(f);
+				fprintf(f->stream, "%s", f->data);
+				const node* n = f;
+				f = f->next;
+				delete n;
+				--q.num_nodes;
 			}
+			q._first = f;
+//			DEBUG("num_nodes: %d", q.num_nodes.load());
 //			DEBUG("Printer thread done flushing");
 			return (q.__kill__.load()) ? true : false;
 		});
