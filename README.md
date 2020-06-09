@@ -148,7 +148,13 @@ int main() {
 	logger_info("This is printed without a time stamp.");
 
 	logger_print_timestamps(true);
-	logger_info("This is printed with a time stamp.");
+	logger_info("This is printed with millisecond time stamp resolution.");
+
+	logger_timestamp_resolution(logger_microsecond);
+	logger_info("This is printed with microsecond time stamp resolution.");
+
+	logger_timestamp_resolution(logger_nanosecond);
+	logger_info("This is printed with nanosecond time stamp resolution.");
 
 }
 ```
