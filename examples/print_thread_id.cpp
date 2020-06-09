@@ -34,5 +34,5 @@ int main() {
 		threads[i] = std::thread(print_thread, i+1);
 	for (std::thread& t : threads) t.join();
 
-	logger_info("Done executing.");
+	logger_async_info("Done executing.");
 }

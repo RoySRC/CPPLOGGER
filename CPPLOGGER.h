@@ -249,18 +249,18 @@ namespace logger {
 	/**
 	 * The following set of macros take in a string object as argument and return a constant char pointer
 	 */
-	#define COLOR(color, msg) color+msg;
-	__force_inline__ string _BLACK_(string msg)		{	return COLOR(ANSI_BLACK, msg);		}
-	__force_inline__ string _RED_(string msg)		{	return COLOR(ANSI_RED, msg);		}
-	__force_inline__ string _GREEN_(string msg)		{	return COLOR(ANSI_GREEN, msg);		}
-	__force_inline__ string _YELLOW_(string msg)	{	return COLOR(ANSI_YELLOW, msg);		}
-	__force_inline__ string _BLUE_(string msg)		{	return COLOR(ANSI_BLUE, msg);		}
-	__force_inline__ string _PURPLE_(string msg)	{	return COLOR(ANSI_PURPLE, msg);		}
-	__force_inline__ string _CYAN_(string msg)		{	return COLOR(ANSI_CYAN, msg);		}
-	__force_inline__ string _WHITE_(string msg)		{	return COLOR(ANSI_WHITE, msg);		}
-	__force_inline__ string _BOLD_(string msg)		{	return COLOR(ANSI_BOLD, msg);		}
-	__force_inline__ string _UNDERLINE_(string msg)	{	return COLOR(ANSI_UNDERLINE, msg);	}
-	__force_inline__ string _ITALIC_(string msg)	{	return COLOR(ANSI_ITALIC, msg);		}
+	#define __CPPLOGGER_COLOR__(color, msg) color+msg;
+	__force_inline__ string _BLACK_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
+	__force_inline__ string _RED_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
+	__force_inline__ string _GREEN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
+	__force_inline__ string _YELLOW_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
+	__force_inline__ string _BLUE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
+	__force_inline__ string _PURPLE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
+	__force_inline__ string _CYAN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
+	__force_inline__ string _WHITE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
+	__force_inline__ string _BOLD_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
+	__force_inline__ string _UNDERLINE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
+	__force_inline__ string _ITALIC_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
 
 
 	/**
@@ -297,10 +297,20 @@ namespace logger {
 	}
 
 	/**
+	 *
+	 */
+	#define __CPPLOGGER_MT__(color, type) {\
+		va_list __args__;\
+		va_start(__args__, fmt);\
+		std::lock_guard<std::mutex> lock(critical_section);\
+		__CPPLOGGER_PRINT__(color, type);\
+	}
+
+	/**
 	 * wrapper function containing the boilerplate code for multi-threaded
 	 * logging
 	 */
-	#define __CPPLOGGER_MT__(fmt, color, type) {\
+	#define __CPPLOGGER_ASYNC__(fmt, color, type) {\
 		va_list __args__; \
 		va_start(__args__, fmt); \
 		lock_free_queue::node* _node = queue.get();\
@@ -338,7 +348,9 @@ namespace logger {
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	#define logger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
-	#define logger_async_info(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_info(...) logger::_info_async_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_info_mt(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
+
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
@@ -353,16 +365,28 @@ namespace logger {
 		}
 	}
 
-	#define logger_info_mt(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
+
 	inline void _info_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
-			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO");
+			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_GREEN, "INFO");
+			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
+		}
+	}
+
+	inline void _info_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
+		}
+	}
+
+	inline void _info_async_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
 		}
 	}
 
@@ -370,7 +394,9 @@ namespace logger {
 	 * Variadic argument function for printing error logs to screen.
 	 */
 	#define logger_error(...) logger::_error_(__FILE__, __LINE__, __VA_ARGS__)
-	#define logger_async_error(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_error(...) logger::_error_async_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_error_mt(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
+
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
@@ -385,16 +411,27 @@ namespace logger {
 		}
 	}
 
-	#define logger_error_mt(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
 	inline void _error_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
-			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR");
+			__CPPLOGGER_MT__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_RED, " ERR");
+			__CPPLOGGER_MT__(ANSI_RED, " ERR");
+		}
+	}
+
+	inline void _error_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
+		}
+	}
+
+	inline void _error_async_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
 		}
 	}
 
@@ -402,7 +439,9 @@ namespace logger {
 	 * Variadic argument function for printing warning logs to screen.
 	 */
 	#define logger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
-	#define logger_async_warning(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_async_warning(...) logger::_warning_async_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
+
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
 			va_start(__args__, fmt);
@@ -417,16 +456,28 @@ namespace logger {
 		}
 	}
 
-	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
+
 	inline void _warning_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_ && cvl >= avl) {
-			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN");
+			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
 		}
 	}
 
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_) {
-			__CPPLOGGER_MT__(fmt, ANSI_BLUE, "WARN");
+			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
+		}
+	}
+
+	inline void _warning_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
+		if (_enable_ && cvl >= avl) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
+		}
+	}
+
+	inline void _warning_async_(const char* _file_, const int line, const char* fmt, ...) {
+		if (_enable_) {
+			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
 		}
 	}
 
