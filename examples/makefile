@@ -25,16 +25,16 @@ make_bin_dir:
 	mkdir -p ./bin
 
 basic_usage: basic_usage.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 typographic_example: typographic_example.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 disable_logging: disable_logging.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 time_stamp: time_stamp.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 multi_thread: multi_thread.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
@@ -43,19 +43,19 @@ print_thread_id: print_thread_id.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 	
 log_type: log_type.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 file_name: file_name.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 line_number: line_number.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 	
 no_file_line: no_file_line.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 verbosity: verbosity.cpp ../*.h
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 asynchronous_logging: asynchronous_logging.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)

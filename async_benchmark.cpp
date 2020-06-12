@@ -8,7 +8,8 @@
 #include <assert.h>
 #include <iostream>
 #include <thread>
-#include <CPPLOGGER.h>
+
+#include "CPPLOGGER_ASYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -33,14 +34,14 @@ void bench(size_t iters, const char* msg) {
 
 	logger_output_stream(stdout);
 	logger_enable(true);
-	logger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
+	logger_async_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
 //	assert(logger::queue._last.load()->stream == stdout);
 }
 
 void single_threaded(size_t iters) {
-	logger_info("*******************************************************************");
-	logger_info("Single threaded benchmark with %'ld iterations", iters);
-	logger_info("*******************************************************************");
+	logger_async_info("*******************************************************************");
+	logger_async_info("Single threaded benchmark with %'ld iterations", iters);
+	logger_async_info("*******************************************************************");
 
 	logger_output_stream(null_file);
 	bench(iters, "basic");
@@ -73,13 +74,13 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 
 	logger_output_stream(stdout);
 	logger_enable(true);
-	logger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
+	logger_async_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
 }
 
 void multi_threaded(size_t threads, size_t iters) {
-	logger_info("*******************************************************************");
-	logger_info("%'d thread benchmark with %'ld iterations", threads, iters);
-	logger_info("*******************************************************************");
+	logger_async_info("*******************************************************************");
+	logger_async_info("%'d thread benchmark with %'ld iterations", threads, iters);
+	logger_async_info("*******************************************************************");
 
 	logger_output_stream(null_file);
 	multi_thread_bench(threads, iters, "basic");
@@ -110,7 +111,7 @@ int main(int argc, char** argv) {
 	}
 
 	single_threaded(iters);
-	logger_info("");
+	logger_async_info("");
 	multi_threaded(threads, iters);
 
 	fclose(null_file);

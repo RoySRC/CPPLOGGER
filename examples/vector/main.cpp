@@ -5,9 +5,9 @@
  *      Author: sajeeb
  */
 
-#include <CPPLOGGER.h>
 #include <iostream>
 #include <vector.h>
+#include "../../CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -19,10 +19,6 @@ int main() {
 
 	vector v;
 
-	v.add(new element(12));
-
-	logger_enable(false);
-
-	v.add(new element(13));
+	for (uint i=0; i<100; ++i) v.add(new element(i));
 
 }

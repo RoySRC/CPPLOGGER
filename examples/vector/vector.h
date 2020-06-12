@@ -5,9 +5,9 @@
  *      Author: sajeeb
  */
 
-#include <CPPLOGGER.h>
 #include <iostream>
 #include <element.h>
+#include "../../CPPLOGGER_SYNC.h"
 
 #ifndef EXAMPLES_VECTOR_VECTOR_H_
 #define EXAMPLES_VECTOR_VECTOR_H_
