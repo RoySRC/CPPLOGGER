@@ -5,7 +5,7 @@
  *      Author: sajeeb
  */
 
-#include <CPPLOGGER.h>
+#include "../../CPPLOGGER_SYNC.h"
 
 #ifndef EXAMPLES_VECTOR_ELEMENT_H_
 #define EXAMPLES_VECTOR_ELEMENT_H_

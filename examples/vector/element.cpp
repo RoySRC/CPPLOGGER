@@ -12,7 +12,7 @@ element::element() {
 }
 
 element::element(int data) {
-	logger_info("creating element with data: %d", data);
+	logger_info("created element with data: %d", data);
 	this->data = data;
 }
 

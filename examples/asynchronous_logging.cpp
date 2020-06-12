@@ -5,12 +5,12 @@
  *      Author: sajeeb
  */
 
-#include <CPPLOGGER.h>
+#include "CPPLOGGER_ASYNC.h"
 
 logger_init();
 
 int main() {
-	logger_info("This message is not asynchronously logged.");
+	logger_async_info("This message is not asynchronously logged.");
 	logger_async_info("This message is asynchronously logged");
 
 	logger_error("This error message is not asynchronously logged.");

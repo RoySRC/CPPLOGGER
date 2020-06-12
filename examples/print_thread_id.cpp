@@ -5,10 +5,10 @@
  *      Author: sajeeb
  */
 
-#include <CPPLOGGER.h>
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "CPPLOGGER_ASYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.

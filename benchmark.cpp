@@ -8,7 +8,8 @@
 #include <assert.h>
 #include <iostream>
 #include <thread>
-#include <CPPLOGGER.h>
+
+#include "CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.

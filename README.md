@@ -35,7 +35,7 @@ This is a simple, lightweight and thread safe logger for C++.
 ## Usage examples
 #### Basic usage
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -60,7 +60,7 @@ int main() {
 
 #### Typographic examples with colors
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -104,7 +104,7 @@ int main() {
 
 #### Disabling global logging example
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -131,7 +131,7 @@ int main() {
 
 #### Printing logging time stamps
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -161,7 +161,7 @@ int main() {
 
 #### Logging with multiple threads
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -185,7 +185,7 @@ int main() {
 
 ####  Logging with printing thread IDs
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -210,7 +210,7 @@ int main() {
 
 #### Logging without printing the log type
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -234,7 +234,7 @@ int main() {
 
 #### Logging without printing the file name
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -258,7 +258,7 @@ int main() {
 
 #### Logging without printing the line number
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -282,7 +282,7 @@ int main() {
 
 #### Logging without printing either the filename or the line number
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -307,7 +307,7 @@ int main() {
 
 #### Verbose Level 
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
@@ -330,7 +330,7 @@ int main() {
 
 #### Asynchronous logging
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_ASYNC.h>
 
 logger_init();
 
@@ -350,7 +350,7 @@ The output of the above program may vary since the asynchronous logging las to g
 
 #### Get type of a variable
 ```c++
-#include <CPPLOGGER.h>
+#include <CPPLOGGER_SYNC.h>
 
 /**
  * The following should always be called only in the main translation unit.
