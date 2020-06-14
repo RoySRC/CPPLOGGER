@@ -27,7 +27,7 @@ This is a simple, lightweight and thread safe logger for C++.
 		* Threads IDs for logging at thread level for Multi/Single threaded applications
 		* Logging types
 		* File name and Line numbers
-* Provides a flag to disable global logging, when this flag is set all logging is disabled
+* Provides a flag to disable global logging and also logging in a single translation unit.
 * Enabling/Disabling logging does not require flags to be passed in at compile time
 * Provides verbose level option to limit how much logging information gets printed. Refer to [this](#Verbose-Level) example.
 	
@@ -104,7 +104,7 @@ int main() {
 
 #### Disabling global logging example
 ```c++
-#include <CPPLOGGER_SYNC.h>
+#include "../CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -120,6 +120,8 @@ int main() {
 
 	logger_info("This is before disabling global logging.");
 
+	// This disables logging in the current translation unit.
+	// To disable global logging use: logger_enable_global(false)
 	logger_enable(false);
 	logger_info("This should not be printed.");
 
@@ -377,7 +379,7 @@ int main(int argc, char** argv) {
 ```
 
 ## Benchmarks
-Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i5-6600K CPU @ 4.60GHz × 4 
+Benchmarking done on Ubuntu 20.04 64 bit, Intel® Core™ i7-8750H CPU @ 2.20GHz × 12  
 
 Throughput is the number of messages printed per second. Iterations is the number of log messages.
 
@@ -387,27 +389,28 @@ In synchronous mode the logging results are immediately displayed on the output 
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.53 secs | Throughput: 9,473,899/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 399,842,653/sec
+[INFO]: basic           | Elapsed: 0.63 secs | Throughput: 7,878,563/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 288,832,788/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 2.17 secs | Throughput: 2,308,156/sec
-[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 332,203,288/sec
+[INFO]: basic           | Elapsed: 5.53 secs | Throughput: 904,463/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 482,712,240/sec
 ```
+
 #### Benchmark result asynchronous
 In asynchronous mode the logging results are not immediately displayed on the output. The logging thread creates a log request and then proceeds to do other work. These logs are eventually displayed on the output when the separate logger thread gets to them or when the program is terminated. If, however the logger queue is full, the threads that want to log a message gets halted while the queue is emptied out. By default, the queue size is 8192 lines.
 ```
 [INFO]: *******************************************************************
 [INFO]: Single threaded benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 1.40 secs | Throughput: 3,565,068/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 378,145,690/sec
+[INFO]: basic           | Elapsed: 1.90 secs | Throughput: 2,628,297/sec
+[INFO]: disabled        | Elapsed: 0.02 secs | Throughput: 267,387,085/sec
 [INFO]: 
 [INFO]: *******************************************************************
 [INFO]: 100 thread benchmark with 5,000,000 iterations
 [INFO]: *******************************************************************
-[INFO]: basic           | Elapsed: 0.71 secs | Throughput: 7,023,647/sec
-[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 523,968,740/sec
+[INFO]: basic           | Elapsed: 3.00 secs | Throughput: 1,667,926/sec
+[INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 656,571,055/sec
 ```

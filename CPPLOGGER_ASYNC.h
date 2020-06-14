@@ -15,7 +15,7 @@ namespace logger { \
 	bool _print_log_type_ = true; \
 	bool _print_file_ = true; \
 	bool _print_line_ = true; \
-	bool _enable_ = true; \
+	bool _enable_global_ = true; \
 	bool _flush_immediately_ = false; \
 	mutex critical_section; \
 	va_list __args__; \
@@ -84,13 +84,13 @@ namespace logger {
 	 */
 
 	inline void _info_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
 		}
 	}
@@ -100,13 +100,13 @@ namespace logger {
 	 */
 
 	inline void _error_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
 		}
 	}
@@ -116,13 +116,13 @@ namespace logger {
 	 */
 
 	inline void _warning_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
 		}
 	}
 
 	inline void _warning_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
 		}
 	}

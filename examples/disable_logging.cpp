@@ -21,6 +21,8 @@ int main() {
 
 	logger_info("This is before disabling global logging.");
 
+	// This disables logging in the current translation unit.
+	// To disable global logging use: logger_enable_global(false)
 	logger_enable(false);
 	logger_info("This should not be printed.");
 
