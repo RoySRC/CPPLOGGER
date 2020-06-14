@@ -33,7 +33,7 @@ void bench(size_t iters, const char* msg) {
 	auto delta_d = duration_cast<duration<double>>(delta).count();
 
 	logger_output_stream(stdout);
-	logger_enable(true);
+	logger_enable_global(true);
 	logger_async_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
 //	assert(logger::queue._last.load()->stream == stdout);
 }
@@ -47,7 +47,7 @@ void single_threaded(size_t iters) {
 	bench(iters, "basic");
 
 	logger_output_stream(null_file);
-	logger_enable(false);
+	logger_enable_global(false);
 	bench(iters, "disabled");
 }
 
@@ -73,7 +73,7 @@ void multi_thread_bench(size_t n_threads, size_t iters, string type) {
 	auto delta_d = duration_cast<duration<double>>(delta).count();
 
 	logger_output_stream(stdout);
-	logger_enable(true);
+	logger_enable_global(true);
 	logger_async_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", type.c_str(), delta_d, int(iters/delta_d));
 }
 
@@ -86,7 +86,7 @@ void multi_threaded(size_t threads, size_t iters) {
 	multi_thread_bench(threads, iters, "basic");
 
 	logger_output_stream(null_file);
-	logger_enable(false);
+	logger_enable_global(false);
 	multi_thread_bench(threads, iters, "disabled");
 }
 

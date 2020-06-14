@@ -24,9 +24,12 @@
 using std::string;
 using std::mutex;
 
+#ifndef __force_inline__
 #define __force_inline__ __attribute__((always_inline)) inline
+#endif
 
-
+#ifndef LOGGER_COLORS
+#define LOGGER_COLORS
 #define logger_black(msg) 		logger::_BLACK_(msg).c_str()
 #define logger_red(msg)			logger::_RED_(msg).c_str()
 #define logger_green(msg) 		logger::_GREEN_(msg).c_str()
@@ -38,6 +41,7 @@ using std::mutex;
 #define logger_bold(msg) 		logger::_BOLD_(msg).c_str()
 #define logger_underline(msg) 	logger::_UNDERLINE_(msg).c_str()
 #define logger_italic(msg) 		logger::_ITALIC_(msg).c_str()
+#endif
 
 /**
  * macro to initialize the extern variables in logger
@@ -50,7 +54,7 @@ namespace logger { \
 	bool _print_log_type_ = true; \
 	bool _print_file_ = true; \
 	bool _print_line_ = true; \
-	bool _enable_ = true; \
+	bool _enable_global_ = true; \
 	bool _flush_immediately_ = false; \
 	mutex critical_section; \
 	va_list __args__; \
@@ -112,8 +116,14 @@ namespace logger {
 	/**
 	 * setting the following to false will disable global logging.
 	 */
-	extern bool _enable_;
-	#define logger_enable(v) logger::_enable_ = v
+	extern bool _enable_global_;
+	#define logger_enable_global(v) logger::_enable_global_ = v
+
+	/**
+	 * Enable or disable logging in a single translation unit
+	 */
+	static bool _enable_translation_uint_ = true;
+	#define logger_enable(v) logger::_enable_translation_uint_ = v
 
 	/**
 	 * The output stream of the logger.
@@ -311,14 +321,14 @@ namespace logger {
 	#define logger_info_mt(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
 		}
@@ -326,13 +336,13 @@ namespace logger {
 
 
 	inline void _info_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
 		}
 	}
 
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
 		}
 	}
@@ -344,27 +354,27 @@ namespace logger {
 	#define logger_error_mt(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_MT__(ANSI_RED, " ERR");
 		}
 	}
 
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_MT__(ANSI_RED, " ERR");
 		}
 	}
@@ -376,14 +386,14 @@ namespace logger {
 	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
 		}
 	}
 
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			va_start(__args__, fmt);
 			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
 		}
@@ -391,13 +401,13 @@ namespace logger {
 
 
 	inline void _warning_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_ && cvl >= avl) {
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
 			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
 		}
 	}
 
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_) {
+		if (_enable_global_ && _enable_translation_uint_) {
 			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
 		}
 	}
@@ -407,7 +417,7 @@ namespace logger {
 	 */
 	template<typename T>
 	const char* get_type(T* c) {
-		if (!_enable_) return nullptr;
+		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
@@ -421,7 +431,7 @@ namespace logger {
 	#ifndef __clang__
 	template<typename T>
 	const char* get_type(T& c) {
-		if (!_enable_) return nullptr;
+		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free
