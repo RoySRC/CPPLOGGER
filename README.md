@@ -348,6 +348,37 @@ int main() {
 }
 ```
 
+#### Setting the log level
+```c++
+#include <CPPLOGGER_SYNC.h>
+
+logger_init();
+
+int main() {
+
+	logger_log_level(logger_loglevel_warning);
+	logger_info("This message should not be printed.");
+	logger_error("This message should not be printed");
+	logger_warning("This warning message should be printed");
+
+	logger_log_level(logger_loglevel_error);
+	logger_info("This info message should not be printed.");
+	logger_error("This error message should be printed");
+	logger_warning("This warning message should not be printed");
+
+	logger_log_level(logger_loglevel_info);
+	logger_info("This info message should be printed.");
+	logger_error("This error message should not be printed");
+	logger_warning("This warning message should not be printed");
+
+	logger_log_level(logger_loglevel_all);
+	logger_info("This info message should be printed.");
+	logger_error("This error message should be printed");
+	logger_warning("This warning message should be printed");
+
+}
+```
+
 #### Get type of a variable
 ```c++
 #include <CPPLOGGER_SYNC.h>

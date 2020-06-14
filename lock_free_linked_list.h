@@ -5,8 +5,8 @@
  *      Author: sajeeb
  */
 
-#ifndef LOCK_FREE_QUEUE_H_
-#define LOCK_FREE_QUEUE_H_
+#ifndef LOCK_FREE_LINKED_LIST_H_
+#define LOCK_FREE_LINKED_LIST_H_
 
 #include <chrono>
 #include <math.h>
@@ -65,15 +65,15 @@ public:
 	}
 
 	~lock_free_queue() {
-		DEBUG("In Destructor.");
-		DEBUG("Terminating print thread");
+		__LOGGER_DEBUGGER__("In Destructor.");
+		__LOGGER_DEBUGGER__("Terminating print thread");
 		__kill__.store(true);
 		while (!__terminated__.load()) {
 			running = true;
 			cv.notify_one();
 		}
-		DEBUG("Print thread terminated.");
-		DEBUG("Number of nodes remaining: %d", num_nodes.load());
+		__LOGGER_DEBUGGER__("Print thread terminated.");
+		__LOGGER_DEBUGGER__("Number of nodes remaining: %d", num_nodes.load());
 		flush_all();
 	}
 
@@ -84,10 +84,10 @@ public:
 
 	__force_inline__
 	void set_output_stream(FILE* os) {
-//		DEBUG("Value before setting stream: %p", _output_stream_.load());
+//		__LOGGER_DEBUGGER__("Value before setting stream: %p", _output_stream_.load());
 		_output_stream_.store(os);
 //		setbuf(_output_stream_.load(), NULL);
-//		DEBUG("Value after setting stream: %p", _output_stream_.load());
+//		__LOGGER_DEBUGGER__("Value after setting stream: %p", _output_stream_.load());
 	}
 
 
@@ -106,15 +106,15 @@ private:
 			});
 		}
 		running = true;
-//		DEBUG("Appending node..");
+//		__LOGGER_DEBUGGER__("Appending node..");
 		node* n = new node(_output_stream_);
 		++num_nodes;
-//		DEBUG("new node: %p", n);
+//		__LOGGER_DEBUGGER__("new node: %p", n);
 		node* prev = _last.exchange(n);
-//		DEBUG("Checking previous node pointer: %p", prev);
+//		__LOGGER_DEBUGGER__("Checking previous node pointer: %p", prev);
 		(prev) ? prev->next = n : _first = n;
-//		DEBUG("new first: %p", _first.load());
-//		DEBUG("Done appending node.");
+//		__LOGGER_DEBUGGER__("new first: %p", _first.load());
+//		__LOGGER_DEBUGGER__("Done appending node.");
 //		if (++current_flush_count % flush_interval) cv.notify_one();
 //		cv.notify_one();
 		cv1.notify_all();
@@ -126,14 +126,14 @@ private:
 	 */
 	__force_inline__
 	void flush(node* n) {
-//		DEBUG("flush");
-//		DEBUG("Setting contents of _first to: %p", n->next);
+//		__LOGGER_DEBUGGER__("flush");
+//		__LOGGER_DEBUGGER__("Setting contents of _first to: %p", n->next);
 		_first.store(n->next);
-//		DEBUG("Printing contents of node: %p", n);
+//		__LOGGER_DEBUGGER__("Printing contents of node: %p", n);
 //		setbuf(n->stream, NULL);
 		fprintf(n->stream, "%s", n->data);
-//		DEBUG("Printed: %s to %p", n->data, n->stream);
-//		DEBUG("DELETE: %p", n);
+//		__LOGGER_DEBUGGER__("Printed: %s to %p", n->data, n->stream);
+//		__LOGGER_DEBUGGER__("DELETE: %p", n);
 		delete n;
 		--num_nodes;
 	}
@@ -143,7 +143,7 @@ private:
 	 */
 	__force_inline__
 	void flush_all() {
-//		DEBUG("flush_all..");
+//		__LOGGER_DEBUGGER__("flush_all..");
 		std::lock_guard<mutex> lock(mtx);
 		node* f;
 		node* prev_last_node = _last;
@@ -164,9 +164,9 @@ private:
 		q.cv.wait(lock, [&]{
 //			if (q.num_nodes < 8192) return false;
 			node* f = q._first;
-//			DEBUG("f: %p, l: %p", f, l);
+//			__LOGGER_DEBUGGER__("f: %p, l: %p", f, l);
 			for (;f != q._last && f != NULL && f->done;) {
-//				DEBUG("Printer thread flushing node: %p", f);
+//				__LOGGER_DEBUGGER__("Printer thread flushing node: %p", f);
 				fprintf(f->stream, "%s", f->data);
 				const node* n = f;
 				f = f->next;
@@ -175,12 +175,12 @@ private:
 			}
 			while (!q.running) q.cv1.notify_all();
 			q._first = f;
-//			DEBUG("num_nodes: %d", q.num_nodes.load());
-//			DEBUG("Printer thread done flushing");
+//			__LOGGER_DEBUGGER__("num_nodes: %d", q.num_nodes.load());
+//			__LOGGER_DEBUGGER__("Printer thread done flushing");
 			return (q.__kill__.load()) ? true : false;
 		});
 		while (!q.__terminated__.load()) q.__terminated__.store(true);
 	}
 };
 
-#endif /* LOCK_FREE_QUEUE_H_ */
+#endif /* LOCK_FREE_LINKED_LIST_H_ */

@@ -19,7 +19,8 @@
 #include <cxxabi.h>
 #include <string.h>
 #include <stdio.h>
-#include "lock_free_queue.h"
+
+#include "lock_free_linked_list.h"
 
 using std::string;
 using std::mutex;
@@ -59,7 +60,8 @@ namespace logger { \
 	mutex critical_section; \
 	va_list __args__; \
 	FILE* _output_stream_ = stdout; \
-	timestamp_resolution _resolution = logger::timestamp_resolution::millisecond;\
+	timestamp_resolution _resolution = timestamp_resolution::millisecond;\
+	log_level _loglevel_global_ = log_level::all;\
 }
 #endif
 
@@ -148,6 +150,24 @@ namespace logger {
 	#define logger_months 		logger::timestamp_resolution::months
 	#define logger_years 		logger::timestamp_resolution::years
 	#define logger_timestamp_resolution(v) logger::_resolution = v
+
+	/**
+	 *
+	 */
+	enum log_level {
+		all, info, error, warning
+	};
+	#define logger_loglevel_all 		logger::log_level::all
+	#define logger_loglevel_info 		logger::log_level::info
+	#define logger_loglevel_error 		logger::log_level::error
+	#define logger_loglevel_warning 	logger::log_level::warning
+
+	/**
+	 *
+	 */
+	extern log_level _loglevel_global_;
+	#define logger_log_level(v) logger::_loglevel_global_ = v
+
 
 	/**
 	 *
@@ -322,28 +342,36 @@ namespace logger {
 
 	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			}
 		}
 	}
 
 	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
+			}
 		}
 	}
 
 
 	inline void _info_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
+			}
 		}
 	}
 
 	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
+			}
 		}
 	}
 
@@ -355,27 +383,35 @@ namespace logger {
 
 	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
+			}
 		}
 	}
 
 	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
+			}
 		}
 	}
 
 	inline void _error_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_MT__(ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
+			}
 		}
 	}
 
 	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_MT__(ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
+			}
 		}
 	}
 
@@ -387,28 +423,36 @@ namespace logger {
 
 	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			}
 		}
 	}
 
 	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			va_start(__args__, fmt);
-			__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				va_start(__args__, fmt);
+				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
+			}
 		}
 	}
 
 
 	inline void _warning_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
+			}
 		}
 	}
 
 	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
+			}
 		}
 	}
 
