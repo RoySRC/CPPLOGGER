@@ -17,7 +17,7 @@
 logger_init();
 
 void print_thread(uint id) {
-	for (int i=0; i<1000; ++i) {
+	for (int i=0; i<2; ++i) {
 		logger_info_mt("%s: %03d | %03d", logger_red("Message from thread"), id, i);
 		logger_info_mt("Message from thread: %03d | %03d", id, i+1);
 	}

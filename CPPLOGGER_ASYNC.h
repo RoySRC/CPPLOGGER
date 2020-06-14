@@ -22,6 +22,7 @@ namespace logger { \
 	FILE* _output_stream_ = stdout; \
 	lock_free_queue queue;\
 	timestamp_resolution _resolution = logger::timestamp_resolution::millisecond;\
+	log_level _loglevel_global_ = logger::log_level::all;\
 }
 
 #define logger_output_stream(v) \
@@ -85,13 +86,18 @@ namespace logger {
 
 	inline void _info_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
+			}
 		}
 	}
 
 	inline void _info_async_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
+			if (_loglevel_global_ == all || _loglevel_global_ == info) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
+
+			}
 		}
 	}
 
@@ -101,13 +107,17 @@ namespace logger {
 
 	inline void _error_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_RED, "ERROR");
+			}
 		}
 	}
 
 	inline void _error_async_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_RED, " ERR");
+			if (_loglevel_global_ == all || _loglevel_global_ == error) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_RED, "ERROR");
+			}
 		}
 	}
 
@@ -117,13 +127,17 @@ namespace logger {
 
 	inline void _warning_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
+			}
 		}
 	}
 
 	inline void _warning_async_(const char* _file_, const int line, const char* fmt, ...) {
 		if (_enable_global_ && _enable_translation_uint_) {
-			__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
+			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
+				__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
+			}
 		}
 	}
 

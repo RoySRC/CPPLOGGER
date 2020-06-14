@@ -9,7 +9,7 @@
 #define LOGGER_DEBUGGER_H_
 
 #ifdef __LOGGER_DEBUGGER__
-#define DEBUG(fmt, ...) {\
+#define __LOGGER_DEBUGGER__(fmt, ...) {\
 	std::stringstream ss;\
 	ss << std::this_thread::get_id();\
 	const unsigned long long int id = std::stoull(ss.str());\
@@ -22,7 +22,7 @@
 	fflush((FILE*)stdout);\
 }
 #else
-#define DEBUG(fmt, ...)
+#define __LOGGER_DEBUGGER__(fmt, ...)
 #endif
 
 

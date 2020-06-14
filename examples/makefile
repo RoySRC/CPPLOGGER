@@ -16,7 +16,8 @@ all: \
 	line_number\
 	no_file_line\
 	verbosity\
-	asynchronous_logging
+	asynchronous_logging\
+	log_level
 	
 run_all: clean all
 	@python3 ./run_all.py
@@ -58,6 +59,9 @@ verbosity: verbosity.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@
 
 asynchronous_logging: asynchronous_logging.cpp ../*.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+
+log_level: log_level.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 
 clean:
