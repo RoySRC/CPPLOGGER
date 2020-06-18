@@ -292,6 +292,23 @@ namespace logger {
 
 
 	/**
+	 *
+	 */
+	template<typename T>
+	string _PRINT_ARRAY_(T* array, size_t size) {
+		string returnValue;
+		returnValue.reserve(size*10);
+		returnValue.append("[");
+		for (size_t i=0; i<size; ++i) {
+			returnValue.append(std::to_string(array[i]));
+			if (i+1 != size) returnValue.append(", ");
+		}
+		returnValue.append("]");
+		return returnValue;
+	}
+	#define logger_array(...) logger::_PRINT_ARRAY_(__VA_ARGS__).c_str()
+
+	/**
 	 * Wrapper macro boilerplate code for printing logging information to screen
 	 */
 	#define __CPPLOGGER_PRINT__(color, type) { \
