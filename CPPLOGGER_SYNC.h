@@ -155,12 +155,13 @@ namespace logger {
 	 *
 	 */
 	enum log_level {
-		all, info, error, warning
+		all, info, error, warning, debug
 	};
 	#define logger_loglevel_all 		logger::log_level::all
 	#define logger_loglevel_info 		logger::log_level::info
 	#define logger_loglevel_error 		logger::log_level::error
 	#define logger_loglevel_warning 	logger::log_level::warning
+	#define logger_loglevel_debug		logger::log_level::debug
 
 	/**
 	 *
@@ -335,45 +336,50 @@ namespace logger {
 	}
 
 	/**
+	 * wrapper macro for the functions provided by the logger
+	 */
+	#define __CPPLOGGER_SYNC_FUNC__(func_name, mt_func_name, log_color, log_level, log_type)\
+	inline void func_name(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				va_start(__args__, fmt);\
+				__CPPLOGGER_PRINT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void func_name(const char* _file_, const int line, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				va_start(__args__, fmt);\
+				__CPPLOGGER_PRINT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void mt_func_name(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_MT__(log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void mt_func_name(const char* _file_, const int line, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_MT__(log_color, log_type);\
+			}\
+		}\
+	}
+
+	/**
 	 * Variadic argument function for printing information logs to screen.
 	 */
 	#define logger_info(...) logger::_info_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_info_mt(...) logger::_info_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
-	inline void _info_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-	inline void _info_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-
-	inline void _info_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-	inline void _info_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_MT__(ANSI_GREEN, "INFO");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_info_, _info_mt_, ANSI_GREEN, info, "INFO")
 
 	/**
 	 * Variadic argument function for printing error logs to screen.
@@ -381,39 +387,7 @@ namespace logger {
 	#define logger_error(...) logger::_error_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_error_mt(...) logger::_error_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
-	inline void _error_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_MT__(ANSI_RED, "ERROR");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_error_, _error_mt_, ANSI_RED, error, "ERROR")
 
 	/**
 	 * Variadic argument function for printing warning logs to screen.
@@ -421,40 +395,17 @@ namespace logger {
 	#define logger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
-	inline void _warning_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
-			}
-		}
-	}
-
-	inline void _warning_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				va_start(__args__, fmt);
-				__CPPLOGGER_PRINT__(ANSI_PURPLE, "WARN");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_warning_, _warning_mt_, ANSI_BLUE, warning, "WARNING")
 
 
-	inline void _warning_mt_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
-			}
-		}
-	}
+	/**
+	 *
+	 */
+	#define logger_debug(...) logger::_debug_(__FILE__, __LINE__, __VA_ARGS__)
+	#define logger_debug_mt(...) logger::_debug_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
-	inline void _warning_mt_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_MT__(ANSI_BLUE, "WARN");
-			}
-		}
-	}
+	__CPPLOGGER_SYNC_FUNC__(_debug_, _debug_mt_, ANSI_CYAN, debug, "DEBUG")
+
 
 	/**
 	 * The following function are used to get the name of a type from its pointer
