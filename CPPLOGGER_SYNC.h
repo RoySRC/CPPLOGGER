@@ -297,7 +297,7 @@ namespace logger {
 	 */
 	#define __CPPLOGGER_PRINT__(color, type) { \
 		if (_print_log_type_) { \
-			fputs("[" color type ANSI_RESET "]", _output_stream_); \
+			fputs(color "[" type "]" ANSI_RESET, _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
 			__print_timestamp_printf__(); \
@@ -395,7 +395,7 @@ namespace logger {
 	#define logger_warning(...) logger::_warning_(__FILE__, __LINE__, __VA_ARGS__)
 	#define logger_warning_mt(...) logger::_warning_mt_(__FILE__, __LINE__, __VA_ARGS__)
 
-	__CPPLOGGER_SYNC_FUNC__(_warning_, _warning_mt_, ANSI_BLUE, warning, "WARNING")
+	__CPPLOGGER_SYNC_FUNC__(_warning_, _warning_mt_, ANSI_PURPLE, warning, "WARNING")
 
 
 	/**

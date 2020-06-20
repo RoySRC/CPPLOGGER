@@ -52,7 +52,7 @@ namespace logger {
 		lock_free_queue::node* _node = queue.get();\
 		char* b = _node->data;\
 		if (_print_log_type_) { \
-			b += sprintf(b, "[" color type ANSI_RESET "]"); \
+			b += sprintf(b, color "[" type "]" ANSI_RESET); \
 		} \
 		if (_print_timestamps_) { \
 			b += __print_timestamp_sprintf__(b);\
@@ -113,6 +113,6 @@ namespace logger {
 	/**
 	 *
 	 */
-	__CPPLOGGER_ASYNC_FUNC__(_warning_async_, ANSI_BLUE, warning, "WARNING")
+	__CPPLOGGER_ASYNC_FUNC__(_warning_async_, ANSI_PURPLE, warning, "WARNING")
 
 }
