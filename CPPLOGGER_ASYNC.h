@@ -52,7 +52,7 @@ namespace logger {
 		lock_free_queue::node* _node = queue.get();\
 		char* b = _node->data;\
 		if (_print_log_type_) { \
-			b += sprintf(b, "[" color type ANSI_RESET "]"); \
+			b += sprintf(b, color "[" type "]" ANSI_RESET); \
 		} \
 		if (_print_timestamps_) { \
 			b += __print_timestamp_sprintf__(b);\
@@ -81,64 +81,38 @@ namespace logger {
 	}
 
 	/**
-	 *
+	 * wrapper macro for the asynchronous functions provided by the logger
 	 */
-
-	inline void _info_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
-			}
-		}
-	}
-
-	inline void _info_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == info) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_GREEN, "INFO");
-
-			}
-		}
+	#define __CPPLOGGER_ASYNC_FUNC__(func_name, log_color, log_level, log_type)\
+	inline void func_name(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_ASYNC__(fmt, log_color, log_type);\
+			}\
+		}\
+	}\
+	\
+	inline void func_name(const char* _file_, const int line, const char* fmt, ...) {\
+		if (_enable_global_ && _enable_translation_uint_) {\
+			if (_loglevel_global_ == all || _loglevel_global_ == log_level) {\
+				__CPPLOGGER_ASYNC__(fmt, log_color, log_type);\
+			}\
+		}\
 	}
 
 	/**
 	 *
 	 */
-
-	inline void _error_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_RED, "ERROR");
-			}
-		}
-	}
-
-	inline void _error_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == error) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_RED, "ERROR");
-			}
-		}
-	}
+	__CPPLOGGER_ASYNC_FUNC__(_info_async_, ANSI_GREEN, info, "INFO")
 
 	/**
 	 *
 	 */
+	__CPPLOGGER_ASYNC_FUNC__(_error_async_, ANSI_RED, error, "ERROR")
 
-	inline void _warning_async_(const char* _file_, const int line, const int cvl, const int avl, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_ && cvl >= avl) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
-			}
-		}
-	}
-
-	inline void _warning_async_(const char* _file_, const int line, const char* fmt, ...) {
-		if (_enable_global_ && _enable_translation_uint_) {
-			if (_loglevel_global_ == all || _loglevel_global_ == warning) {
-				__CPPLOGGER_ASYNC__(fmt, ANSI_BLUE, "WARN");
-			}
-		}
-	}
+	/**
+	 *
+	 */
+	__CPPLOGGER_ASYNC_FUNC__(_warning_async_, ANSI_PURPLE, warning, "WARNING")
 
 }
