@@ -347,6 +347,7 @@ int main() {
 	logger_info(verbose_level, 1, "This should only be printed at verbose level 1.");
 }
 ```
+The first argument to the function is the current verbose level and the second argument is the level at which the log message will be printed.
 
 #### Asynchronous logging
 ```c++
