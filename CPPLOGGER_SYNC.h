@@ -223,7 +223,7 @@ namespace logger {
 	 *
 	 */
 	__force_inline__
-	void __print_timestamp_printf__() {
+	void __print_timestamp__() {
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
 			case nanosecond:
@@ -262,7 +262,7 @@ namespace logger {
 	 *
 	 */
 	__force_inline__
-	int __print_timestamp_sprintf__(char* b) {
+//	int __print_timestamp__(char* b) {
 		int rv = 0;
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
@@ -351,7 +351,7 @@ namespace logger {
 			fputs(color "[" type "]" ANSI_RESET, _output_stream_); \
 		} \
 		if (_print_timestamps_) { \
-			__print_timestamp_printf__(); \
+			__print_timestamp__(); \
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
@@ -461,7 +461,7 @@ namespace logger {
 
 
 	/**
-	 *
+	 * Variadic argument function for printing debug logs to screen.
 	 */
 	#ifndef logger_debug
 	#define logger_debug(...) logger::_debug_(__FILE__, __LINE__, __VA_ARGS__)

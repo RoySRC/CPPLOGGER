@@ -81,7 +81,7 @@ namespace logger {
 			b += sprintf(b, color "[" type "]" ANSI_RESET); \
 		} \
 		if (_print_timestamps_) { \
-			b += __print_timestamp_sprintf__(b);\
+			b += __print_timestamp__(b);\
 		} \
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
