@@ -367,6 +367,26 @@ int main() {
 }
 ```
 
+#### Scoped logging
+This feature allows the enabling or disabling of logging within a certain scope. Note that `logger_enable_scope()` function can only be called once in a scope.
+```c++
+#include <CPPLOGGER_SYNC.h>
+
+logger_init();
+
+int main() {
+	logger_enable(false);
+	logger_info("This is before entering a new scope. This message should not be printed");
+	{
+	    logger_enable_scope(true);
+	    logger_info("This is logging in the new scope.");
+	}
+	logger_info("This is after leaving the scope. This message should not be printed");
+	logger_enable(true);
+	logger_info("This message is after enabling global logging.");
+}
+```
+
 #### Setting the log level
 ```c++
 #include <CPPLOGGER_SYNC.h>

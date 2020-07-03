@@ -171,6 +171,13 @@ namespace logger {
 	#endif
 
 	/**
+	 *
+	 */
+	#ifndef logger_enable_scope
+	#define logger_enable_scope(v) logger::__scope__ scope_logging(v)
+	#endif
+
+	/**
 	 * The output stream of the logger.
 	 */
 	extern FILE* _output_stream_;
@@ -218,6 +225,22 @@ namespace logger {
 	#define logger_log_level(v) logger::_loglevel_global_ = v
 	#endif
 
+	/**
+	 * Used to enable or disable logging within a certain scope
+	 */
+	class __scope__ {
+		bool value;
+
+	public:
+		__scope__(bool value) {
+			logger_enable(value);
+			this->value = value;
+		}
+
+		~__scope__() {
+			logger_enable(!value);
+		}
+	};
 
 	/**
 	 *

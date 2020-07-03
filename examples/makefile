@@ -18,7 +18,8 @@ all: \
 	verbosity\
 	asynchronous_logging\
 	log_level\
-	print_array
+	print_array\
+	scoped_logging
 	
 run_all: clean all
 	@python3 ./run_all.py
@@ -66,6 +67,9 @@ log_level: log_level.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 
 print_array: print_array.cpp ../*.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	
+scoped_logging: scoped_logging.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 
 clean:
