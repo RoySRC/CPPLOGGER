@@ -262,7 +262,7 @@ namespace logger {
 	 *
 	 */
 	__force_inline__
-//	int __print_timestamp__(char* b) {
+	int __print_timestamp__(char* b) {
 		int rv = 0;
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
