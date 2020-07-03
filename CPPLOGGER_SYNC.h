@@ -227,18 +227,29 @@ namespace logger {
 
 	/**
 	 * Used to enable or disable logging within a certain scope
+	 * Affects the states of both global logging and translation unit logging
 	 */
 	class __scope__ {
 		bool value;
+		bool previous_global_logger_state;
+		bool previous_translation_unit_logger_state;
 
 	public:
 		__scope__(bool value) {
+			bool current_global_logger_state = logger::_enable_global_;
+			bool current_translation_unit_logger_state = logger::_enable_translation_uint_;
+
+			previous_global_logger_state = current_global_logger_state;
+			previous_translation_unit_logger_state = current_translation_unit_logger_state;
+
 			logger_enable(value);
+			logger_enable_global(value);
 			this->value = value;
 		}
 
 		~__scope__() {
-			logger_enable(!value);
+			logger_enable(previous_translation_unit_logger_state);
+			logger_enable_global(previous_global_logger_state);
 		}
 	};
 
