@@ -508,28 +508,29 @@ namespace logger {
 	/**
 	 * The following function are used to get the name of a type from its pointer
 	 */
+	#ifndef logger_get_type
+	#define logger_get_type(v) logger::get_type(v).c_str()
+	#endif
+
 	template<typename T>
-	const char* get_type(T* c) {
+	string get_type(T* c) {
 		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(*c).name(), nullptr, nullptr, nullptr),
 			std::free
 		};
-		return string(ptr.get()).c_str();
+		return string(ptr.get());
 	}
 
-	/**
-	 * The following function is used to get the name of a type from its reference
-	 */
 	#ifndef __clang__
 	template<typename T>
-	const char* get_type(T& c) {
+	string get_type(T& c) {
 		if (!_enable_global_ || !_enable_translation_uint_) return nullptr;
 		auto ptr = std::unique_ptr<char, decltype(& std::free)>{
 			abi::__cxa_demangle(typeid(c).name(), nullptr, nullptr, nullptr),
 			std::free
 		};
-		return string(ptr.get()).c_str();
+		return string(ptr.get());
 	}
 	#endif
 

@@ -423,7 +423,7 @@ int main() {
 
 #### Get type of a variable
 ```c++
-#include <CPPLOGGER_SYNC.h>
+#include "../CPPLOGGER_SYNC.h"
 
 /**
  * The following should always be called only in the main translation unit.
@@ -435,7 +435,7 @@ class sample_class {
 public:
 	sample_class() {}
 	void print() {
-		logger_info("print method in class: %s", logger_red(logger::get_type(this)));
+		logger_info("print method in class: %s", logger_red(logger_get_type(this)));
 	}
 };
 
@@ -443,11 +443,11 @@ int main(int argc, char** argv) {
 
 	sample_class c;
 	c.print();
-	logger_info("c: %s", logger::get_type(c));
+	logger_info("c: %s", logger_get_type(c));
 
 
 	int a = 10;
-	logger_info("type of a: %s", logger::get_type(a));
+	logger_info("type of a: %s", logger_get_type(a));
 }
 ```
 

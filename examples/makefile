@@ -19,7 +19,8 @@ all: \
 	asynchronous_logging\
 	log_level\
 	print_array\
-	scoped_logging
+	scoped_logging\
+	get_type
 	
 run_all: clean all
 	@python3 ./run_all.py
@@ -70,6 +71,9 @@ print_array: print_array.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 	
 scoped_logging: scoped_logging.cpp ../*.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+
+get_type: get_type.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 
 clean:
