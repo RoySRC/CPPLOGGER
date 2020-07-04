@@ -71,6 +71,9 @@ print_array: print_array.cpp ../*.h
 	
 scoped_logging: scoped_logging.cpp ../*.h
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
+	
+progress: progress.cpp ../*.h
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) $< -o ./bin/$@ $(LIBS)
 
 clean:
 	rm -rf ./bin/
