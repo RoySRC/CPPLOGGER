@@ -78,7 +78,7 @@ namespace logger {
 		lock_free_queue::node* _node = queue.get();\
 		char* b = _node->data;\
 		if (_print_log_type_) { \
-			b += sprintf(b, color "[" type "]" ANSI_RESET); \
+			b += snprintf(b, 64, color "[" type "]" ANSI_RESET); \
 		} \
 		if (_print_timestamps_) { \
 			b += __print_timestamp__(b);\
@@ -86,22 +86,22 @@ namespace logger {
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			b += sprintf(b, "[%04lld]", id); \
+			b += snprintf(b, 64, "[%04lld]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
-			b += sprintf(b, ": "); \
+			b += snprintf(b, 64, ": "); \
 		} \
 		if (_print_file_) { \
-			b += sprintf(b, "%s:", _file_); \
+			b += snprintf(b, 64, "%s:", _file_); \
 		} \
 		if (_print_line_) { \
-			b += sprintf(b, "%d:", line); \
+			b += snprintf(b, 64, "%d:", line); \
 		} \
 		if (_print_file_ || _print_line_) { \
-			b += sprintf(b, ": "); \
+			b += snprintf(b, 64, ": "); \
 		} \
 		b += vsprintf(b, fmt, __args__); \
-		b += sprintf(b, ANSI_RESET "\n"); \
+		b += snprintf(b, 64, ANSI_RESET "\n"); \
 		va_end(__args__);\
 		_node->done = true;\
 	}
