@@ -31,7 +31,7 @@ using std::mutex;
 class lock_free_queue {
 public:
 	typedef struct node {
-		char data[256];
+		char data[256] = {'\0',};
 		node* next = nullptr;
 		bool done = false;
 		FILE* stream;

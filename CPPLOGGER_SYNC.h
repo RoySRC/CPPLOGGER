@@ -235,7 +235,7 @@ namespace logger {
 		bool previous_translation_unit_logger_state;
 
 	public:
-		__scope__(bool value) {
+		explicit __scope__(bool value) {
 			bool current_global_logger_state = logger::_enable_global_;
 			bool current_translation_unit_logger_state = logger::_enable_translation_uint_;
 
@@ -301,32 +301,32 @@ namespace logger {
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
 			case nanosecond:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
 				break;
 
 			case microsecond:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
 				break;
 
 			case millisecond:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
 				break;
 
 			case seconds:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
 				break;
 
 			case minutes:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
 				break;
 
 			case hours:
-				rv += sprintf(b, "[%ld]",
+				rv += snprintf(b, 20, "[%ld]",
 						std::chrono::duration_cast<std::chrono::hours>(duration).count());
 				break;
 		}
