@@ -344,17 +344,17 @@ namespace logger {
 	#ifndef __CPPLOGGER_COLOR__
 	#define __CPPLOGGER_COLOR__(color, msg) color+msg;
 	#endif
-	__force_inline__ string _BLACK_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
-	__force_inline__ string _RED_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
-	__force_inline__ string _GREEN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
-	__force_inline__ string _YELLOW_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
-	__force_inline__ string _BLUE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
-	__force_inline__ string _PURPLE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
-	__force_inline__ string _CYAN_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
-	__force_inline__ string _WHITE_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
-	__force_inline__ string _BOLD_(string msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
-	__force_inline__ string _UNDERLINE_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
-	__force_inline__ string _ITALIC_(string msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
+	__force_inline__ string _BLACK_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
+	__force_inline__ string _RED_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
+	__force_inline__ string _GREEN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
+	__force_inline__ string _YELLOW_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
+	__force_inline__ string _BLUE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
+	__force_inline__ string _PURPLE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
+	__force_inline__ string _CYAN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
+	__force_inline__ string _WHITE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
+	__force_inline__ string _BOLD_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
+	__force_inline__ string _UNDERLINE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
+	__force_inline__ string _ITALIC_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
 
 
 	/**
@@ -390,7 +390,7 @@ namespace logger {
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			fprintf(_output_stream_, "[%04lld]", id); \
+			fprintf(_output_stream_, "[%04llu]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
 			fputs(": ", _output_stream_); \
