@@ -12,8 +12,8 @@
 
 class element {
 public:
-	element();
-	element(int data);
+	explicit element();
+	explicit element(int data);
 	~element();
 
 private:

@@ -18,7 +18,7 @@ for executable in executables:
 	print("".join(["="]*97))
 	print("Running", executable)
 	print("".join(["="]*97))
-	arch = subprocess.check_output(executable);
+	arch = subprocess.check_output(executable)
 	for i in arch.decode().split("\n"):
 		print(" ", i)
 	print()

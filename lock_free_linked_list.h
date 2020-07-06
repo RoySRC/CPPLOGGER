@@ -35,7 +35,7 @@ public:
 		node* next = nullptr;
 		bool done = false;
 		FILE* stream;
-		node(FILE* os) : stream(os) {}
+		explicit node(FILE* os) : stream(os) {}
 	} node;
 
 	atomic<node*> _first;
