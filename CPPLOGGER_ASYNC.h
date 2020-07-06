@@ -86,7 +86,7 @@ namespace logger {
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			b += snprintf(b, 32, "[%04lld]", id); \
+			b += snprintf(b, 32, "[%04llu]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
 			b += snprintf(b, 4, ": "); \
