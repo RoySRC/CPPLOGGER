@@ -11,10 +11,7 @@
 
 #include "CPPLOGGER_SYNC.h"
 
-/**
- * The following should always be called only in the main translation unit.
- * This is to default initialize the logger flags.
- */
+
 logger_init();
 
 FILE* null_file = fopen("/dev/null", "w");
@@ -35,7 +32,6 @@ void bench(size_t iters, const char* msg) {
 	logger_output_stream(stdout);
 	logger_enable_global(true);
 	logger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec", msg, delta_d, int(iters/delta_d));
-//	assert(logger::queue._last.load()->stream == stdout);
 }
 
 void single_threaded(size_t iters) {
@@ -102,10 +98,18 @@ int main(int argc, char** argv) {
 	for (uint8_t i=0; i<argc; ++i) {
 		if (strcmp(argv[i], "--threads") == 0) {
 			threads = atoi(argv[i+1]);
+			if (threads <= 0 || threads >= 1000) {
+				printf("Number of threads needs to be between (0, 1000)");
+				exit(-1);
+			}
 			i += 1;
 
 		} else if (strcmp(argv[i], "--iters") == 0) {
 			iters = atoi(argv[i+1]);
+			if (iters <= 0 || iters >= 10000000) {
+				printf("number of messages needs to be within (0, 10000000)");
+				exit(-1);
+			}
 			i += 1;
 		}
 	}
