@@ -507,6 +507,7 @@ namespace logger {
 
 	/**
 	 * The following function are used to get the name of a type from its pointer
+	 * or its reference
 	 */
 	#ifndef logger_get_type
 	#define logger_get_type(v) logger::get_type(v).c_str()
