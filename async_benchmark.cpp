@@ -14,7 +14,13 @@
 
 logger_init();
 
-FILE* null_file = fopen("/dev/null", "w");
+/**
+ * Check when opening files - can an attacker redirect it (via symlinks),
+ * force the opening of special file type (e.g., device files), move
+ * things around to create a race condition, control its ancestors, or
+ * change its contents? (CWE-362)
+ */
+FILE* null_file = fdopen(open("/dev/null", O_NOFOLLOW|O_RDWR), "w");
 
 void bench(size_t iters, const char* msg) {
 	using std::chrono::duration;
