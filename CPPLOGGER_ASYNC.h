@@ -105,7 +105,7 @@ namespace logger {
 		r += 32*_print_file_ + 32*_print_line_ + 4*(_print_file_ || _print_line_);\
 		b += vsnprintf(b, r, fmt, __args__); \
 		b += snprintf(b, 32, ANSI_RESET "\n"); \
-		b[strlen(b)] = '\0';\
+		b[255] = '\0';\
 		va_end(__args__);\
 		_node->done = true;\
 	}

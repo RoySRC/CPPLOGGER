@@ -31,6 +31,8 @@ using std::mutex;
 class lock_free_queue {
 public:
 	typedef struct node {
+		// if the size of the following array is changed, also change
+		// the value in __CPPLOGGER_ASYNC__ macro
 		char data[256] = {'\0',};
 		node* next = nullptr;
 		bool done = false;
