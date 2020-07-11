@@ -8,6 +8,10 @@
 #ifndef LOCK_FREE_LINKED_LIST_H_
 #define LOCK_FREE_LINKED_LIST_H_
 
+#ifndef uint
+typedef unsigned int uint;
+#endif
+
 #include <chrono>
 #include <math.h>
 #include <stdlib.h>
