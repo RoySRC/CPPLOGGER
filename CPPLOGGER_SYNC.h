@@ -264,35 +264,47 @@ namespace logger {
 	void __print_timestamp__() {
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
-			case nanosecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+			case nanosecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case microsecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+			case microsecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case millisecond:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+			case millisecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case seconds:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+			case seconds: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case minutes:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+			case minutes: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 
-			case hours:
-				fprintf(_output_stream_, "[%ld]",
-						std::chrono::duration_cast<std::chrono::hours>(duration).count());
+			case hours: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::hours>(duration).count();
+				fprintf(_output_stream_, "[%lu]", time);
 				break;
+			}
 		}
 	}
 
@@ -304,35 +316,47 @@ namespace logger {
 		int rv = 0;
 		const auto duration = std::chrono::system_clock::now().time_since_epoch();
 		switch (_resolution) {
-			case nanosecond:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count());
+			case nanosecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case microsecond:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::microseconds>(duration).count());
+			case microsecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case millisecond:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count());
+			case millisecond: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case seconds:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::seconds>(duration).count());
+			case seconds: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case minutes:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::minutes>(duration).count());
+			case minutes: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::minutes>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 
-			case hours:
-				rv += snprintf(b, 20, "[%ld]",
-						std::chrono::duration_cast<std::chrono::hours>(duration).count());
+			case hours: {
+				const uint64_t time =
+						std::chrono::duration_cast<std::chrono::hours>(duration).count();
+				rv += snprintf(b, 20, "[%lu]", time);
 				break;
+			}
 		}
 		return rv;
 	}
