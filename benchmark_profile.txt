@@ -1,0 +1,647 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 24.21      0.15     0.15  4298481     0.00     0.00  logger::_info_mt_(char const*, int, char const*, ...)
+ 19.37      0.27     0.12       83     1.45     6.45  multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}::operator()() const
+ 15.34      0.37     0.10  4038358     0.00     0.00  std::lock_guard<std::mutex>::lock_guard(std::mutex&)
+ 12.91      0.45     0.08  4029360     0.00     0.00  std::mutex::lock()
+  8.07      0.50     0.05 10000011     0.00     0.00  logger::_info_(char const*, int, char const*, ...)
+  8.07      0.55     0.05  4457374     0.00     0.00  __gthread_mutex_unlock(pthread_mutex_t*)
+  6.46      0.59     0.04  4119228     0.00     0.00  __gthread_mutex_lock(pthread_mutex_t*)
+  4.84      0.62     0.03        2    15.01    40.04  bench(unsigned long, char const*)
+  0.81      0.62     0.01       86     0.06     0.06  std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<std::thread::id> >, std::is_move_constructible<std::thread::id>, std::is_move_assignable<std::thread::id> >::value, void>::type std::swap<std::thread::id>(std::thread::id&, std::thread::id&)
+  0.00      0.62     0.00  8682358     0.00     0.00  __gthread_active_p()
+  0.00      0.62     0.00  4468424     0.00     0.00  std::mutex::unlock()
+  0.00      0.62     0.00  4429404     0.00     0.00  std::lock_guard<std::mutex>::~lock_guard()
+  0.00      0.62     0.00      775     0.00     0.00  multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&)
+  0.00      0.62     0.00      654     0.00     0.00  std::thread::id::id()
+  0.00      0.62     0.00      374     0.00     0.00  std::operator==(std::thread::id, std::thread::id)
+  0.00      0.62     0.00      373     0.00     0.00  std::thread::joinable() const
+  0.00      0.62     0.00      286     0.00     0.00  std::thread::~thread()
+  0.00      0.62     0.00      259     0.00     0.00  std::remove_reference<std::thread::id&>::type&& std::move<std::thread::id&>(std::thread::id&)
+  0.00      0.62     0.00      200     0.00     0.00  std::thread::thread()
+  0.00      0.62     0.00      181     0.00     0.00  std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&)
+  0.00      0.62     0.00      179     0.00     0.00  std::_Head_base<0ul, std::thread::_State*, false>::_M_head(std::_Head_base<0ul, std::thread::_State*, false>&)
+  0.00      0.62     0.00      177     0.00     0.00  std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&& std::forward<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::remove_reference<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::type&)
+  0.00      0.62     0.00      173     0.00     0.00  std::tuple_element<0ul, std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> > >::type& std::get<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >&)
+  0.00      0.62     0.00      169     0.00     0.00  std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_M_head(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&)
+  0.00      0.62     0.00      168     0.00     0.00  std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr()
+  0.00      0.62     0.00      166     0.00     0.00  std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&)
+  0.00      0.62     0.00      163     0.00     0.00  std::thread::_State*& std::__get_helper<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&)
+  0.00      0.62     0.00      161     0.00     0.00  std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&)
+  0.00      0.62     0.00       94     0.00     0.00  std::_Tuple_impl<1ul, std::default_delete<std::thread::_State> >::_Tuple_impl()
+  0.00      0.62     0.00       94     0.00     0.00  std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&)
+  0.00      0.62     0.00       92     0.00     0.00  std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&)
+  0.00      0.62     0.00       92     0.00     0.05  std::thread::swap(std::thread&)
+  0.00      0.62     0.00       91     0.00     0.00  std::_Head_base<1ul, std::default_delete<std::thread::_State>, true>::_Head_base()
+  0.00      0.62     0.00       91     0.00     0.00  std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl()
+  0.00      0.62     0.00       90     0.00     0.00  std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*)
+  0.00      0.62     0.00       90     0.00     0.00  std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >::tuple<std::thread::_State*, std::default_delete<std::thread::_State>, true>()
+  0.00      0.62     0.00       89     0.00     0.00  std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&)
+  0.00      0.62     0.00       89     0.00     0.06  std::thread::operator=(std::thread&&)
+  0.00      0.62     0.00       88     0.00     0.00  std::_Head_base<0ul, std::thread::_State*, false>::_Head_base()
+  0.00      0.62     0.00       86     0.00     0.00  std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  0.00      0.62     0.00       86     0.00     0.00  std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...)
+  0.00      0.62     0.00       85     0.00     0.00  std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::~_State_impl()
+  0.00      0.62     0.00       84     0.00     0.00  std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  0.00      0.62     0.00       84     0.00     0.00  std::thread::_State::_State()
+  0.00      0.62     0.00       83     0.00     0.00  std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::unique_ptr<std::default_delete<std::thread::_State>, void>(std::thread::_State*)
+  0.00      0.62     0.00       83     0.00     0.00  std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::~unique_ptr()
+  0.00      0.62     0.00       83     0.00     0.00  std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  0.00      0.62     0.00       82     0.00     0.00  std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&)
+  0.00      0.62     0.00       81     0.00     0.00  std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_Invoker(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&)
+  0.00      0.62     0.00       72     0.00     7.44  void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  0.00      0.62     0.00       72     0.00     0.00  std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  0.00      0.62     0.00       71     0.00     0.00  std::remove_reference<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>::type&& std::move<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>(std::remove_reference&&)
+  0.00      0.62     0.00       70     0.00     7.65  std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...)
+  0.00      0.62     0.00       69     0.00     0.00  multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}& std::__get_helper<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&)
+  0.00      0.62     0.00       69     0.00     0.00  std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&)
+  0.00      0.62     0.00       69     0.00     0.00  multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>::type&)
+  0.00      0.62     0.00       68     0.00     7.87  std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::operator()()
+  0.00      0.62     0.00       65     0.00     8.24  void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>)
+  0.00      0.62     0.00       12     0.00     0.00  std::chrono::duration<long, std::ratio<1l, 1000000000l> >::count() const
+  0.00      0.62     0.00        8     0.00     0.00  std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::time_since_epoch() const
+  0.00      0.62     0.00        4     0.00     0.00  bool __gnu_cxx::__is_null_pointer<char const>(char const*)
+  0.00      0.62     0.00        4     0.00     0.00  std::chrono::duration<double, std::ratio<1l, 1l> >::count() const
+  0.00      0.62     0.00        4     0.00     0.00  std::char_traits<char>::length(char const*)
+  0.00      0.62     0.00        4     0.00     0.00  std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::chrono::duration<double, std::ratio<1l, 1l> >::duration<double, void>(double const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::chrono::duration<long, std::ratio<1l, 1000000000l> >::duration<long, void>(long const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&)
+  0.00      0.62     0.00        4     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*)
+  0.00      0.62     0.00        4     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)
+  0.00      0.62     0.00        4     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char const*>(char const*, char const*, std::__false_type)
+  0.00      0.62     0.00        4     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::iterator_traits<char const*>::difference_type std::__distance<char const*>(char const*, char const*, std::random_access_iterator_tag)
+  0.00      0.62     0.00        4     0.00     0.00  std::iterator_traits<char const*>::iterator_category std::__iterator_category<char const*>(char const* const&)
+  0.00      0.62     0.00        4     0.00     0.00  std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*)
+  0.00      0.62     0.00        2     0.00     2.50  multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  0.00      0.62     0.00        2     0.00     0.00  unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)
+  0.00      0.62     0.00        2     0.00     0.00  std::__cxx11::stoul(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long*, int)
+  0.00      0.62     0.00        2     0.00     0.00  __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Range_chk::_S_chk(unsigned long, std::integral_constant<bool, false>)
+  0.00      0.62     0.00        2     0.00     0.00  __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::_Save_errno()
+  0.00      0.62     0.00        2     0.00     0.00  __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::~_Save_errno()
+  0.00      0.62     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN6logger18_print_timestamps_E
+  0.00      0.62     0.00        1     0.00     5.00  multi_threaded(unsigned long, unsigned long)
+  0.00      0.62     0.00        1     0.00    80.07  single_threaded(unsigned long)
+  0.00      0.62     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 1.61% of 0.62 seconds
+
+index % time    self  children    called     name
+                0.12    0.42      83/83          void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [2]
+[1]     86.3    0.12    0.42      83         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}::operator()() const [1]
+                0.15    0.27 4298481/4298481     logger::_info_mt_(char const*, int, char const*, ...) [7]
+-----------------------------------------------
+                0.00    0.54      72/72          std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...) [3]
+[2]     86.3    0.00    0.54      72         void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [2]
+                0.12    0.42      83/83          multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}::operator()() const [1]
+                0.00    0.00      75/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.54      70/70          void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [5]
+[3]     86.3    0.00    0.54      70         std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...) [3]
+                0.00    0.54      72/72          void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [2]
+                0.00    0.00      77/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.54      68/68          std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_M_run() [6]
+[4]     86.3    0.00    0.54      68         std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::operator()() [4]
+                0.00    0.54      65/65          void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [5]
+-----------------------------------------------
+                0.00    0.54      65/65          std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::operator()() [4]
+[5]     86.3    0.00    0.54      65         void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [5]
+                0.00    0.54      70/70          std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...) [3]
+                0.00    0.00      72/72          std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [65]
+                0.00    0.00      71/71          std::remove_reference<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>::type&& std::move<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>(std::remove_reference&&) [66]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]     86.3    0.00    0.54                 std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_M_run() [6]
+                0.00    0.54      68/68          std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::operator()() [4]
+-----------------------------------------------
+                0.15    0.27 4298481/4298481     multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}::operator()() const [1]
+[7]     66.9    0.15    0.27 4298481         logger::_info_mt_(char const*, int, char const*, ...) [7]
+                0.10    0.12 4038358/4038358     std::lock_guard<std::mutex>::lock_guard(std::mutex&) [8]
+                0.00    0.05 4429404/4429404     std::lock_guard<std::mutex>::~lock_guard() [16]
+-----------------------------------------------
+                0.10    0.12 4038358/4038358     logger::_info_mt_(char const*, int, char const*, ...) [7]
+[8]     34.7    0.10    0.12 4038358         std::lock_guard<std::mutex>::lock_guard(std::mutex&) [8]
+                0.08    0.04 4029360/4029360     std::mutex::lock() [9]
+-----------------------------------------------
+                0.08    0.04 4029360/4029360     std::lock_guard<std::mutex>::lock_guard(std::mutex&) [8]
+[9]     19.4    0.08    0.04 4029360         std::mutex::lock() [9]
+                0.04    0.00 4119228/4119228     __gthread_mutex_lock(pthread_mutex_t*) [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]    13.7    0.00    0.09                 main [10]
+                0.00    0.08       1/1           single_threaded(unsigned long) [11]
+                0.00    0.01       1/1           multi_threaded(unsigned long, unsigned long) [18]
+                0.00    0.00       1/10000011     logger::_info_(char const*, int, char const*, ...) [13]
+                0.00    0.00       2/4           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&) [84]
+                0.00    0.00       2/2           std::__cxx11::stoul(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long*, int) [89]
+-----------------------------------------------
+                0.00    0.08       1/1           main [10]
+[11]    12.9    0.00    0.08       1         single_threaded(unsigned long) [11]
+                0.03    0.05       2/2           bench(unsigned long, char const*) [12]
+                0.00    0.00       3/10000011     logger::_info_(char const*, int, char const*, ...) [13]
+-----------------------------------------------
+                0.03    0.05       2/2           single_threaded(unsigned long) [11]
+[12]    12.9    0.03    0.05       2         bench(unsigned long, char const*) [12]
+                0.05    0.00 10000002/10000011     logger::_info_(char const*, int, char const*, ...) [13]
+                0.00    0.00       2/4           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [79]
+                0.00    0.00       2/4           std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [75]
+                0.00    0.00       2/4           std::chrono::duration<double, std::ratio<1l, 1l> >::count() const [73]
+-----------------------------------------------
+                0.00    0.00       1/10000011     main [10]
+                0.00    0.00       2/10000011     multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+                0.00    0.00       3/10000011     single_threaded(unsigned long) [11]
+                0.00    0.00       3/10000011     multi_threaded(unsigned long, unsigned long) [18]
+                0.05    0.00 10000002/10000011     bench(unsigned long, char const*) [12]
+[13]     8.1    0.05    0.00 10000011         logger::_info_(char const*, int, char const*, ...) [13]
+-----------------------------------------------
+                0.00    0.05 4468424/4468424     std::lock_guard<std::mutex>::~lock_guard() [16]
+[14]     8.1    0.00    0.05 4468424         std::mutex::unlock() [14]
+                0.05    0.00 4457374/4457374     __gthread_mutex_unlock(pthread_mutex_t*) [15]
+-----------------------------------------------
+                0.05    0.00 4457374/4457374     std::mutex::unlock() [14]
+[15]     8.1    0.05    0.00 4457374         __gthread_mutex_unlock(pthread_mutex_t*) [15]
+                0.00    0.00 4468766/8682358     __gthread_active_p() [29]
+-----------------------------------------------
+                0.00    0.05 4429404/4429404     logger::_info_mt_(char const*, int, char const*, ...) [7]
+[16]     8.1    0.00    0.05 4429404         std::lock_guard<std::mutex>::~lock_guard() [16]
+                0.00    0.05 4468424/4468424     std::mutex::unlock() [14]
+-----------------------------------------------
+                0.04    0.00 4119228/4119228     std::mutex::lock() [9]
+[17]     6.5    0.04    0.00 4119228         __gthread_mutex_lock(pthread_mutex_t*) [17]
+                0.00    0.00 4213592/8682358     __gthread_active_p() [29]
+-----------------------------------------------
+                0.00    0.01       1/1           main [10]
+[18]     0.8    0.00    0.01       1         multi_threaded(unsigned long, unsigned long) [18]
+                0.00    0.01       2/2           multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+                0.00    0.00       3/10000011     logger::_info_(char const*, int, char const*, ...) [13]
+                0.00    0.00       2/4           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&) [84]
+-----------------------------------------------
+                0.00    0.01       2/2           multi_threaded(unsigned long, unsigned long) [18]
+[19]     0.8    0.00    0.01       2         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+                0.00    0.01      89/89          std::thread::operator=(std::thread&&) [21]
+                0.00    0.00       2/10000011     logger::_info_(char const*, int, char const*, ...) [13]
+                0.00    0.00     286/286         std::thread::~thread() [34]
+                0.00    0.00     200/200         std::thread::thread() [36]
+                0.00    0.00      83/83          std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+                0.00    0.00       2/4           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [79]
+                0.00    0.00       2/4           std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [75]
+                0.00    0.00       2/4           std::chrono::duration<double, std::ratio<1l, 1l> >::count() const [73]
+-----------------------------------------------
+                0.00    0.01      92/92          std::thread::operator=(std::thread&&) [21]
+[20]     0.8    0.00    0.01      92         std::thread::swap(std::thread&) [20]
+                0.01    0.00      86/86          std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<std::thread::id> >, std::is_move_constructible<std::thread::id>, std::is_move_assignable<std::thread::id> >::value, void>::type std::swap<std::thread::id>(std::thread::id&, std::thread::id&) [22]
+-----------------------------------------------
+                0.00    0.01      89/89          multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[21]     0.8    0.00    0.01      89         std::thread::operator=(std::thread&&) [21]
+                0.00    0.01      92/92          std::thread::swap(std::thread&) [20]
+                0.00    0.00      90/373         std::thread::joinable() const [33]
+-----------------------------------------------
+                0.01    0.00      86/86          std::thread::swap(std::thread&) [20]
+[22]     0.8    0.01    0.00      86         std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<std::thread::id> >, std::is_move_constructible<std::thread::id>, std::is_move_assignable<std::thread::id> >::value, void>::type std::swap<std::thread::id>(std::thread::id&, std::thread::id&) [22]
+                0.00    0.00     259/259         std::remove_reference<std::thread::id&>::type&& std::move<std::thread::id&>(std::thread::id&) [35]
+-----------------------------------------------
+                0.00    0.00 4213592/8682358     __gthread_mutex_lock(pthread_mutex_t*) [17]
+                0.00    0.00 4468766/8682358     __gthread_mutex_unlock(pthread_mutex_t*) [15]
+[29]     0.0    0.00    0.00 8682358         __gthread_active_p() [29]
+-----------------------------------------------
+                0.00    0.00      75/775         void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [2]
+                0.00    0.00      77/775         std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...) [3]
+                0.00    0.00      85/775         std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...) [56]
+                0.00    0.00      86/775         std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+                0.00    0.00      87/775         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [58]
+                0.00    0.00      90/775         std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&) [53]
+                0.00    0.00      91/775         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&) [48]
+                0.00    0.00     184/775         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&) [37]
+[30]     0.0    0.00    0.00     775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.00      86/654         std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+                0.00    0.00     200/654         std::thread::thread() [36]
+                0.00    0.00     368/654         std::thread::joinable() const [33]
+[31]     0.0    0.00    0.00     654         std::thread::id::id() [31]
+-----------------------------------------------
+                0.00    0.00     374/374         std::thread::joinable() const [33]
+[32]     0.0    0.00    0.00     374         std::operator==(std::thread::id, std::thread::id) [32]
+-----------------------------------------------
+                0.00    0.00      90/373         std::thread::operator=(std::thread&&) [21]
+                0.00    0.00     283/373         std::thread::~thread() [34]
+[33]     0.0    0.00    0.00     373         std::thread::joinable() const [33]
+                0.00    0.00     374/374         std::operator==(std::thread::id, std::thread::id) [32]
+                0.00    0.00     368/654         std::thread::id::id() [31]
+-----------------------------------------------
+                0.00    0.00     286/286         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[34]     0.0    0.00    0.00     286         std::thread::~thread() [34]
+                0.00    0.00     283/373         std::thread::joinable() const [33]
+-----------------------------------------------
+                0.00    0.00     259/259         std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<std::thread::id> >, std::is_move_constructible<std::thread::id>, std::is_move_assignable<std::thread::id> >::value, void>::type std::swap<std::thread::id>(std::thread::id&, std::thread::id&) [22]
+[35]     0.0    0.00    0.00     259         std::remove_reference<std::thread::id&>::type&& std::move<std::thread::id&>(std::thread::id&) [35]
+-----------------------------------------------
+                0.00    0.00     200/200         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[36]     0.0    0.00    0.00     200         std::thread::thread() [36]
+                0.00    0.00     200/654         std::thread::id::id() [31]
+-----------------------------------------------
+                0.00    0.00      86/181         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [58]
+                0.00    0.00      95/181         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&) [48]
+[37]     0.0    0.00    0.00     181         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&) [37]
+                0.00    0.00     184/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.00     179/179         std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_M_head(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [41]
+[38]     0.0    0.00    0.00     179         std::_Head_base<0ul, std::thread::_State*, false>::_M_head(std::_Head_base<0ul, std::thread::_State*, false>&) [38]
+-----------------------------------------------
+                0.00    0.00      79/177         std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [63]
+                0.00    0.00      98/177         std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [47]
+[39]     0.0    0.00    0.00     177         std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&& std::forward<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::remove_reference<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::type&) [39]
+-----------------------------------------------
+                0.00    0.00     173/173         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr() [42]
+[40]     0.0    0.00    0.00     173         std::tuple_element<0ul, std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> > >::type& std::get<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >&) [40]
+                0.00    0.00     163/163         std::thread::_State*& std::__get_helper<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [44]
+-----------------------------------------------
+                0.00    0.00     169/169         std::thread::_State*& std::__get_helper<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [44]
+[41]     0.0    0.00    0.00     169         std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_M_head(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [41]
+                0.00    0.00     179/179         std::_Head_base<0ul, std::thread::_State*, false>::_M_head(std::_Head_base<0ul, std::thread::_State*, false>&) [38]
+-----------------------------------------------
+                0.00    0.00      78/168         std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::~unique_ptr() [61]
+                0.00    0.00      90/168         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*) [51]
+[42]     0.0    0.00    0.00     168         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr() [42]
+                0.00    0.00     173/173         std::tuple_element<0ul, std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> > >::type& std::get<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >&) [40]
+-----------------------------------------------
+                0.00    0.00     166/166         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [45]
+[43]     0.0    0.00    0.00     166         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [43]
+-----------------------------------------------
+                0.00    0.00     163/163         std::tuple_element<0ul, std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> > >::type& std::get<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >&) [40]
+[44]     0.0    0.00    0.00     163         std::thread::_State*& std::__get_helper<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [44]
+                0.00    0.00     169/169         std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_M_head(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [41]
+-----------------------------------------------
+                0.00    0.00      74/161         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}& std::__get_helper<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&) [67]
+                0.00    0.00      87/161         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [58]
+[45]     0.0    0.00    0.00     161         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [45]
+                0.00    0.00     166/166         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [43]
+-----------------------------------------------
+                0.00    0.00      94/94          std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl() [50]
+[46]     0.0    0.00    0.00      94         std::_Tuple_impl<1ul, std::default_delete<std::thread::_State> >::_Tuple_impl() [46]
+                0.00    0.00      91/91          std::_Head_base<1ul, std::default_delete<std::thread::_State>, true>::_Head_base() [49]
+-----------------------------------------------
+                0.00    0.00      94/94          std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+[47]     0.0    0.00    0.00      94         std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [47]
+                0.00    0.00      98/177         std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&& std::forward<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::remove_reference<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::type&) [39]
+                0.00    0.00      83/83          std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::unique_ptr<std::default_delete<std::thread::_State>, void>(std::thread::_State*) [60]
+                0.00    0.00      82/82          std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [63]
+-----------------------------------------------
+                0.00    0.00      92/92          std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&) [53]
+[48]     0.0    0.00    0.00      92         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&) [48]
+                0.00    0.00      95/181         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&) [37]
+                0.00    0.00      91/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.00      91/91          std::_Tuple_impl<1ul, std::default_delete<std::thread::_State> >::_Tuple_impl() [46]
+[49]     0.0    0.00    0.00      91         std::_Head_base<1ul, std::default_delete<std::thread::_State>, true>::_Head_base() [49]
+-----------------------------------------------
+                0.00    0.00      91/91          std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >::tuple<std::thread::_State*, std::default_delete<std::thread::_State>, true>() [52]
+[50]     0.0    0.00    0.00      91         std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl() [50]
+                0.00    0.00      94/94          std::_Tuple_impl<1ul, std::default_delete<std::thread::_State> >::_Tuple_impl() [46]
+                0.00    0.00      88/88          std::_Head_base<0ul, std::thread::_State*, false>::_Head_base() [54]
+-----------------------------------------------
+                0.00    0.00      90/90          std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::unique_ptr<std::default_delete<std::thread::_State>, void>(std::thread::_State*) [60]
+[51]     0.0    0.00    0.00      90         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*) [51]
+                0.00    0.00      90/90          std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >::tuple<std::thread::_State*, std::default_delete<std::thread::_State>, true>() [52]
+                0.00    0.00      90/168         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr() [42]
+-----------------------------------------------
+                0.00    0.00      90/90          std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*) [51]
+[52]     0.0    0.00    0.00      90         std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >::tuple<std::thread::_State*, std::default_delete<std::thread::_State>, true>() [52]
+                0.00    0.00      91/91          std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl() [50]
+-----------------------------------------------
+                0.00    0.00      89/89          std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...) [56]
+[53]     0.0    0.00    0.00      89         std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&) [53]
+                0.00    0.00      92/92          std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&) [48]
+                0.00    0.00      90/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.00      88/88          std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl() [50]
+[54]     0.0    0.00    0.00      88         std::_Head_base<0ul, std::thread::_State*, false>::_Head_base() [54]
+-----------------------------------------------
+                0.00    0.00      86/86          std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_Invoker(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [64]
+[55]     0.0    0.00    0.00      86         std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [55]
+                0.00    0.00      84/84          std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [58]
+-----------------------------------------------
+                0.00    0.00      86/86          std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+[56]     0.0    0.00    0.00      86         std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...) [56]
+                0.00    0.00      89/89          std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&) [53]
+                0.00    0.00      85/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+-----------------------------------------------
+                0.00    0.00      85/85          std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::~_State_impl() [127]
+[57]     0.0    0.00    0.00      85         std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::~_State_impl() [57]
+-----------------------------------------------
+                0.00    0.00      84/84          std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [55]
+[58]     0.0    0.00    0.00      84         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [58]
+                0.00    0.00      87/161         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [45]
+                0.00    0.00      87/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+                0.00    0.00      86/181         std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&) [37]
+-----------------------------------------------
+                0.00    0.00      84/84          std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [63]
+[59]     0.0    0.00    0.00      84         std::thread::_State::_State() [59]
+-----------------------------------------------
+                0.00    0.00      83/83          std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [47]
+[60]     0.0    0.00    0.00      83         std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::unique_ptr<std::default_delete<std::thread::_State>, void>(std::thread::_State*) [60]
+                0.00    0.00      90/90          std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*) [51]
+-----------------------------------------------
+                0.00    0.00      83/83          std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+[61]     0.0    0.00    0.00      83         std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::~unique_ptr() [61]
+                0.00    0.00      78/168         std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr() [42]
+-----------------------------------------------
+                0.00    0.00      83/83          multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[62]     0.0    0.00    0.00      83         std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [62]
+                0.00    0.00      94/94          std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [47]
+                0.00    0.00      86/654         std::thread::id::id() [31]
+                0.00    0.00      86/775         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&) [30]
+                0.00    0.00      86/86          std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...) [56]
+                0.00    0.00      83/83          std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::~unique_ptr() [61]
+-----------------------------------------------
+                0.00    0.00      82/82          std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [47]
+[63]     0.0    0.00    0.00      82         std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [63]
+                0.00    0.00      84/84          std::thread::_State::_State() [59]
+                0.00    0.00      81/81          std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_Invoker(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [64]
+                0.00    0.00      79/177         std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&& std::forward<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::remove_reference<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::type&) [39]
+-----------------------------------------------
+                0.00    0.00      81/81          std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [63]
+[64]     0.0    0.00    0.00      81         std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_Invoker(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [64]
+                0.00    0.00      86/86          std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [55]
+-----------------------------------------------
+                0.00    0.00      72/72          void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [5]
+[65]     0.0    0.00    0.00      72         std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [65]
+                0.00    0.00      69/69          multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>::type&) [69]
+                0.00    0.00      69/69          std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [68]
+-----------------------------------------------
+                0.00    0.00      71/71          void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [5]
+[66]     0.0    0.00    0.00      71         std::remove_reference<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>::type&& std::move<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>(std::remove_reference&&) [66]
+-----------------------------------------------
+                0.00    0.00      69/69          std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [68]
+[67]     0.0    0.00    0.00      69         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}& std::__get_helper<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&) [67]
+                0.00    0.00      74/161         std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [45]
+-----------------------------------------------
+                0.00    0.00      69/69          std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [65]
+[68]     0.0    0.00    0.00      69         std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [68]
+                0.00    0.00      69/69          multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}& std::__get_helper<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&) [67]
+-----------------------------------------------
+                0.00    0.00      69/69          std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [65]
+[69]     0.0    0.00    0.00      69         multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>::type&) [69]
+-----------------------------------------------
+                0.00    0.00       4/12          std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [76]
+                0.00    0.00       8/12          std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [80]
+[70]     0.0    0.00    0.00      12         std::chrono::duration<long, std::ratio<1l, 1000000000l> >::count() const [70]
+-----------------------------------------------
+                0.00    0.00       8/8           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [79]
+[71]     0.0    0.00    0.00       8         std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::time_since_epoch() const [71]
+-----------------------------------------------
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [82]
+[72]     0.0    0.00    0.00       4         bool __gnu_cxx::__is_null_pointer<char const>(char const*) [72]
+-----------------------------------------------
+                0.00    0.00       2/4           bench(unsigned long, char const*) [12]
+                0.00    0.00       2/4           multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[73]     0.0    0.00    0.00       4         std::chrono::duration<double, std::ratio<1l, 1l> >::count() const [73]
+-----------------------------------------------
+                0.00    0.00       4/4           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&) [84]
+[74]     0.0    0.00    0.00       4         std::char_traits<char>::length(char const*) [74]
+-----------------------------------------------
+                0.00    0.00       2/4           bench(unsigned long, char const*) [12]
+                0.00    0.00       2/4           multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[75]     0.0    0.00    0.00       4         std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [75]
+                0.00    0.00       4/4           std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [76]
+-----------------------------------------------
+                0.00    0.00       4/4           std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [75]
+[76]     0.0    0.00    0.00       4         std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [76]
+                0.00    0.00       4/12          std::chrono::duration<long, std::ratio<1l, 1000000000l> >::count() const [70]
+                0.00    0.00       4/4           std::chrono::duration<double, std::ratio<1l, 1l> >::duration<double, void>(double const&) [77]
+-----------------------------------------------
+                0.00    0.00       4/4           std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [76]
+[77]     0.0    0.00    0.00       4         std::chrono::duration<double, std::ratio<1l, 1l> >::duration<double, void>(double const&) [77]
+-----------------------------------------------
+                0.00    0.00       4/4           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [80]
+[78]     0.0    0.00    0.00       4         std::chrono::duration<long, std::ratio<1l, 1000000000l> >::duration<long, void>(long const&) [78]
+-----------------------------------------------
+                0.00    0.00       2/4           bench(unsigned long, char const*) [12]
+                0.00    0.00       2/4           multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+[79]     0.0    0.00    0.00       4         std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [79]
+                0.00    0.00       8/8           std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::time_since_epoch() const [71]
+                0.00    0.00       4/4           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [80]
+-----------------------------------------------
+                0.00    0.00       4/4           std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [79]
+[80]     0.0    0.00    0.00       4         std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [80]
+                0.00    0.00       8/12          std::chrono::duration<long, std::ratio<1l, 1000000000l> >::count() const [70]
+                0.00    0.00       4/4           std::chrono::duration<long, std::ratio<1l, 1000000000l> >::duration<long, void>(long const&) [78]
+-----------------------------------------------
+                0.00    0.00       4/4           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&) [84]
+[81]     0.0    0.00    0.00       4         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*) [81]
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char const*>(char const*, char const*, std::__false_type) [83]
+-----------------------------------------------
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char const*>(char const*, char const*, std::__false_type) [83]
+[82]     0.0    0.00    0.00       4         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [82]
+                0.00    0.00       4/4           bool __gnu_cxx::__is_null_pointer<char const>(char const*) [72]
+                0.00    0.00       4/4           std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*) [87]
+-----------------------------------------------
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*) [81]
+[83]     0.0    0.00    0.00       4         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char const*>(char const*, char const*, std::__false_type) [83]
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [82]
+-----------------------------------------------
+                0.00    0.00       2/4           multi_threaded(unsigned long, unsigned long) [18]
+                0.00    0.00       2/4           main [10]
+[84]     0.0    0.00    0.00       4         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&) [84]
+                0.00    0.00       4/4           std::char_traits<char>::length(char const*) [74]
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*) [81]
+-----------------------------------------------
+                0.00    0.00       4/4           std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*) [87]
+[85]     0.0    0.00    0.00       4         std::iterator_traits<char const*>::difference_type std::__distance<char const*>(char const*, char const*, std::random_access_iterator_tag) [85]
+-----------------------------------------------
+                0.00    0.00       4/4           std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*) [87]
+[86]     0.0    0.00    0.00       4         std::iterator_traits<char const*>::iterator_category std::__iterator_category<char const*>(char const* const&) [86]
+-----------------------------------------------
+                0.00    0.00       4/4           void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [82]
+[87]     0.0    0.00    0.00       4         std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*) [87]
+                0.00    0.00       4/4           std::iterator_traits<char const*>::iterator_category std::__iterator_category<char const*>(char const* const&) [86]
+                0.00    0.00       4/4           std::iterator_traits<char const*>::difference_type std::__distance<char const*>(char const*, char const*, std::random_access_iterator_tag) [85]
+-----------------------------------------------
+                0.00    0.00       2/2           std::__cxx11::stoul(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long*, int) [89]
+[88]     0.0    0.00    0.00       2         unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [88]
+                0.00    0.00       2/2           __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::_Save_errno() [91]
+                0.00    0.00       2/2           __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Range_chk::_S_chk(unsigned long, std::integral_constant<bool, false>) [90]
+                0.00    0.00       2/2           __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::~_Save_errno() [92]
+-----------------------------------------------
+                0.00    0.00       2/2           main [10]
+[89]     0.0    0.00    0.00       2         std::__cxx11::stoul(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long*, int) [89]
+                0.00    0.00       2/2           unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [88]
+-----------------------------------------------
+                0.00    0.00       2/2           unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [88]
+[90]     0.0    0.00    0.00       2         __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Range_chk::_S_chk(unsigned long, std::integral_constant<bool, false>) [90]
+-----------------------------------------------
+                0.00    0.00       2/2           unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [88]
+[91]     0.0    0.00    0.00       2         __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::_Save_errno() [91]
+-----------------------------------------------
+                0.00    0.00       2/2           unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [88]
+[92]     0.0    0.00    0.00       2         __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::~_Save_errno() [92]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [141]
+[93]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN6logger18_print_timestamps_E [93]
+                0.00    0.00       1/1           __static_initialization_and_destruction_0(int, int) [94]
+-----------------------------------------------
+                0.00    0.00       1/1           _GLOBAL__sub_I__ZN6logger18_print_timestamps_E [93]
+[94]     0.0    0.00    0.00       1         __static_initialization_and_destruction_0(int, int) [94]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [93] _GLOBAL__sub_I__ZN6logger18_print_timestamps_E [58] std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [34] std::thread::~thread()
+  [18] multi_threaded(unsigned long, unsigned long) [48] std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_Tuple_impl<{lambda()#1}>({lambda()#1}&&) [21] std::thread::operator=(std::thread&&)
+  [11] single_threaded(unsigned long) [46] std::_Tuple_impl<1ul, std::default_delete<std::thread::_State> >::_Tuple_impl() [81] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*)
+  [19] multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [74] std::char_traits<char>::length(char const*) [82] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)
+  [94] __static_initialization_and_destruction_0(int, int) [42] std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::_M_ptr() [83] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct_aux<char const*>(char const*, char const*, std::__false_type)
+  [12] bench(unsigned long, char const*) [51] std::__uniq_ptr_impl<std::thread::_State, std::default_delete<std::thread::_State> >::__uniq_ptr_impl(std::thread::_State*) [84] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocator<char> const&)
+  [29] __gthread_active_p()    [9] std::mutex::lock()     [89] std::__cxx11::stoul(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long*, int)
+  [17] __gthread_mutex_lock(pthread_mutex_t*) [14] std::mutex::unlock() [85] std::iterator_traits<char const*>::difference_type std::__distance<char const*>(char const*, char const*, std::random_access_iterator_tag)
+  [15] __gthread_mutex_unlock(pthread_mutex_t*) [52] std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >::tuple<std::thread::_State*, std::default_delete<std::thread::_State>, true>() [44] std::thread::_State*& std::__get_helper<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&)
+  [13] logger::_info_(char const*, int, char const*, ...) [55] std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [67] multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}& std::__get_helper<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&)
+   [7] logger::_info_mt_(char const*, int, char const*, ...) [53] std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::tuple<{lambda()#1}, true>({lambda()#1}&&) [2] void std::__invoke_impl<void, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_other, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  [72] bool __gnu_cxx::__is_null_pointer<char const>(char const*) [75] std::enable_if<std::chrono::__is_duration<std::chrono::duration<double, std::ratio<1l, 1l> > >::value, std::chrono::duration<double, std::ratio<1l, 1l> > >::type std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1l, 1l> >, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [86] std::iterator_traits<char const*>::iterator_category std::__iterator_category<char const*>(char const* const&)
+  [88] unsigned long __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int) [76] std::chrono::duration<double, std::ratio<1l, 1l> > std::chrono::__duration_cast_impl<std::chrono::duration<double, std::ratio<1l, 1l> >, std::ratio<1l, 1000000000l>, double, true, false>::__cast<long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [40] std::tuple_element<0ul, std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> > >::type& std::get<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >(std::tuple<std::thread::_State*, std::default_delete<std::thread::_State> >&)
+  [71] std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::time_since_epoch() const [77] std::chrono::duration<double, std::ratio<1l, 1l> >::duration<double, void>(double const&) [65] std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type&& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)
+  [73] std::chrono::duration<double, std::ratio<1l, 1l> >::count() const [78] std::chrono::duration<long, std::ratio<1l, 1000000000l> >::duration<long, void>(long const&) [68] std::tuple_element<0ul, std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::type& std::get<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&)
+  [70] std::chrono::duration<long, std::ratio<1l, 1000000000l> >::count() const [79] std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >(std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&, std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1l, 1000000000l> > > const&) [35] std::remove_reference<std::thread::id&>::type&& std::move<std::thread::id&>(std::thread::id&)
+  [33] std::thread::joinable() const [80] std::common_type<std::chrono::duration<long, std::ratio<1l, 1000000000l> >, std::chrono::duration<long, std::ratio<1l, 1000000000l> > >::type std::chrono::operator-<long, std::ratio<1l, 1000000000l>, long, std::ratio<1l, 1000000000l> >(std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> > const&) [66] std::remove_reference<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>::type&& std::move<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&>(std::remove_reference&&)
+  [38] std::_Head_base<0ul, std::thread::_State*, false>::_M_head(std::_Head_base<0ul, std::thread::_State*, false>&) [63] std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::_State_impl(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [22] std::enable_if<std::__and_<std::__not_<std::__is_tuple_like<std::thread::id> >, std::is_move_constructible<std::thread::id>, std::is_move_assignable<std::thread::id> >::value, void>::type std::swap<std::thread::id>(std::thread::id&, std::thread::id&)
+  [54] std::_Head_base<0ul, std::thread::_State*, false>::_Head_base() [57] std::thread::_State_impl<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::~_State_impl() [39] std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&& std::forward<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::remove_reference<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >::type&)
+  [43] std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [47] std::unique_ptr<std::thread::_State, std::default_delete<std::unique_ptr> > std::thread::_S_make_state<std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> > >(std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >&&) [69] multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&>::type&)
+  [37] std::_Head_base<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, false>::_Head_base<{lambda()#1}>({lambda()#1}&&) [56] std::thread::_Invoker<std::tuple<std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type> > std::thread::__make_invoker<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::decay&&, (std::decay<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&&)...) [30] multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&& std::forward<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::remove_reference<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type&)
+  [49] std::_Head_base<1ul, std::default_delete<std::thread::_State>, true>::_Head_base() [31] std::thread::id::id() [3] std::__invoke_result<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::type std::__invoke<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>(std::__invoke_result&&, (multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&)...)
+   [8] std::lock_guard<std::mutex>::lock_guard(std::mutex&) [20] std::thread::swap(std::thread&) [87] std::iterator_traits<char const*>::difference_type std::distance<char const*>(char const*, char const*)
+  [16] std::lock_guard<std::mutex>::~lock_guard() [59] std::thread::_State::_State() [32] std::operator==(std::thread::id, std::thread::id)
+  [60] std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::unique_ptr<std::default_delete<std::thread::_State>, void>(std::thread::_State*) [5] void std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) [1] multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}::operator()() const
+  [61] std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >::~unique_ptr() [64] std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::_Invoker(std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>&&) [90] __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Range_chk::_S_chk(unsigned long, std::integral_constant<bool, false>)
+  [41] std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_M_head(std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >&) [4] std::thread::_Invoker<std::tuple<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}> >::operator()() [91] __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::_Save_errno()
+  [50] std::_Tuple_impl<0ul, std::thread::_State*, std::default_delete<std::thread::_State> >::_Tuple_impl() [62] std::thread::thread<multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}, , void>(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&&) [92] __gnu_cxx::__stoa<unsigned long, unsigned long, char, int>(unsigned long (*)(char const*, char**, int), char const*, char const*, unsigned long*, int)::_Save_errno::~_Save_errno()
+  [45] std::_Tuple_impl<0ul, multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}>::_M_head(multi_thread_bench(unsigned long, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)::{lambda()#1}&) [36] std::thread::thread()

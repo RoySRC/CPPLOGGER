@@ -24,6 +24,10 @@
 using std::string;
 using std::mutex;
 
+#ifndef uint
+typedef unsigned int uint;
+#endif
+
 #ifndef __force_inline__
 #define __force_inline__ __attribute__((always_inline)) inline
 #endif
