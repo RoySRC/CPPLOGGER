@@ -344,17 +344,17 @@ namespace logger {
 	#ifndef __CPPLOGGER_COLOR__
 	#define __CPPLOGGER_COLOR__(color, msg) color+msg;
 	#endif
-	__force_inline__ string _BLACK_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
-	__force_inline__ string _RED_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
-	__force_inline__ string _GREEN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
-	__force_inline__ string _YELLOW_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
-	__force_inline__ string _BLUE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
-	__force_inline__ string _PURPLE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
-	__force_inline__ string _CYAN_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
-	__force_inline__ string _WHITE_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
-	__force_inline__ string _BOLD_(const string& msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
-	__force_inline__ string _UNDERLINE_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
-	__force_inline__ string _ITALIC_(const string& msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
+	__force_inline__ string _BLACK_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLACK, msg);		}
+	__force_inline__ string _RED_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_RED, msg);			}
+	__force_inline__ string _GREEN_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_GREEN, msg);		}
+	__force_inline__ string _YELLOW_(const string&& msg)	{return __CPPLOGGER_COLOR__(ANSI_YELLOW, msg);		}
+	__force_inline__ string _BLUE_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_BLUE, msg);		}
+	__force_inline__ string _PURPLE_(const string&& msg)	{return __CPPLOGGER_COLOR__(ANSI_PURPLE, msg);		}
+	__force_inline__ string _CYAN_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_CYAN, msg);		}
+	__force_inline__ string _WHITE_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_WHITE, msg);		}
+	__force_inline__ string _BOLD_(const string&& msg)		{return __CPPLOGGER_COLOR__(ANSI_BOLD, msg);		}
+	__force_inline__ string _UNDERLINE_(const string&& msg)	{return __CPPLOGGER_COLOR__(ANSI_UNDERLINE, msg);	}
+	__force_inline__ string _ITALIC_(const string&& msg)	{return __CPPLOGGER_COLOR__(ANSI_ITALIC, msg);		}
 
 
 	/**

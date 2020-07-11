@@ -86,7 +86,7 @@ namespace logger {
 		if (_print_thread_id_) { \
 			std::stringstream ss; ss << std::this_thread::get_id(); \
 			const unsigned long long int id = std::stoull(ss.str()); \
-			b += snprintf(b, 32, "[%04llu]", id); \
+			b += snprintf(b, 22, "[%04llu]", id); \
 		} \
 		if (_print_log_type_ || _print_timestamps_ || _print_thread_id_) { \
 			b += snprintf(b, 4, ": "); \
@@ -100,7 +100,7 @@ namespace logger {
 		if (_print_file_ || _print_line_) { \
 			b += snprintf(b, 4, ": "); \
 		} \
-		uint8_t r = 32*_print_log_type_ + 20*_print_timestamps_ + 32*_print_thread_id_;\
+		uint8_t r = 32*_print_log_type_ + 20*_print_timestamps_ + 22*_print_thread_id_;\
 		r += 4*(_print_log_type_ || _print_timestamps_ || _print_thread_id_);\
 		r += 32*_print_file_ + 32*_print_line_ + 4*(_print_file_ || _print_line_);\
 		b += vsnprintf(b, r, fmt, __args__); \

@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
 
 	for (uint8_t i=0; i<argc; ++i) {
 		if (strcmp(argv[i], "--threads") == 0) {
-			threads = atoi(argv[i+1]);
+			threads = std::stoul(argv[i+1]);
 			if (threads == 0 || threads >= 1000) {
 				printf("Number of threads needs to be between (0, 1000)");
 				exit(-1);
@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
 			i += 1;
 
 		} else if (strcmp(argv[i], "--iters") == 0) {
-			iters = atoi(argv[i+1]);
+			iters = std::stoul(argv[i+1]);
 			if (iters == 0 || iters >= 10000000) {
 				printf("number of messages needs to be within (0, 10000000)");
 				exit(-1);
