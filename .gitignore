@@ -7,4 +7,5 @@ main
 *.out
 benchmark
 async_benchmark
+typographic_benchmark
 */bin/*
