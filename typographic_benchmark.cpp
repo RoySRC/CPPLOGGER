@@ -8,14 +8,13 @@
 
 #include <CPPLOGGER_SYNC.h>
 
+using std::chrono::duration;
+using std::chrono::duration_cast;
+using std::chrono::high_resolution_clock;
+
 logger_init();
 
 class Timer {
-
-	using std::chrono::duration;
-	using std::chrono::duration_cast;
-	using std::chrono::high_resolution_clock;
-
 	high_resolution_clock::time_point start;
 
 public:
@@ -65,15 +64,26 @@ void bench() {
 }
 
 int main() {
+	logger_print_file(false);
+	logger_print_line(false);
+	setlocale(LC_NUMERIC, "");
+
+	uint iters = 1000000;
+
+	logger_info("*******************************************************************");
+	logger_info("Single threaded benchmark with %'ld messages", iters);
+	logger_info("*******************************************************************");
+
 	FILE* os = fopen("/dev/null", "w");
 	logger_output_stream(os);
-	uint iters = 1000000;
+
 	{
 		Timer timer;
-		bench();
+		for (size_t i=0; i<iters; ++i) bench();
 		double delta_d = timer.elapsed();
 		logger_output_stream(stdout);
 		logger_info("%-16s| Elapsed: %04.2f secs | Throughput: %'d/sec",
 				"Typographic", delta_d, int(iters/delta_d));
 	}
+	fclose(os);
 }
