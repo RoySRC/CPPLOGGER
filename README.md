@@ -487,3 +487,12 @@ In asynchronous mode the logging results are not immediately displayed on the ou
 [INFO]: basic           | Elapsed: 2.68 secs | Throughput: 1,867,975/sec
 [INFO]: disabled        | Elapsed: 0.01 secs | Throughput: 638,469,145/sec
 ```
+
+## Comparison to other loggers
+
+The following shows the speed comparison of `CPPLOGGER` to other loggers in terms of throughput. Throughput, in this context is a measure of messages logged per second. Therefore the higher the throughput, the faster the logger.
+
+|Logger Name|Synchronous Throughput|Asynchronous Throughput|
+|-----------|-----------|------------|
+|spdlog|<table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>2,669,494</td><td>1,593,900</td></tr></tbody></table>| <table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>2,035,971</td><td>2,387,697</td></tr></tbody></table>|
+|CPPLOGGER|<table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>10,577,494</td><td>1,597,245</td></tr></tbody></table>| <table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>4,625,998</td><td>11,975,875</td></tr></tbody></table>|
