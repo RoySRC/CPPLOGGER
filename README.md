@@ -490,7 +490,7 @@ In asynchronous mode the logging results are not immediately displayed on the ou
 
 ## Comparison to other loggers
 
-The following shows the speed comparison of `CPPLOGGER` to other loggers in terms of throughput. Throughput, in this context is a measure of messages logged per second. Therefore the higher the throughput, the faster the logger.
+The following shows the speed comparison of `CPPLOGGER` to other loggers in terms of throughput. Throughput, in this context is a measure of messages logged per second. Therefore the higher the throughput, the faster the logger. The following table is logging 5,000,000 messages. Under the multi-threaded environment, each thread is logging 5,000,000 messages.
 
 |Logger Name|Synchronous Throughput|Asynchronous Throughput|
 |-----------|-----------|------------|
