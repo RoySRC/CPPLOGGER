@@ -496,3 +496,5 @@ The following shows the speed comparison of `CPPLOGGER` to other loggers in term
 |-----------|-----------|------------|
 |[spdlog](https://github.com/gabime/spdlog)|<table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>2,669,494</td><td>76,760</td></tr></tbody></table>| <table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>2,035,971</td><td>2,387,697</td></tr></tbody></table>|
 |[CPPLOGGER](https://github.com/RoySRC/CPPLOGGER)|<table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>10,577,494</td><td>814,530</td></tr></tbody></table>| <table><thead><tr><th>Single Threaded</th><th>Multi-Threaded</th></tr></thead><tbody><tr><td>4,625,998</td><td>11,975,875</td></tr></tbody></table>|
+
+***All benchmarks are as of January 13, 2021 and are subject to change in future iterations***
